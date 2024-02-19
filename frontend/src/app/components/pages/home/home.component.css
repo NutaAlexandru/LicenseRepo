@@ -1,0 +1,40 @@
+ul {
+    list-style-type: none; /* Înlătură bullet-urile */
+    padding: 0; /* Înlătură padding-ul implicit */
+    margin: 0; /* Înlătură margin-ul implicit */
+}
+
+li {
+    margin-bottom: 10px; /* Adaugă un spațiu între elementele listei */
+    border-bottom: 1px solid #ccc; /* Adaugă o linie sub fiecare element pentru a le separa */
+    padding-bottom: 10px; /* Adaugă un spațiu între text și linia de separare */
+}
+
+a {
+    text-decoration: none; /* Înlătură sublinierea link-urilor */
+    color: #333; /* Schimbă culoarea textului */
+    display: block; /* Face ca întregul element li să fie clicabil */
+}
+
+.content {
+    display: flex; /* Utilizează flexbox pentru alinierea elementelor */
+    align-items: center; /* Centrează elementele vertical */
+}
+
+.name {
+    font-size: 16px; /* Mărimea fontului pentru numele acțiunii */
+    color: #007bff; /* Culoare pentru numele acțiunii */
+    margin-right: 10px; /* Adaugă un spațiu între nume și preț */
+    font-weight: bold; /* Face textul bold */
+}
+
+.name::after {
+    content: " - "; /* Adaugă un separator între nume și preț */
+}
+
+/* Stil pentru preț */
+.name {
+    font-size: 14px; /* Mărimea fontului pentru preț */
+    color: #28a745; /* Culoare pentru preț */
+    font-weight: normal; /* Înlătură bold-ul */
+}

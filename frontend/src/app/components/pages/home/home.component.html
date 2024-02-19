@@ -1,0 +1,14 @@
+<app-search>
+</app-search>
+<ul>
+    <li *ngFor="let stock of stocks">
+        <a routerLink="/stock/{{stock.id}}">
+            <div class="content">
+                <div class="name">
+                    {{stock.name}}
+                    {{stock.price}}     
+                </div>
+            </div>         
+        </a>
+    </li>
+</ul>
