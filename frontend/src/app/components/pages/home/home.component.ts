@@ -4,11 +4,12 @@ import { StockService } from '../../../services/stock.service';
 import { ActivatedRoute, RouterLink, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SearchComponent } from '../../partials/search/search.component';
+import { NotFoundComponent } from '../../partials/not-found/not-found.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterModule,CommonModule,SearchComponent],
+  imports: [RouterModule,CommonModule,SearchComponent,NotFoundComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

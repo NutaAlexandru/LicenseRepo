@@ -1,5 +1,8 @@
-<app-search>
-</app-search>
+<app-search></app-search>
+<app-not-found
+    [visible]="!stocks || !stocks.length"
+    resetLinkText="Reset">
+</app-not-found>
 <ul>
     <li *ngFor="let stock of stocks">
         <a routerLink="/stock/{{stock.id}}">

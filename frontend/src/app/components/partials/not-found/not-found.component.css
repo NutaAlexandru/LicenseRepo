@@ -1,0 +1,31 @@
+/* Stil pentru div-ul care conține mesajul și link-ul */
+div {
+    background-color: #f2f2f2; /* O culoare de fundal subtilă */
+    padding: 20px; /* Un padding generos pentru a adăuga spațiu în interiorul div-ului */
+    border-radius: 8px; /* Margini rotunjite pentru un aspect modern */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* O umbră ușoară pentru a adăuga adâncime */
+    margin-bottom: 20px; /* Spațiu sub div pentru a-l separa de elementele adiacente */
+}
+
+/* Stil pentru mesaj */
+div > p {
+    color: #333; /* Culoare mai închisă pentru text, pentru contrast */
+    margin-bottom: 16px; /* Spațiu sub paragraf */
+    font-size: 16px; /* Mărimea fontului pentru lizibilitate */
+}
+
+/* Stil pentru link */
+a {
+    display: inline-block; /* Permite aplicarea de padding și alte proprietăți de bloc */
+    background-color: #007bff; /* Culoare de fundal pentru link */
+    color: #ffffff; /* Culoare text pentru link, pentru contrast */
+    padding: 10px 15px; /* Padding în jurul textului link-ului */
+    border-radius: 4px; /* Margini rotunjite */
+    text-decoration: none; /* Înlătură sublinierea implicită a link-urilor */
+    font-weight: bold; /* Text mai gros pentru a face link-ul să iasă în evidență */
+    transition: background-color 0.3s ease; /* Tranziție pentru hover */
+}
+
+a:hover {
+    background-color: #0056b3; /* Schimbă culoarea de fundal la hover pentru feedback vizual */
+}
