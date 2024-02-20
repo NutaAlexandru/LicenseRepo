@@ -71,4 +71,23 @@ export const sample_stocks: any[] = [
         stock: 100,
         date: "2021-01-01"
     }
-]
+];
+
+
+export const sample_users: any[] = [
+    {
+        name : "user1",
+        email : "emailuser1@gmail.com",
+        password : "passworduser1",
+        address : "addressuser1",
+        isAdmin : false
+    },
+    {
+        name : "user2",
+        email : "emailuser2@gmail.com",
+        password : "passworduser2",
+        address : "addressuser2",
+        isAdmin : true
+    },
+
+];

@@ -3,10 +3,11 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/partials/header/header.component';
 import { HomeComponent } from './components/pages/home/home.component';
 import { HttpClientModule} from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [HttpClientModule,RouterOutlet,HeaderComponent,HomeComponent,RouterModule],
+  imports: [ReactiveFormsModule,HttpClientModule,RouterOutlet,HeaderComponent,HomeComponent,RouterModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

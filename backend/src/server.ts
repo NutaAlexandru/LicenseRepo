@@ -1,9 +1,10 @@
 import express from "express";
 import cors from "cors";
-import { sample_stocks } from "./data";
+import { sample_stocks, sample_users } from "./data";
+import jwt from "jsonwebtoken";
 
 const app=express();
-
+app.use(express.json());
 app.use(cors(
     {
         credentials: true,
@@ -27,6 +28,28 @@ app.get("/api/stocks/:id", (req, res) => {
     const stock = sample_stocks.find(stock => stock.id === id);
     res.send(stock);
 });
+
+app.post("/api/users/login", (req, res) => {
+    const {email,password}=req.body;
+    const user=sample_users.find(user => user.email === email && user.password === password);
+
+    if(user){
+        res.send(generateToken(user));
+    }
+    else {
+        res.status(401).send({message:"Invalid email or password"});
+    }
+});
+
+const generateToken=(user:any)=>{
+    const token=jwt.sign({
+        email:user.email,isAdmin:user.isAdmin
+    },'secret',{
+        expiresIn:"200d"
+    });
+    user.token=token;
+    return user;
+}
 
 const port = 5000;
 app.listen(port, () => {
