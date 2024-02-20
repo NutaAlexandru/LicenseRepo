@@ -1,9 +1,9 @@
 <app-not-found
-    [visible]="!stock.id"
+    [visible]="!stock"
     notFoundMessage="Stock not found"
     resetLinkText="Homepage">
 </app-not-found>
-<div *ngIf="stock.id" class="container">
+<div *ngIf="stock" class="container">
     <div class="details">
         <div class="header">
             <h1>{{stock.name}}</h1>

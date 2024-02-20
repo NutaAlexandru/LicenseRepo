@@ -1,24 +1,27 @@
 import { Injectable } from '@angular/core';
 import { Stock } from '../shared/models/Stock';
 import { sample_stocks } from '../../data';
+import { Observable } from 'rxjs';
+import { STOCKS_URL, STOCK_SEARCH_URL,STOCK_BY_ID_URL } from '../shared/constants/urls';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StockService {
 
-  constructor() { }
+  constructor(private http:HttpClient) { }
 
-  getAllStocks():Stock[]{
-    return sample_stocks;
+  getAllStocks():Observable<Stock[]>{
+    return this.http.get<Stock[]>(STOCKS_URL);
   }
 
   getAllStocksBySearchTerm(searchTerm:string){
-    return sample_stocks.filter(stock => stock.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    return this.http.get<Stock[]>(STOCK_SEARCH_URL+searchTerm);
   }
 
-  getStocksById(id:string):Stock{
-    return this.getAllStocks().find(stock => stock.id === id) ?? new Stock();
+  getStocksById(id:string):Observable<Stock>{
+    return this.http.get<Stock>(STOCK_BY_ID_URL+id);
   }
 
 }

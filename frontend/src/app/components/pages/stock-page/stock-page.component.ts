@@ -4,11 +4,14 @@ import { ActivatedRoute } from '@angular/router';
 import { StockService } from '../../../services/stock.service';
 import { NotFoundComponent } from '../../partials/not-found/not-found.component';
 import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-stock-page',
   standalone: true,
-  imports: [NotFoundComponent,CommonModule],
+  providers: [StockService],
+  imports: [HttpClientModule,NotFoundComponent,CommonModule],
   templateUrl: './stock-page.component.html',
   styleUrl: './stock-page.component.css'
 })
@@ -18,7 +21,9 @@ export class StockPageComponent {
   constructor(activatedRoute:ActivatedRoute,stockService:StockService){
     activatedRoute.params.subscribe(params => {
       if(params.id){
-        this.stock = stockService.getStocksById(params.id);
+        stockService.getStocksById(params.id).subscribe((serverStock)=>{
+          this.stock = serverStock;
+        });
       }
     });
   }
