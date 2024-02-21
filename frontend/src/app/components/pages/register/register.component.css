@@ -1,0 +1,62 @@
+/* Stiluri generale pentru container */
+.container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.details {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Stiluri pentru input-uri și label-uri */
+.input-container {
+    margin-bottom: 20px;
+}
+
+.input-container label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.input-container input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Asigură-te că padding-ul nu afectează lățimea */
+}
+
+.input-container input::placeholder {
+    color: #aaa;
+}
+
+/* Stiluri pentru afișarea erorilor */
+.errorList {
+    color: #d9534f; /* Culoare roșie pentru mesajele de eroare */
+    margin-top: -10px; /* Ajustează spațiul dacă este necesar */
+    margin-bottom: 20px;
+    font-size: 0.9em;
+}
+
+/* Stiluri pentru butonul de submit */
+.button button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button button:hover {
+    background-color: #0056b3;
+}
