@@ -1,28 +1,26 @@
+
 <header>
     <div class="container">
-        <a routerLink="/" class="logo">Trading Platform</a>
-        <nav>
-            <ul>
-                <li class="menu-container">
-                    <a routerLink="/dashboard">Dashboard</a>
-                    <a routerLink="/trades">Trades</a>
-                    <a routerLink="/wallet">Wallet</a>
-                    <a routerLink="/settings">Settings</a>
-                    <a routerLink="/Profile">Profile</a>
-                    <a routerLink="/login">Login</a>
-                    <a routerLink="/register">Register</a>
-                </li>
-                <li >
-                    <a routerLink="/cartPage">
-                        Cart <span>3</span>
-                    </a>
-                </li>
-                <li>
-                    <a routerLink="/demo">Demo</a>
-                </li>
-                
-
-            </ul>
-        </nav>
+      <a routerLink="/" class="logo">Food Mine!</a>
+      <nav>
+        <ul>
+          <li *ngIf="!isAuth">
+            <a routerLink="/login">Login</a>
+          </li>
+          <li *ngIf="isAuth" class="menu-container">
+            <a routerLink="/dashboard">{{user.name}}</a>
+            <div class="menu">
+              <a routerLink="/profile">Profile</a>
+              <a routerLink="/orders">Orders</a>
+              <a (click)="logout()">Logout</a>
+            </div>
+          </li>
+          <!-- <li>
+            <a routerLink="/cart-page">
+              Cart <span *ngIf="cartQuantity">{{cartQuantity}}</span>
+            </a>
+          </li> -->
+        </ul>
+      </nav>
     </div>
-</header>
+  </header>

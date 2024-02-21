@@ -1,21 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
-import { ReactiveFormsModule} from '@angular/forms';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule} from '@angular/forms';
+import { UserService } from '../../../services/user.service';
+import { CoreModule } from '../../../modules/core/core.module';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterModule,ReactiveFormsModule,CommonModule],
+  providers: [UserService,ToastrService],
+  imports: [CoreModule,RouterModule,ReactiveFormsModule,CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   loginForm!: FormGroup;
   isSubmitted = false;
-  constructor(private formBuilder:FormBuilder) { 
+  returnUrl= '';
+  constructor(private activatedRoute:ActivatedRoute, private formBuilder:FormBuilder,private userService:UserService,private router:Router) { 
 
   }
 
@@ -24,6 +29,8 @@ export class LoginComponent {
       email: ['', [Validators.required,Validators.email]],
       password: ['',Validators.required]
     });
+
+    this.returnUrl = this.activatedRoute.snapshot.queryParams.returnUrl;
   }
 
   get fc(){
@@ -35,7 +42,8 @@ export class LoginComponent {
     if(this.loginForm.invalid){
       return;
     }
-    console.table(this.loginForm.value);
+    this.userService.login({email:this.fc.email.value,password:this.fc.password.value}).subscribe(()=>{
+      this.router.navigateByUrl(this.returnUrl);
+    });
   }
-
 }
