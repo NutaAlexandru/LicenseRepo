@@ -1,0 +1,25 @@
+input{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    
+
+}
+
+input::placeholder{
+    color: #aaa;
+}
+
+input:focus{
+    border-color: #007bff;
+    outline: none;
+}
+
+input-validation{
+    color: #d9534f;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 0.9em;
+}

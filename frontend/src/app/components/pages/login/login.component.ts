@@ -6,13 +6,17 @@ import { ReactiveFormsModule} from '@angular/forms';
 import { UserService } from '../../../services/user.service';
 import { CoreModule } from '../../../modules/core/core.module';
 import { ToastrService } from 'ngx-toastr';
+import { InputContainerComponent } from '../../partials/input-container/input-container.component';
+import { InputValidationComponent } from '../../partials/input-validation/input-validation.component';
+import { TextInputComponent } from '../../partials/text-input/text-input.component';
+import { DefaultButtonComponent } from '../../partials/default-button/default-button.component';
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
   providers: [UserService,ToastrService],
-  imports: [CoreModule,RouterModule,ReactiveFormsModule,CommonModule],
+  imports: [DefaultButtonComponent,TextInputComponent,InputValidationComponent,InputContainerComponent,CoreModule,RouterModule,ReactiveFormsModule,CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })

@@ -1,66 +1,100 @@
-header{
-    position: relative;
-    background: white;
-    padding: 0;
-    border-bottom: 1px solid #e72929;
+/* Reset stiluri pentru header */
+header {
+  background-color: #333; /* Fundal închis pentru un look modern */
+  color: #fff;
+  padding: 20px 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+header a:hover {
+  color: #1e90ff; /* Schimbă culoarea link-urilor la hover */
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+nav ul li {
+  padding: 0 15px;
+}
+
+nav ul li a {
+  padding: 5px 10px;
+}
+
+/* Stil pentru logo */
+.logo {
+  font-weight: bold;
+  font-size: 24px;
+}
+
+/* Stiluri pentru meniul utilizator autentificat */
+.menu-container {
+  position: relative; /* Necesar pentru poziționarea absolută a meniului dropdown */
+}
+
+.menu-container .menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #444; /* Ușor mai deschis decât fundalul header-ului */
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  padding: 10px 0;
+  width: 200px; /* Lățime fixă pentru meniu */
+}
+
+.menu-container:hover .menu {
+  display: block; /* Afișează meniul la hover */
+}
+
+.menu a {
+  display: block;
+  padding: 10px;
+  color: white;
+  text-decoration: none;
+}
+
+.menu a:hover {
+  background-color: #555; /* Fundal pentru item-urile meniului la hover */
+}
+
+/* Responsivitate */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
   }
-  
-  a{
-    color: #af1313;
+
+  nav ul {
+    flex-direction: column;
   }
-  
-  a:hover{
-    background:#e72929;
-    color: white;
-    cursor: pointer;
+
+  nav ul li {
+    padding: 10px 0;
   }
-  
-  .container{
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
+
+  .menu-container .menu {
+    width: 100%; /* Meniul dropdown va ocupa întreaga lățime */
+    top: 50px; /* Ajustează poziția top pentru a se potrivi cu layout-ul vertical */
   }
-  
-  a.logo{
-    font-weight: bold;
-    padding: 1rem;
-  }
-  
-  ul{
-    display: flex;
-    list-style-type: none;
-    margin: 0;
-  }
-  
-  ul a{
-    padding: 1rem;
-    display: inline-block;
-  }
-  
-  a span{
-    background: #ff4d4d;
-    color: white;
-    padding: 0.1rem 0.45rem;
-    border-radius: 100rem;
-    font-size:0.9rem;
-  }
-  
-  .menu-container{
-    position: relative;
-  }
-  
-  .menu{
-    position:absolute;
-    z-index:1;
-    background:whitesmoke;
-    display: none;
-  }
-  
-  .menu-container:hover .menu{
-    display: block;
-  }
-  
-  .menu a{
-    width: 100%;
-    min-width:8rem;
-  }
+}
