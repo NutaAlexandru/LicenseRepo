@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { User } from '../shared/models/User';
+import { User,GoogleUser } from '../shared/models/User';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IUserLogin } from '../shared/interfaces/IUserLogin';
 import { HttpClient } from '@angular/common/http';
-import { USER_LOGIN_URL, USER_REGISTER_URL } from '../shared/constants/urls';
+import { USER_LOGIN_URL, USER_REGISTER_URL,USER_LOGIN_WITH_GOOGLE_URL } from '../shared/constants/urls';
 import { tap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { IUserRegister } from '../shared/interfaces/IUserRegister';
@@ -18,6 +18,7 @@ export class UserService {
   constructor(private http:HttpClient,private toastrService:ToastrService) { 
     this.userObservable = this.userSubject.asObservable();
   }
+
 
   login(userLogin:IUserLogin):Observable<User>{
     return this.http.post<User>(USER_LOGIN_URL,userLogin).pipe(
@@ -66,16 +67,32 @@ export class UserService {
       }
     }
     return new User();
-  }
-  
+  }  
   private setUserToLocalStorage(user: User) {
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem(USER_KEY, JSON.stringify(user));
+
     }
-  }
-  
+  }  
   public get currentUser():User{
     return this.userSubject.value;
   }
 
+  validateGoogleToken(token: string): Observable<User> {
+    return this.http.post<User>(USER_LOGIN_WITH_GOOGLE_URL, { token }).pipe(
+      tap({
+        next:(user) => {
+          this.setUserToLocalStorage(user); // Salvează GoogleUser în Local Storage
+          this.userSubject.next(user); // Actualizează BehaviorSubject-ul cu noul utilizator
+        },
+        error:(errorResponse)=>{
+          this.toastrService.error(errorResponse.error,'Login failed');
+        }
+      })
+      
+    );
+    
+  }
+
+  
 }

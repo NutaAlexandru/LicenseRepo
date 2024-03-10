@@ -8,6 +8,7 @@ import { NotFoundComponent } from '../../partials/not-found/not-found.component'
 import { Observable } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -24,9 +25,11 @@ export class HomeComponent {
     activatedRoute.params.subscribe(params => {
       if(params.searchTerm){
         stocksObs = this.stockService.getAllStocksBySearchTerm(params.searchTerm);
+        
       }
       else{
         stocksObs = this.stockService.getAllStocks();
+        
         }
 
       stocksObs.subscribe((serverStocks)=>
@@ -36,4 +39,5 @@ export class HomeComponent {
       )
     })
   }
+  
 }

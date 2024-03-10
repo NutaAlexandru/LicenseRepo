@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-stock-page',
   standalone: true,

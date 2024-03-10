@@ -13,6 +13,7 @@ import { PasswordsMatchValidator } from '../../../shared/validators/password_mat
 import { IUserRegister } from '../../../shared/interfaces/IUserRegister';
 
 
+
 @Component({
   selector: 'app-register',
   standalone: true,

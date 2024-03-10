@@ -11,12 +11,17 @@ import { InputValidationComponent } from '../../partials/input-validation/input-
 import { TextInputComponent } from '../../partials/text-input/text-input.component';
 import { DefaultButtonComponent } from '../../partials/default-button/default-button.component';
 
+import { SocialAuthService, GoogleSigninButtonModule,SocialUser } from '@abacritt/angularx-social-login';
+import { User } from '../../../shared/models/User';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  providers: [UserService,ToastrService],
-  imports: [DefaultButtonComponent,TextInputComponent,InputValidationComponent,InputContainerComponent,CoreModule,RouterModule,ReactiveFormsModule,CommonModule],
+  providers: [UserService,
+    ToastrService,
+    
+  ],
+  imports: [GoogleSigninButtonModule,DefaultButtonComponent,TextInputComponent,InputValidationComponent,InputContainerComponent,CoreModule,RouterModule,ReactiveFormsModule,CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -24,7 +29,15 @@ export class LoginComponent implements OnInit{
   loginForm!: FormGroup;
   isSubmitted = false;
   returnUrl= '';
-  constructor(private activatedRoute:ActivatedRoute, private formBuilder:FormBuilder,private userService:UserService,private router:Router) { 
+  user: SocialUser;
+  simpleUser:User;
+  loggedIn: boolean;
+  constructor(private activatedRoute:ActivatedRoute,
+     private formBuilder:FormBuilder,
+     private userService:UserService,
+     private router:Router,
+     private authService: SocialAuthService,
+     private toastrService: ToastrService) { 
 
   }
 
@@ -33,8 +46,14 @@ export class LoginComponent implements OnInit{
       email: ['', [Validators.required,Validators.email]],
       password: ['',Validators.required]
     });
+    this.authService.authState.subscribe((user) => {
+      if (user) {
+        this.handleCredentialResponse(user);
+      }
+    });
 
     this.returnUrl = this.activatedRoute.snapshot.queryParams.returnUrl;
+    
   }
 
   get fc(){
@@ -50,4 +69,23 @@ export class LoginComponent implements OnInit{
       this.router.navigateByUrl(this.returnUrl);
     });
   }
+
+// În login.component.ts
+handleCredentialResponse(user: SocialUser): void {
+    this.userService.validateGoogleToken(user.idToken).subscribe({
+      next: (simpleUser) => {
+        this.isSubmitted = true;
+        this.router.navigateByUrl(this.returnUrl);
+        console.log(user.idToken);
+        console.log(localStorage)
+        console.log(user);
+       
+      },
+      error: (error) => {
+        console.error("Eroare la autentificarea cu Google: ", error);
+        this.toastrService.error('Autentificarea cu Google a eșuat');
+      }
+    });
+  }
+  
 }

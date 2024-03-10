@@ -1,8 +1,14 @@
 export class User{
-    id!:string;
-    email!:string;
-    name!:string;
-    address!:string;
-    token!:string;
-    isAdmin!:boolean;
+    id:string;
+    email:string;
+    name:string;
+    address:string;
+    token:string;
+    isAdmin:boolean;
+}
+
+export class GoogleUser{
+    id:string;
+    email:string;
+    name:string;
 }

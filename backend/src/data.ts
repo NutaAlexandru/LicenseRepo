@@ -89,5 +89,4 @@ export const sample_users: any[] = [
         address : "addressuser2",
         isAdmin : true
     },
-
 ];
