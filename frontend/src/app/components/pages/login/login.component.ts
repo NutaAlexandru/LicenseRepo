@@ -73,10 +73,10 @@ export class LoginComponent implements OnInit{
 // În login.component.ts
 handleCredentialResponse(user: SocialUser): void {
     this.userService.validateGoogleToken(user.idToken).subscribe({
-      next: (simpleUser) => {
+      next: (user) => {
         this.isSubmitted = true;
         this.router.navigateByUrl(this.returnUrl);
-        console.log(user.idToken);
+        //console.log(user.idToken);
         console.log(localStorage)
         console.log(user);
        

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Stock } from '../shared/models/Stock';
-import { sample_stocks } from '../../data';
 import { Observable } from 'rxjs';
 import { STOCKS_URL, STOCK_SEARCH_URL,STOCK_BY_ID_URL } from '../shared/constants/urls';
 import { HttpClient } from '@angular/common/http';

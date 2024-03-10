@@ -17,18 +17,10 @@
     margin-bottom: 10px;
 }
 
-.header p {
+.p{
     font-size: 18px;
-    color: #666;
-    background-color: #e9ecef;
-    padding: 10px;
-    border-radius: 5px;
-    display: inline-block;
+    color: #333;
+    margin-bottom: 10px;
 }
 
-/* Adaugă un stil suplimentar pentru a evidenția prețul */
-.header p:before {
-    content: "Preț: ";
-    font-weight: bold;
-    color: #000;
-}
+

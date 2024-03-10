@@ -7,8 +7,10 @@
 <div *ngIf="stock" class="container">
     <div class="details">
         <div class="header">
-            <h1>{{stock.name}}</h1>
+            <h1>{{stock.exchangeShortName}}</h1>
             <p>{{stock.price}}</p>
+            <p>{{stock.type}}</p>
+            <p>{{stock.exchange}}</p>
         </div>
 
     <button> Buy</button>

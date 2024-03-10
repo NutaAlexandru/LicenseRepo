@@ -124,6 +124,8 @@ async function verifyToken(token:string) {
     const userToken = generateToken(user);
   
     return { user, token: userToken };
+
+    
   }
   
  

@@ -7,18 +7,20 @@ import { SearchComponent } from '../../partials/search/search.component';
 import { NotFoundComponent } from '../../partials/not-found/not-found.component';
 import { Observable } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
+import { LoadingComponent } from '../../partials/loading/loading.component';
+
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
   providers: [StockService],
-  imports: [HttpClientModule,RouterModule,CommonModule,SearchComponent,NotFoundComponent],
+  imports: [HttpClientModule,RouterModule,CommonModule,SearchComponent,NotFoundComponent,LoadingComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-
+  
   stocks:Stock[] = [];
   constructor(private stockService:StockService,private activatedRoute:ActivatedRoute) {
     let stocksObs:Observable<Stock[]>;

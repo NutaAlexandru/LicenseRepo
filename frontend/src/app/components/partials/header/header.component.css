@@ -1,100 +1,67 @@
-/* Reset stiluri pentru header */
-header {
-  background-color: #333; /* Fundal închis pentru un look modern */
-  color: #fff;
-  padding: 20px 0;
-  font-family: Arial, sans-serif;
+header{
+  position: relative;
+  background: white;
+  padding: 0;
+  border-bottom: 1px solid #e72929;
+  z-index: 999;
 }
 
-.container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 0 20px;
+a{
+  color: #af1313;
+}
+
+a:hover{
+  background:#e72929;
+  color: white;
+  cursor: pointer;
+}
+
+.container{
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
-header a {
-  color: #fff;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-header a:hover {
-  color: #1e90ff; /* Schimbă culoarea link-urilor la hover */
-}
-
-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  align-items: center;
-}
-
-nav ul li {
-  padding: 0 15px;
-}
-
-nav ul li a {
-  padding: 5px 10px;
-}
-
-/* Stil pentru logo */
-.logo {
+a.logo{
   font-weight: bold;
-  font-size: 24px;
+  padding: 1rem;
 }
 
-/* Stiluri pentru meniul utilizator autentificat */
-.menu-container {
-  position: relative; /* Necesar pentru poziționarea absolută a meniului dropdown */
+ul{
+  display: flex;
+  list-style-type: none;
+  margin: 0;
 }
 
-.menu-container .menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: #444; /* Ușor mai deschis decât fundalul header-ului */
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-  padding: 10px 0;
-  width: 200px; /* Lățime fixă pentru meniu */
+ul a{
+  padding: 1rem;
+  display: inline-block;
 }
 
-.menu-container:hover .menu {
-  display: block; /* Afișează meniul la hover */
-}
-
-.menu a {
-  display: block;
-  padding: 10px;
+a span{
+  background: #ff4d4d;
   color: white;
-  text-decoration: none;
+  padding: 0.1rem 0.45rem;
+  border-radius: 100rem;
+  font-size:0.9rem;
 }
 
-.menu a:hover {
-  background-color: #555; /* Fundal pentru item-urile meniului la hover */
+.menu-container{
+  position: relative;
 }
 
-/* Responsivitate */
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-    align-items: center;
-  }
+.menu{
+  position:absolute;
+  z-index:1;
+  background:whitesmoke;
+  display: none;
+}
 
-  nav ul {
-    flex-direction: column;
-  }
+.menu-container:hover .menu{
+  display: block;
+}
 
-  nav ul li {
-    padding: 10px 0;
-  }
-
-  .menu-container .menu {
-    width: 100%; /* Meniul dropdown va ocupa întreaga lățime */
-    top: 50px; /* Ajustează poziția top pentru a se potrivi cu layout-ul vertical */
-  }
+.menu a{
+  width: 100%;
+  min-width:8rem;
 }

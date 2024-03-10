@@ -8,6 +8,8 @@ import { tap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { IUserRegister } from '../shared/interfaces/IUserRegister';
 
+import { SocialAuthService } from '@abacritt/angularx-social-login';
+
 const USER_KEY ='User';
 @Injectable({
   providedIn: 'any'
@@ -15,7 +17,7 @@ const USER_KEY ='User';
 export class UserService {
   private userSubject = new BehaviorSubject<User>(this.getUserFromLocalStorage());
   public userObservable:Observable<User>;
-  constructor(private http:HttpClient,private toastrService:ToastrService) { 
+  constructor(private http:HttpClient,private toastrService:ToastrService,private authService: SocialAuthService) { 
     this.userObservable = this.userSubject.asObservable();
   }
 
@@ -54,8 +56,20 @@ export class UserService {
     this.userSubject.next(new User());
     if (typeof window !== 'undefined') {
       localStorage.removeItem(USER_KEY);
+      this.logoutFromGoogle();
       window.location.reload();
     }
+    
+  }
+
+  logoutFromGoogle(): void {
+    this.authService.signOut()
+      .then(() => {
+        console.log('Logout from Google successful');
+      })
+      .catch((error) => {
+        console.error('Error logging out from Google:', error);
+      });
   }
   
 
@@ -82,6 +96,7 @@ export class UserService {
     return this.http.post<User>(USER_LOGIN_WITH_GOOGLE_URL, { token }).pipe(
       tap({
         next:(user) => {
+          console.log(user);
           this.setUserToLocalStorage(user); // Salvează GoogleUser în Local Storage
           this.userSubject.next(user); // Actualizează BehaviorSubject-ul cu noul utilizator
         },

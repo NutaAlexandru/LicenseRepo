@@ -1,5 +1,7 @@
 
 <app-search></app-search>
+<a routerLink="/dividents">Dividents</a>
+<a routerLink="/news">News</a>
 <app-not-found
     [visible]="!stocks || !stocks.length"
     resetLinkText="Reset">
@@ -9,8 +11,9 @@
         <a routerLink="/stock/{{stock.id}}">
             <div class="content">
                 <div class="name">
-                    {{stock.name}}
-                    {{stock.price}}     
+                    {{stock.symbol}}
+                    {{stock.price}}
+                         
                 </div>
             </div>         
         </a>

@@ -2,18 +2,21 @@ import { Schema, model} from 'mongoose';
 
 export interface Stock{
     
-        id:string;
+        symbol:string;
         name:string;
         price:number;
-        stock:number;
-        date:string;
+        exchange:string;
+        exchangeShortName:string;
+        type:string;
 }
 
 export const StockSchema=new Schema<Stock>({
+    symbol:{type:String,required:true},
     name:{type:String,required:true},
     price:{type:Number,required:true},
-    stock:{type:Number,required:true},
-    date:{type:String,required:true},
+    exchange:{type:String,required:false},
+    exchangeShortName:{type:String,required:false},
+    type:{type:String,required:false},
 },
 {
     toJSON:{

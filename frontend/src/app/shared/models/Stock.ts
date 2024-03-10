@@ -1,7 +1,9 @@
 export class Stock{
     id!:string;
+    symbol!:string;
     name!:string;
     price!:number;
-    stock!:number;
-    date!:string;
+    exchange:string;
+    exchangeShortName:string;
+    type:string;
 }

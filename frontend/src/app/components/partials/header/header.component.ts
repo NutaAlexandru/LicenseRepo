@@ -19,14 +19,15 @@ import { Console } from 'console';
 })
 export class HeaderComponent {
 
-  user:User;
+  user!:User;
   constructor(private userService:UserService) {
 
     userService.userObservable.subscribe((newUser)=>{
       this.user = newUser;
 
    });
-   console.log(this.user);
+   //console.log(this.user);
+   console.log(this.isAuth);
   }
 
 logout(){
@@ -36,5 +37,4 @@ logout(){
 get isAuth(){
   return this.user.id;
 }
-
 }
