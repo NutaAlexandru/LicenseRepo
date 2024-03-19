@@ -1,0 +1,17 @@
+<app-search></app-search>
+<app-not-found
+    [visible]="!cryptos || !cryptos.length"
+    resetLinkText="Reset">
+</app-not-found>
+<ul>
+    <li *ngFor="let crypto of cryptos">
+        <a routerLink="/crypto/{{crypto.id}}">
+            <div class="content">
+                <div class="name">
+                    {{crypto.symbol}}
+                    {{crypto.currency}}                   
+                </div>
+            </div>         
+        </a>
+    </li>
+</ul>

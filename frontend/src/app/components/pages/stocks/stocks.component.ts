@@ -8,17 +8,32 @@ import { NotFoundComponent } from '../../partials/not-found/not-found.component'
 import { Observable } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { LoadingComponent } from '../../partials/loading/loading.component';
-
-
-
 @Component({
-  selector: 'app-home',
+  selector: 'app-stocks',
   standalone: true,
   providers: [StockService],
   imports: [HttpClientModule,RouterModule,CommonModule,SearchComponent,NotFoundComponent,LoadingComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  templateUrl: './stocks.component.html',
+  styleUrl: './stocks.component.css'
 })
-export class HomeComponent {
-  
+export class StocksComponent {
+  stocks:Stock[] = [];
+  constructor(private stockService:StockService,private activatedRoute:ActivatedRoute) {
+    let stocksObs:Observable<Stock[]>;
+    activatedRoute.params.subscribe(params => {
+      if(params.searchTerm){
+        stocksObs = this.stockService.getAllStocksBySearchTerm(params.searchTerm);
+        
+      }
+      else{
+        stocksObs = this.stockService.getAllStocks();  
+        }
+
+      stocksObs.subscribe((serverStocks)=>
+      {
+        this.stocks = serverStocks;
+      }
+      )
+    })
+  }
 }

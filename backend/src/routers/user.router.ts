@@ -35,17 +35,6 @@ router.post("/login",expressAsyncHandler(async (req, res) => {
     }
 }));
 
-// router.post('/google/login', async (req, res) => {
-//     const { token } = req.body;
-//     try {
-//       const { user, token: userToken } = await verifyToken(token);
-//       res.json({ user: user, token: userToken });
-//     } catch (error) {
-//       console.error("Error verifying Google token: ", error);
-//       res.status(500).send("Internal Server Error");
-//     }
-//   });
-
 router.post('/google/login', async (req, res) => {
     const { token } = req.body;
     try {

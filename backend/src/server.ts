@@ -8,6 +8,9 @@ import { sample_stocks, sample_users } from "./data";
 import jwt from "jsonwebtoken";
 import stocksRouter from "./routers/stocks.router";
 import userRouter from "./routers/user.router";
+import newsRouter from "./routers/news.router" 
+import dividentsRouter from "./routers/dividents.router"
+import cryptoRouter from "./routers/crypto.router"
 import { dbConnect } from "./configs/database.config";
 dbConnect();
 const app=express();
@@ -26,6 +29,9 @@ app.post('/google/login', (req, res) => {
 
 app.use("/api/stocks",stocksRouter);
 app.use("/api/users",userRouter);
+app.use("/api",newsRouter);
+app.use('/api',dividentsRouter);
+app.use('/api/cryptos',cryptoRouter)
 
 const port = 5000;
 app.listen(port, () => {

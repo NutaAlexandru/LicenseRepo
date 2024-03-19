@@ -1,17 +1,17 @@
-
 <app-not-found
-    [visible]="!stock"
+    [visible]="!crypto"
     notFoundMessage="Stock not found"
     resetLinkText="Homepage">
 </app-not-found>
-<div *ngIf="stock" class="container">
+<div *ngIf="crypto" class="container">
     <div class="details">
         <div class="header">
-            <h1>{{stock.symbol}}</h1>
-            <h1>{{stock.exchangeShortName}}</h1>
-            <p>{{stock.price}}</p>
-            <p>{{stock.type}}</p>
-            <p>{{stock.exchange}}</p>
+            <p>{{crypto.name}}</p>
+            <h1>{{crypto.symbol}}</h1>
+            <h1>{{crypto.exchangeShortNumber}}</h1>
+            <p>{{crypto.currency}}</p>
+            <p>{{crypto.stockExchange}}</p>
+            
         </div>
 
     <button> Buy</button>
@@ -25,4 +25,3 @@
         </highcharts-chart>
       </div>
 </div>
-
