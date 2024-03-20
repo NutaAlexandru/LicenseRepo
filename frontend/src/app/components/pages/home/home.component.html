@@ -3,20 +3,8 @@
 <a routerLink="/news">News</a>
 <a routerLink="/stocks">Stocks</a>
 <a routerLink="/cryptos">Criptos</a>
-<!-- <app-not-found
-    [visible]="!stocks || !stocks.length"
-    resetLinkText="Reset">
-</app-not-found> 
- <ul>
-    <li *ngFor="let stock of stocks">
-        <a routerLink="/stock/{{stock.id}}">
-            <div class="content">
-                <div class="name">
-                    {{stock.symbol}}
-                    {{stock.price}}
-                         
-                </div>
-            </div>         
-        </a>
-    </li>
-</ul> -->
+
+<div [ngSwitch]="currentComponent">
+    <app-stocks *ngSwitchCase="'component1'"></app-stocks>
+    <app-crypto *ngSwitchCase="'component2'"></app-crypto>
+</div>

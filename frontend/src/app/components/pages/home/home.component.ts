@@ -8,6 +8,8 @@ import { NotFoundComponent } from '../../partials/not-found/not-found.component'
 import { Observable } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { LoadingComponent } from '../../partials/loading/loading.component';
+import { StocksComponent } from '../stocks/stocks.component';
+import { CryptoComponent } from '../crypto/crypto.component';
 
 
 
@@ -15,10 +17,11 @@ import { LoadingComponent } from '../../partials/loading/loading.component';
   selector: 'app-home',
   standalone: true,
   providers: [StockService],
-  imports: [HttpClientModule,RouterModule,CommonModule,SearchComponent,NotFoundComponent,LoadingComponent],
+  imports: [HttpClientModule,RouterModule,CommonModule,SearchComponent,NotFoundComponent,LoadingComponent,StocksComponent,CryptoComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+  currentComponent: string | null = null;
   
 }

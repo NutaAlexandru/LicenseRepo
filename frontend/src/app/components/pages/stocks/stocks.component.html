@@ -1,4 +1,5 @@
-<app-search></app-search>
+<app-search
+[isStockSearch]="isSearchOn"></app-search>
 <app-not-found
     [visible]="!stocks || !stocks.length"
     resetLinkText="Reset">

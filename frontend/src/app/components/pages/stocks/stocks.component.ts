@@ -17,11 +17,13 @@ import { LoadingComponent } from '../../partials/loading/loading.component';
   styleUrl: './stocks.component.css'
 })
 export class StocksComponent {
+  isSearchOn:boolean=true;
   stocks:Stock[] = [];
   constructor(private stockService:StockService,private activatedRoute:ActivatedRoute) {
     let stocksObs:Observable<Stock[]>;
     activatedRoute.params.subscribe(params => {
       if(params.searchTerm){
+       
         stocksObs = this.stockService.getAllStocksBySearchTerm(params.searchTerm);
         
       }

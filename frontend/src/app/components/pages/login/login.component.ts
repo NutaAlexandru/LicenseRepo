@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit{
     });
     this.authService.authState.subscribe((user) => {
       if (user) {
+        console.log(user.authToken);
         this.handleCredentialResponse(user);
       }
     });
@@ -75,10 +76,9 @@ handleCredentialResponse(user: SocialUser): void {
     this.userService.validateGoogleToken(user.idToken).subscribe({
       next: (user) => {
         this.isSubmitted = true;
-        this.router.navigateByUrl(this.returnUrl);
-        //console.log(user.idToken);
-        console.log(localStorage)
-        console.log(user);
+       // console.log(user.token);
+       // console.log(localStorage)
+        //console.log(user);
        
       },
       error: (error) => {
@@ -86,6 +86,7 @@ handleCredentialResponse(user: SocialUser): void {
         this.toastrService.error('Autentificarea cu Google a eșuat');
       }
     });
+    this.router.navigateByUrl(this.returnUrl);
   }
   
 }

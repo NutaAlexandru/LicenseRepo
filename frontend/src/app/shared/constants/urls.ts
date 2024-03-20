@@ -5,7 +5,7 @@ export const STOCK_BY_ID_URL = STOCKS_URL+'/';
 export const STOCK_HISTORIC=STOCKS_URL+'/historical/';
 
 export const CRYPTO_URL = BASE_URL+'/api/cryptos';
-export const CRYPTO_SEARCH_URL = CRYPTO_URL+'/search/';
+export const CRYPTO_SEARCH_URL = CRYPTO_URL+'/crypto/search/';
 export const CRYPTO_BY_ID_URL = CRYPTO_URL+'/';
 export const CRYPTO_HISTORIC=CRYPTO_URL+'/historical/';
 

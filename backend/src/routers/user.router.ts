@@ -37,21 +37,23 @@ router.post("/login",expressAsyncHandler(async (req, res) => {
 
 router.post('/google/login', async (req, res) => {
     const { token } = req.body;
-    try {
-        const { user, token: userToken } = await verifyToken(token);
-        // Presupunând că dorești să returnezi structura similară cu endpoint-ul `/login`
-        // și că `user` include toate informațiile necesare
-        res.json({
-            _id: user._id, // Sau user.id, în funcție de cum este definit în schema ta
-            email: user.email,
-            name: user.name,
-            token: userToken, // Acesta este token-ul de sesiune generat pentru utilizator
-            // Orice alte câmpuri relevante pe care dorești să le returnezi
+    const ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: CLIENT_ID,  // Verifică că ID token-ul este destinat aplicației tale
+    });
+    const payload:any = ticket.getPayload();
+    console.log(payload);
+    const user=await UserModel.findOne({email:payload.email});
+    if (!user) {
+      const newUser = new UserModel({
+          id:'',
+          email: payload.email.toLowerCase(),
+          name: payload.name,
         });
-    } catch (error) {
-        console.error("Error verifying Google token: ", error);
-        res.status(500).send("Internal Server Error");
-    }
+        const createdUser=await UserModel.create(newUser);
+        res.send(generateToken(createdUser));
+      }
+      else res.send(generateToken(user));
 });
 
 
@@ -71,21 +73,27 @@ router.post("/register",expressAsyncHandler(async (req, res) => {
         email:email.toLowerCase(),
         password:encryptedPassword,
         address,
-        isAdmin:false
+        isAdmin:false,
     }
     const createdUser=await UserModel.create(newUser);
     res.send(generateToken(createdUser));
 }));
 
 
-const generateToken=(user:any)=>{
+const generateToken=(user:User)=>{
     const token=jwt.sign({
-        email:user.email,isAdmin:user.isAdmin
+        id: user.id,email:user.email
     },'secret',{
         expiresIn:"200d"
     });
-    user.token=token;
-    return user;
+    return {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        address: user.address,
+        isAdmin: user.isAdmin,
+        token: token
+      };
 }
 
 async function verifyToken(token:string) {
@@ -94,27 +102,19 @@ async function verifyToken(token:string) {
         audience: CLIENT_ID,  // Verifică că ID token-ul este destinat aplicației tale
     });
     const payload = ticket.getPayload(); // Conține informații despre utilizatorul Google
-  
-    // Logica pentru a verifica dacă utilizatorul există în baza ta de date
-    // Dacă nu, poți crea un nou utilizator folosind informațiile din payload
+
     let user = await UserModel.findOne({ email: payload.email });
     if (!user) {
-      // Dacă utilizatorul nu există, creează unul nou
       user = new UserModel({
         id:'',
-        email: payload.email,
-        name: payload.name,
-        // Alte câmpuri necesare modelului tău de utilizator
+        email: payload.email.toLowerCase(),
+        name: payload.username,
       });
       await user.save();
     }
-  
-    // Generarea unui token de sesiune personalizat sau utilizarea unei metode existente
     const userToken = generateToken(user);
   
-    return { user, token: userToken };
-
-    
+    return { user, token: userToken };   
   }
   
  

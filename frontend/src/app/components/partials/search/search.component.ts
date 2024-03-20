@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 
@@ -21,10 +21,22 @@ export class SearchComponent {
     });
     
   }
+@Input()
+isStockSearch:boolean=false;
+@Input()
+isCryptoSearch:boolean=false;
 
   search(term:string):void{
     if(term){
-      this.router.navigateByUrl('/search/'+term);
+      if(this.isCryptoSearch){
+        this.router.navigateByUrl('/crypto/search/'+term);
+        
+      }
+      if(this.isStockSearch){
+        this.router.navigateByUrl('/search/'+term);
+      }
+
+      
     }
   }
 

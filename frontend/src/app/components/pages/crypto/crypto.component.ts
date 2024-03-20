@@ -11,7 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-crypto-page',
+  selector: 'app-crypto',
   standalone: true,
   providers:[
     CryptoService

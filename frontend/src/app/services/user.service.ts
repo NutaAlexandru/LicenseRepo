@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User,GoogleUser } from '../shared/models/User';
+import { User } from '../shared/models/User';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IUserLogin } from '../shared/interfaces/IUserLogin';
 import { HttpClient } from '@angular/common/http';
@@ -10,6 +10,7 @@ import { IUserRegister } from '../shared/interfaces/IUserRegister';
 
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 
+
 const USER_KEY ='User';
 @Injectable({
   providedIn: 'any'
@@ -17,6 +18,7 @@ const USER_KEY ='User';
 export class UserService {
   private userSubject = new BehaviorSubject<User>(this.getUserFromLocalStorage());
   public userObservable:Observable<User>;
+  
   constructor(private http:HttpClient,private toastrService:ToastrService,private authService: SocialAuthService) { 
     this.userObservable = this.userSubject.asObservable();
   }
@@ -29,6 +31,7 @@ export class UserService {
           this.setUserToLocalStorage(user);
           this.userSubject.next(user);
           this.toastrService.success('Login successful');
+          window.location.reload();
         },
         error:(errorResponse)=>{
           this.toastrService.error(errorResponse.error,'Login failed');
@@ -96,9 +99,12 @@ export class UserService {
     return this.http.post<User>(USER_LOGIN_WITH_GOOGLE_URL, { token }).pipe(
       tap({
         next:(user) => {
-          console.log(user);
+         // console.log(user);
           this.setUserToLocalStorage(user); // Salvează GoogleUser în Local Storage
-          this.userSubject.next(user); // Actualizează BehaviorSubject-ul cu noul utilizator
+          this.userSubject.next(user);
+          window.location.reload();
+          
+           // Actualizează BehaviorSubject-ul cu noul utilizator
         },
         error:(errorResponse)=>{
           this.toastrService.error(errorResponse.error,'Login failed');

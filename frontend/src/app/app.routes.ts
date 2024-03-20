@@ -24,6 +24,7 @@ export const routes: Routes = [
     {path:'stocks',component:StocksComponent},
     {path:'cryptos',component:CryptoComponent},
     {path:'crypto/:id',component:CryptoPageComponent},
+    {path:'crypto/search/:searchTerm',component:CryptoComponent},
 ];
 
 

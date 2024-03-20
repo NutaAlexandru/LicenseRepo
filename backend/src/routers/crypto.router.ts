@@ -82,7 +82,7 @@ router.get("/",expressAsyncHandler(async(req, res) => {
 }
 ));
 
-router.get("/search/:searchTerm", expressAsyncHandler(async(req, res) => {
+router.get("/crypto/search/:searchTerm", expressAsyncHandler(async(req, res) => {
     const searchRegex=new RegExp('^' + req.params.searchTerm, 'i');
     const crypto=await CryptoModel.find({symbol:{ $regex: searchRegex }});
     res.send(crypto);

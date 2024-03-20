@@ -18,7 +18,7 @@
             
 
             <default-button text="Login"></default-button>
-            <asl-google-signin-button type='standard' size='medium'>
+            <asl-google-signin-button *ngIf="!user" type='standard' size='medium'>
             </asl-google-signin-button>
             <!-- <div id="g_id_onload"
                 data-client_id="878958543895-jvesiqudtoi4iaf3kfjjaaipqh51b164.apps.googleusercontent.com"

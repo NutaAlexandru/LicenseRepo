@@ -1,4 +1,38 @@
+div {
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
 img {
-    width: 200px;
-    height: 200px;
+    max-width:10%; /* Ajustează acest procentaj după cum dorești */
+    height: auto;
+}
+
+span {
+    display: block;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+a {
+    display: inline-block;
+    color: #0066cc;
+    text-decoration: none;
+    background-color: #ddd;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+a:hover {
+    background-color: #ccc;
 }

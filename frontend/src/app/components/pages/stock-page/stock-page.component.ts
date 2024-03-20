@@ -11,8 +11,6 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import * as  Highcharts from 'highcharts/highstock';
 
 
-
-
 @Component({
   selector: 'app-stock-page',
   standalone: true,
@@ -45,6 +43,7 @@ export class StockPageComponent implements OnInit{
     console.log(this.stock.symbol);
     if (this.stock && this.stock.symbol) {
       this.stockService.getHistoricalData(this.stock.symbol).subscribe(data => {
+        
         this.chartOptions = {
           title: {
             text: `${this.stock.symbol} Historical Stock Price`
@@ -65,9 +64,10 @@ export class StockPageComponent implements OnInit{
               
             }
           },
+          
           series: [{
             name: `${this.stock.symbol} Stock Price`,
-            data: data.map(item => [new Date(item.date).getTime(), item.close]),
+            data: data.map(item => [new Date(item.date).getTime(), item.close],),
             type: 'line'
           }]
         };

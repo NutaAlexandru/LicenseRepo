@@ -6,9 +6,3 @@ export class User{
     token:string;
     isAdmin:boolean;
 }
-
-export class GoogleUser{
-    id:string;
-    email:string;
-    name:string;
-}
