@@ -23,4 +23,99 @@
     margin-bottom: 10px;
 }
 
+.company-profile-container {
+    max-width: 800px;
+    margin: auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
 
+.company-header {
+    background: #f8f8f8;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.company-logo {
+    width: 100px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.company-title {
+    margin: 0;
+    color: #333;
+    font-weight: 700;
+}
+
+.company-details {
+    padding: 20px;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: #333;
+}
+
+.company-description {
+    margin-top: 20px;
+    line-height: 1.6;
+}
+
+a {
+    color: #0077cc;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.price-container {
+    font-family: 'Arial', sans-serif;
+    background: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 20px auto;
+    width: fit-content;
+  }
+  
+  .price-container h2 {
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .prices {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+  }
+  
+  .price-box {
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 10px 20px;
+    border-radius: 4px;
+    margin: 0 10px;
+  }
+  
+  .price-box .label {
+    display: block;
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  .price-box .value {
+    color: #000;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  

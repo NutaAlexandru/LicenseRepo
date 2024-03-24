@@ -99,12 +99,9 @@ export class UserService {
     return this.http.post<User>(USER_LOGIN_WITH_GOOGLE_URL, { token }).pipe(
       tap({
         next:(user) => {
-         // console.log(user);
-          this.setUserToLocalStorage(user); // Salvează GoogleUser în Local Storage
+          this.setUserToLocalStorage(user);
           this.userSubject.next(user);
           window.location.reload();
-          
-           // Actualizează BehaviorSubject-ul cu noul utilizator
         },
         error:(errorResponse)=>{
           this.toastrService.error(errorResponse.error,'Login failed');

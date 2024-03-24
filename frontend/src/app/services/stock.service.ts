@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Stock } from '../shared/models/Stock';
 import { Observable, map } from 'rxjs';
-import { STOCKS_URL, STOCK_SEARCH_URL,STOCK_BY_ID_URL, STOCK_HISTORIC } from '../shared/constants/urls';
+import { STOCKS_URL, STOCK_SEARCH_URL,STOCK_BY_ID_URL, STOCK_HISTORIC ,COMPANYINFO,STOCKMARKETDATA } from '../shared/constants/urls';
 import { HttpClient } from '@angular/common/http';
 import { IHistory } from '../shared/interfaces/IHistory';
+import { ICompanyInfo} from '../shared/interfaces/ICompanyInfo'
+import { IStockMarketData } from '../shared/interfaces/IStockMarketData';
 
 @Injectable({
   providedIn: 'root'
@@ -30,13 +32,21 @@ export class StockService {
     return this.http.get<Stock>(STOCK_BY_ID_URL+id);
   }
 
+  getCompanyProfile(stockSymbol:string) :Observable<ICompanyInfo[]>{
+    return this.http.get<ICompanyInfo[]>(COMPANYINFO+stockSymbol).pipe(
+      map(response => response)
+    );
+  } 
+
+  getMarketData(stockSymbol:string) :Observable<IStockMarketData[]>{
+    return this.http.get<IStockMarketData[]>(STOCKMARKETDATA+stockSymbol).pipe(
+      map(response => response)
+    );
+  } 
+
   
 
-  // getHistoricalData(stockSymbol: string): Observable<any[]> {
-  //   return this.http.get<any[]>(`${STOCK_HISTORIC}${stockSymbol}`).pipe(
-  //     map(response => response)
-  //   );
-  // }   
+    
   
 
 }

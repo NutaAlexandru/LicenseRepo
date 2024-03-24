@@ -1,7 +1,6 @@
 <header>
   <div class="container">
-    <a routerLink="/hello" class="logo">Trading Platform</a>
-    <a routerLink="/" class="menu-container">Stocks</a>
+    <a routerLink="/" class="logo">Trading Platform</a>
     <nav>
       <ul>
         <li *ngIf="!isAuth">
@@ -10,7 +9,7 @@
         <li *ngIf="isAuth" class="menu-container">
           <a routerLink="/dashboard">{{ user.name }}</a> <!-- Modifică aici -->
           <div class="menu">
-            <a routerLink="/profile">Profile</a>
+            <a [routerLink]="['/profile', user.id]">Profile</a>
             <a routerLink="/orders">Orders</a>
             <a (click)="logout()">Logout</a>
           </div>

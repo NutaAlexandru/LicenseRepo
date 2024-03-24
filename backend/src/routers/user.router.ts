@@ -71,7 +71,7 @@ router.post("/register",expressAsyncHandler(async (req, res) => {
         id:'',
         name,
         email:email.toLowerCase(),
-        password:encryptedPassword,
+        password:encryptedPassword,     
         address,
         isAdmin:false,
     }
@@ -96,27 +96,38 @@ const generateToken=(user:User)=>{
       };
 }
 
-async function verifyToken(token:string) {
-    const ticket = await client.verifyIdToken({
-        idToken: token,
-        audience: CLIENT_ID,  // Verifică că ID token-ul este destinat aplicației tale
-    });
-    const payload = ticket.getPayload(); // Conține informații despre utilizatorul Google
+// În fișierul router-ului tău
 
-    let user = await UserModel.findOne({ email: payload.email });
+// Endpoint pentru actualizarea profilului utilizatorului
+router.put("/profile/update", expressAsyncHandler(async (req, res) => {
+    const { userId, address } = req.body;
+
+    // Verifică dacă utilizatorul există
+    const user = await UserModel.findById(userId);
     if (!user) {
-      user = new UserModel({
-        id:'',
-        email: payload.email.toLowerCase(),
-        name: payload.username,
-      });
-      await user.save();
+        res.status(404).send({ message: "User not found" });
+        return;
     }
-    const userToken = generateToken(user);
-  
-    return { user, token: userToken };   
-  }
-  
+
+    // Actualizează adresa utilizatorului
+    user.address = address;
+
+    try {
+        const updatedUser = await user.save();
+        res.send({
+            message: "User updated successfully",
+            user: {
+                id: updatedUser.id,
+                email: updatedUser.email,
+                name: updatedUser.name,
+                address: updatedUser.address,
+            }
+        });
+    } catch (error) {
+        res.status(500).send({ message: "Error updating user", error });
+    }
+}));
+ 
  
 
 export default router;

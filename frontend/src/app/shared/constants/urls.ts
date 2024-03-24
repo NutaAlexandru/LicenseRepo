@@ -4,6 +4,9 @@ export const STOCK_SEARCH_URL = STOCKS_URL+'/search/';
 export const STOCK_BY_ID_URL = STOCKS_URL+'/';
 export const STOCK_HISTORIC=STOCKS_URL+'/historical/';
 
+export const COMPANYINFO=STOCKS_URL+'/company-profile/';
+export const STOCKMARKETDATA=STOCKS_URL+'/market-data/';
+
 export const CRYPTO_URL = BASE_URL+'/api/cryptos';
 export const CRYPTO_SEARCH_URL = CRYPTO_URL+'/crypto/search/';
 export const CRYPTO_BY_ID_URL = CRYPTO_URL+'/';

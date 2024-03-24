@@ -1,1 +1,16 @@
-<p>profile-page works!</p>
+<div *ngIf="user && user.id" class="profile-container"> <!-- Verifică dacă userul are un ID definit -->
+    <h2>Profile Details</h2>
+    <div class="profile-info">
+      <p><strong>ID:</strong> {{ user.id }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>Name:</strong> {{ user.name }}</p>
+      <p><strong>Address:</strong> {{ user.address }}</p>
+      <p><strong>Admin:</strong> {{ user.isAdmin ? 'Yes' : 'No' }}</p>
+    </div>
+    <!-- Poti adăuga mai multe detalii aici -->
+  </div>
+
+  <!-- <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+    <input formControlName="address" placeholder="Your address">
+    <button type="submit">Update Profile</button>
+  </form> -->

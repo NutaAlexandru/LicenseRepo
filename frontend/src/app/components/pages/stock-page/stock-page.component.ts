@@ -9,6 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { HighchartsChartModule } from 'highcharts-angular';
 import * as  Highcharts from 'highcharts/highstock';
+import { ICompanyInfo } from '../../../shared/interfaces/ICompanyInfo';
+import { IStockMarketData } from '../../../shared/interfaces/IStockMarketData';
 
 
 @Component({
@@ -21,7 +23,9 @@ import * as  Highcharts from 'highcharts/highstock';
 })
 export class StockPageComponent implements OnInit{
   stock!:Stock;
-  
+  companyProfile!: ICompanyInfo
+  marketData!:IStockMarketData;
+
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options = {};
 
@@ -34,6 +38,8 @@ export class StockPageComponent implements OnInit{
         this.stockService.getStocksById(params.id).subscribe((stockData) => {
           this.stock = stockData;
           this.loadChartData();
+          this.loadCompanyProfile(this.stock.symbol);
+          this.loadMarketData(this.stock.symbol);
         });
       }
     });
@@ -73,5 +79,15 @@ export class StockPageComponent implements OnInit{
         };
       });
     }
+  }
+  loadCompanyProfile(symbol: string): void {
+    this.stockService.getCompanyProfile(symbol).subscribe(companyProfile => {
+      this.companyProfile = companyProfile[0]; // Salvează profilul companiei în proprietatea componentei
+    });
+  }
+  loadMarketData(symbol: string): void {
+    this.stockService.getMarketData(symbol).subscribe(marketData => {
+      this.marketData = marketData[0]; 
+    });
   }
 }
