@@ -1,31 +1,33 @@
-/* Stiluri pentru containerul profilului */
 .profile-container {
-    max-width: 600px; /* Limitează lățimea containerului */
-    margin: 20px auto; /* Centrare și spațiu în jur */
-    padding: 20px; /* Spațiu în interior */
-    border: 1px solid #ccc; /* Bordură subtilă */
-    border-radius: 8px; /* Colțuri rotunjite */
-    background-color: #f9f9f9; /* Culoare de fundal deschisă */
-  }
-  
-  .profile-container h2 {
-    color: #333; /* Culoare pentru titlu */
-    margin-bottom: 20px; /* Spațiu sub titlu */
-  }
-  
-  .profile-info {
-    line-height: 1.6; /* Spațiu între linii */
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
   }
   
   .profile-info p {
-    margin: 10px 0; /* Spațiu vertical între paragrafe */
-    padding: 10px; /* Spațiu în interiorul paragrafelor */
-    background-color: #fff; /* Culoare de fundal pentru paragrafe */
-    border-left: 4px solid #007bff; /* Accent pe partea stângă */
-    box-shadow: 0px 2px 4px rgba(0,0,0,0.1); /* Umbra ușoară pentru efect de ridicare */
+    margin: 5px 0;
   }
   
   .profile-info strong {
-    color: #007bff; /* Culoare pentru etichete */
+    font-weight: bold;
+  }
+  
+  .edit-address {
+    margin-top: 10px;
+  }
+  
+  .edit-address input {
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 300px;
+  }
+  
+  .buttons button {
+    margin-right: 10px;
+  }
+  
+  .buttons button:last-child {
+    margin-right: 0;
   }
   

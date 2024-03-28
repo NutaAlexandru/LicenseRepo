@@ -2,7 +2,7 @@ import { Router } from "express";
 import { sample_users } from "../data";
 import jwt from "jsonwebtoken";
 import expressAsyncHandler from "express-async-handler";
-import { User, UserModel, GoogleUserModel } from "../models/user.model";
+import { User, UserModel } from "../models/user.model";
 import bcrypt from "bcryptjs";
 
 const { OAuth2Client } = require('google-auth-library');
@@ -25,9 +25,9 @@ router.get("/seed", expressAsyncHandler(
 
 router.post("/login",expressAsyncHandler(async (req, res) => {
     const {email,password}=req.body;
-    const user=await UserModel.findOne({email,password});
+    const user=await UserModel.findOne({email});
 
-    if(user){
+    if(user&& (await bcrypt.compare(password,user.password))){
         res.send(generateToken(user));
     }
     else {
@@ -39,7 +39,7 @@ router.post('/google/login', async (req, res) => {
     const { token } = req.body;
     const ticket = await client.verifyIdToken({
         idToken: token,
-        audience: CLIENT_ID,  // Verifică că ID token-ul este destinat aplicației tale
+        audience: CLIENT_ID, 
     });
     const payload:any = ticket.getPayload();
     console.log(payload);
@@ -56,9 +56,24 @@ router.post('/google/login', async (req, res) => {
       else res.send(generateToken(user));
 });
 
+router.put('/update-user/:userId', expressAsyncHandler(async (req, res) => {
+    const { userId } = req.params;
+    const { address } = req.body;
+
+        const tempUser = await UserModel.findById(userId);
+        if (!tempUser) {
+             res.status(404).send({ message: 'User not found' });
+             return;
+        }
+        tempUser.address = address;
+        const updatedUser = await tempUser.save();
+        const token=generateToken(updatedUser);
+        res.send({ user: updatedUser, token });
+}));
 
 router.post("/register",expressAsyncHandler(async (req, res) => {
     const {email,password,name,address}=req.body;
+    var temp=0;
     const user=await UserModel.findOne({email});
     if(user){
         res.status(401).send({message:"User already exists"});
@@ -74,10 +89,13 @@ router.post("/register",expressAsyncHandler(async (req, res) => {
         password:encryptedPassword,     
         address,
         isAdmin:false,
+        balance:temp
     }
     const createdUser=await UserModel.create(newUser);
     res.send(generateToken(createdUser));
 }));
+
+
 
 
 const generateToken=(user:User)=>{
@@ -92,42 +110,11 @@ const generateToken=(user:User)=>{
         name: user.name,
         address: user.address,
         isAdmin: user.isAdmin,
+        balance:user.balance,
         token: token
       };
 }
 
-// În fișierul router-ului tău
 
-// Endpoint pentru actualizarea profilului utilizatorului
-router.put("/profile/update", expressAsyncHandler(async (req, res) => {
-    const { userId, address } = req.body;
-
-    // Verifică dacă utilizatorul există
-    const user = await UserModel.findById(userId);
-    if (!user) {
-        res.status(404).send({ message: "User not found" });
-        return;
-    }
-
-    // Actualizează adresa utilizatorului
-    user.address = address;
-
-    try {
-        const updatedUser = await user.save();
-        res.send({
-            message: "User updated successfully",
-            user: {
-                id: updatedUser.id,
-                email: updatedUser.email,
-                name: updatedUser.name,
-                address: updatedUser.address,
-            }
-        });
-    } catch (error) {
-        res.status(500).send({ message: "Error updating user", error });
-    }
-}));
- 
- 
 
 export default router;

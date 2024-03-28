@@ -11,6 +11,7 @@ import userRouter from "./routers/user.router";
 import newsRouter from "./routers/news.router" 
 import dividentsRouter from "./routers/dividents.router"
 import cryptoRouter from "./routers/crypto.router"
+import transactionsRouter from "./routers/transactions.router"
 import { dbConnect } from "./configs/database.config";
 dbConnect();
 const app=express();
@@ -31,7 +32,8 @@ app.use("/api/stocks",stocksRouter);
 app.use("/api/users",userRouter);
 app.use("/api",newsRouter);
 app.use('/api',dividentsRouter);
-app.use('/api/cryptos',cryptoRouter)
+app.use('/api/cryptos',cryptoRouter);
+app.use('/api/transactions',transactionsRouter);
 
 const port = 5000;
 app.listen(port, () => {

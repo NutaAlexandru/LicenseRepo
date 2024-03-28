@@ -1,40 +1,62 @@
-ul {
-    list-style-type: none; /* Înlătură bullet-urile */
-    padding: 0; /* Înlătură padding-ul implicit */
-    margin: 0; /* Înlătură margin-ul implicit */
-}
-
-li {
-    margin-bottom: 10px; /* Adaugă un spațiu între elementele listei */
-    border-bottom: 1px solid #ccc; /* Adaugă o linie sub fiecare element pentru a le separa */
-    padding-bottom: 10px; /* Adaugă un spațiu între text și linia de separare */
-}
-
-a {
-    text-decoration: none; /* Înlătură sublinierea link-urilor */
-    color: #333; /* Schimbă culoarea textului */
-    display: block; /* Face ca întregul element li să fie clicabil */
-}
-
-.content {
-    display: flex; /* Utilizează flexbox pentru alinierea elementelor */
-    align-items: center; /* Centrează elementele vertical */
-}
-
-.name {
-    font-size: 16px; /* Mărimea fontului pentru numele acțiunii */
-    color: #007bff; /* Culoare pentru numele acțiunii */
-    margin-right: 10px; /* Adaugă un spațiu între nume și preț */
-    font-weight: bold; /* Face textul bold */
-}
-
-.name::after {
-    content: " - "; /* Adaugă un separator între nume și preț */
-}
-
-/* Stil pentru preț */
-.name {
-    font-size: 14px; /* Mărimea fontului pentru preț */
-    color: #28a745; /* Culoare pentru preț */
-    font-weight: normal; /* Înlătură bold-ul */
-}
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .lists, .informations {
+    flex: 1;
+  }
+  
+  .list-selector, .component-selector {
+    margin-bottom: 20px;
+  }
+  
+  button {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .list-display, .component-display {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    height: 300px; /* Adjust based on content */
+    overflow-y: auto;
+  }
+  
+  .list-display > *, .component-display > * {
+    margin: 10px 0;
+  }
+  
+  /* Optional: Add more specific styles for your components */
+  app-stocks, app-cryptos, app-dividents, app-news {
+    display: block; /* Ensure proper spacing */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+  
+    .lists, .informations {
+      margin-bottom: 20px;
+    }
+  
+    button {
+      width: 100%;
+      margin-bottom: 10px; /* Stack buttons vertically on smaller screens */
+    }
+  }
+  

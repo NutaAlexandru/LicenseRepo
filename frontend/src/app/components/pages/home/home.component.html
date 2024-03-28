@@ -1,10 +1,32 @@
 
-<a routerLink="/dividents">Dividents</a>
+<!-- <a routerLink="/dividents">Dividents</a>
 <a routerLink="/news">News</a>
 <a routerLink="/stocks">Stocks</a>
-<a routerLink="/cryptos">Criptos</a>
+<a routerLink="/cryptos">Criptos</a> -->
 
-<div [ngSwitch]="currentComponent">
-    <app-stocks *ngSwitchCase="'component1'"></app-stocks>
-    <app-crypto *ngSwitchCase="'component2'"></app-crypto>
+<!-- parent-component.html -->
+
+<div class="container">
+    <div class="lists">
+        <div class="list-selector">
+            <button (click)="selectListComponent('Stocks')">Stocks</button>
+            <button (click)="selectListComponent('Cryptos')">Cryptos</button>
+        </div>
+  
+        <div class="list-display">
+            <app-stocks *ngIf="selectedListComponent === 'Stocks'"></app-stocks>
+            <app-crypto *ngIf="selectedListComponent === 'Cryptos'"></app-crypto> <!-- Ensure component names are correct -->
+        </div>
+    </div>
+    <div class="informations">
+        <div class="component-selector">
+            <button (click)="selectInformationComponent('Dividents')">Dividents</button>
+            <button (click)="selectInformationComponent('News')">News</button>
+        </div>
+  
+        <div class="component-display">
+            <app-dividents *ngIf="selectedInformationComponent === 'Dividents'"></app-dividents>
+            <app-news *ngIf="selectedInformationComponent === 'News'"></app-news>
+        </div>
+    </div>
 </div>

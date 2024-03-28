@@ -117,5 +117,43 @@ a:hover {
     font-size: 18px;
     font-weight: bold;
   }
+  /* stock-performance.component.css */
+.stock-performance {
+    font-family: 'Arial', sans-serif;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
   
+  .stock-performance h2 {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  
+  .performance-table {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .performance-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .performance-row:last-child {
+    border-bottom: none;
+  }
+  
+  .time-frame {
+    font-weight: bold;
+  }
+  
+  .value {
+    font-weight: normal;
+    text-align: right;
+  }
   

@@ -1,16 +1,20 @@
-<div *ngIf="user && user.id" class="profile-container"> <!-- Verifică dacă userul are un ID definit -->
+<div *ngIf="user && user.id" class="profile-container">
     <h2>Profile Details</h2>
     <div class="profile-info">
       <p><strong>ID:</strong> {{ user.id }}</p>
       <p><strong>Email:</strong> {{ user.email }}</p>
       <p><strong>Name:</strong> {{ user.name }}</p>
-      <p><strong>Address:</strong> {{ user.address }}</p>
-      <p><strong>Admin:</strong> {{ user.isAdmin ? 'Yes' : 'No' }}</p>
+      <div *ngIf="!editAddress">
+        <p><strong>Address:</strong> {{ user.address }} <button (click)="toggleEditAddress()">Edit</button></p>
+      </div>
+      <div *ngIf="editAddress" class="edit-address">
+        <input class="input" [(ngModel)]="newAddress" placeholder="New address">
+        <div class="buttons">
+          <button (click)="updateAddress()">Save</button>
+          <button (click)="toggleEditAddress(false)">Cancel</button>
+        </div>
+      </div>
+      <p><strong>Amount:</strong> {{ user.balance }}</p>
     </div>
-    <!-- Poti adăuga mai multe detalii aici -->
   </div>
-
-  <!-- <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
-    <input formControlName="address" placeholder="Your address">
-    <button type="submit">Update Profile</button>
-  </form> -->
+  

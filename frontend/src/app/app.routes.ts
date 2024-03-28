@@ -11,6 +11,7 @@ import { StocksComponent } from './components/pages/stocks/stocks.component';
 import { CryptoComponent } from './components/pages/crypto/crypto.component';
 import { CryptoPageComponent } from './components/pages/crypto-page/crypto-page.component';
 import { ProfilePageComponent } from './components/pages/profile-page/profile-page.component';
+import { DepositPageComponent } from './components/pages/deposit-page/deposit-page.component';
 
 export const routes: Routes = [
     {path:'hello',component:FirstPageComponent},
@@ -27,6 +28,8 @@ export const routes: Routes = [
     {path:'crypto/:id',component:CryptoPageComponent},
     {path:'crypto/search/:searchTerm',component:CryptoComponent},
     {path:'profile/:id',component:ProfilePageComponent},
+    {path:'deposit',component:DepositPageComponent},
+
 ];
 
 

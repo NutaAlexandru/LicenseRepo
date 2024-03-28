@@ -7,10 +7,8 @@
 <div *ngIf="stock" class="container">
     <div class="details">
         <div class="header">
-            <img src="{{companyProfile.image}}" alt="Company Logo" class="company-logo">
             <h1>{{stock.symbol}}</h1>
             <h1>{{stock.exchangeShortName}}</h1>
-            <p>{{companyProfile.price}}</p>
             <p>{{stock.type}}</p>
             <p>{{stock.exchange}}</p>
         </div>
@@ -18,21 +16,21 @@
             <div class="prices">
               <div class="price-box">
                 <span class="label">Bid Price:</span>
-                <span class="value">{{ marketData.bidPrice | currency:'USD':true }}</span>
+                <span class="value">{{ marketData.bidPrice | currency:'USD':"marketData" }}</span>
               </div>
               <div class="price-box">
                 <span class="label">Ask Price:</span>
-                <span class="value">{{ marketData.askPrice | currency:'USD':true }}</span>
+                <span class="value">{{ marketData.askPrice | currency:'USD' }}</span>
               </div>
               <div class="price-box">
                 <span class="label">Last Sale Price:</span>
-                <span class="value">{{ marketData.lastSalePrice | currency:'USD':true }}</span>
+                <span class="value">{{ marketData.lastSalePrice | currency:'USD' }}</span>
               </div>
             </div>
           </div>
     <button> Buy</button>
     </div>
-    <div *ngIf="chartOptions.series"> <!-- Afișează graficul numai când datele seriei sunt disponibile -->
+    <div *ngIf="chartOptions">
         <highcharts-chart 
           [Highcharts]="Highcharts"
           [options]="chartOptions"
@@ -40,15 +38,64 @@
           style="width: 100%; height: 400px; display: block;">
         </highcharts-chart>
       </div>
-      <div class="key-ratios">
+      <div class="key-ratios" *ngIf="companyProfile">
         <p><span class="detail-label">Market Cap:</span> {{companyProfile.mktCap}}</p>
         <p><span class="detail-label">Revenue:</span> {{companyProfile.volAvg}}</p>
         <p><span class="detail-label">Last Divident:</span> {{companyProfile.lastDiv}}</p>
         <p><span class="detail-label">Beta:</span> {{companyProfile.beta}}</p>
       </div>
-      <div class="company-profile-container">
+      <!-- <div class="stock-performance" *ngIf="priceChange">
+        <h2>{{ priceChange.symbol }} Performance</h2>
+        <div class="performance-table">
+            <div class="performance-row">
+                <span class="time-frame">1 Day</span>
+                <span class="value">{{ priceChange['1D'] }}</span>
+            </div>
+            <div class="performance-row">
+                <span class="time-frame">5 Days</span>
+                <span class="value">{{ priceChange['5D'] }}</span>
+            </div>
+            <div class="performance-row">
+                <span class="time-frame">1 Month</span>
+                <span class="value">{{ priceChange['1M'] }}</span>
+            </div>
+            <div class="performance-row">
+                <span class="time-frame">3 Months</span>
+                <span class="value">{{ priceChange['3M'] }}</span>
+            </div>
+            <div class="performance-row">
+                <span class="time-frame">6 Months</span>
+                <span class="value">{{ priceChange['6M'] }}</span>
+            </div>
+            <div class="performance-row">
+                <span class="time-frame">Year-to-Date</span>
+                <span class="value">{{ priceChange.ytd }}</span>
+            </div>
+            <div class="performance-row">
+                <span class="time-frame">1 Year</span>
+                <span class="value">{{ priceChange['1Y'] }}</span>
+            </div>
+            <div class="performance-row">
+                <span class="time-frame">3 Years</span>
+                <span class="value">{{ priceChange['3Y'] }}</span>
+            </div>
+            <div class="performance-row">
+                <span class="time-frame">5 Years</span>
+                <span class="value">{{ priceChange['5Y'] }}</span>
+            </div>
+            <div class="performance-row">
+                <span class="time-frame">10 Years</span>
+                <span class="value">{{ priceChange['10Y'] }}</span>
+            </div>
+            <div class="performance-row">
+                <span class="time-frame">Max</span>
+                <span class="value">{{ priceChange.max }}</span>
+            </div>
+        </div>
+    </div> -->
+      <div class="company-profile-container" *ngIf="companyProfile">
         <div class="company-header">
-            <img src="{{companyProfile.image}}" alt="{{companyProfile.companyName}} Logo" class="company-logo">
+            <img src="{{companyProfile.image}}" alt="Company Logo" class="company-logo">
             <h2 class="company-title">{{companyProfile.companyName}}</h2>
         </div>
         <div class="company-details">

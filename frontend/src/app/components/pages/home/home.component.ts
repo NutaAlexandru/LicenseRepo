@@ -10,6 +10,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoadingComponent } from '../../partials/loading/loading.component';
 import { StocksComponent } from '../stocks/stocks.component';
 import { CryptoComponent } from '../crypto/crypto.component';
+import { StockPageComponent } from '../stock-page/stock-page.component';
+import { CryptoPageComponent } from '../crypto-page/crypto-page.component';
+import { NewsComponent } from '../news/news.component';
+import { DividentsComponent } from '../dividents/dividents.component';
 
 
 
@@ -17,11 +21,19 @@ import { CryptoComponent } from '../crypto/crypto.component';
   selector: 'app-home',
   standalone: true,
   providers: [StockService],
-  imports: [HttpClientModule,RouterModule,CommonModule,SearchComponent,NotFoundComponent,LoadingComponent,StocksComponent,CryptoComponent],
+  imports: [HttpClientModule,RouterModule,CommonModule,SearchComponent,NotFoundComponent,LoadingComponent,StocksComponent,CryptoComponent,NewsComponent,DividentsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  currentComponent: string | null = null;
-  
+  selectedListComponent: string = 'Stocks'; // Default to Stocks for lists
+  selectedInformationComponent: string = 'Dividents'; // Default to Dividents for information
+
+  selectListComponent(componentName: string) {
+    this.selectedListComponent = componentName;
+  }
+
+  selectInformationComponent(componentName: string) {
+    this.selectedInformationComponent = componentName;
+  }
 }

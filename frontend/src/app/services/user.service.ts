@@ -3,7 +3,7 @@ import { User } from '../shared/models/User';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IUserLogin } from '../shared/interfaces/IUserLogin';
 import { HttpClient } from '@angular/common/http';
-import { USER_LOGIN_URL, USER_REGISTER_URL,USER_LOGIN_WITH_GOOGLE_URL } from '../shared/constants/urls';
+import { USER_LOGIN_URL, USER_REGISTER_URL,USER_LOGIN_WITH_GOOGLE_URL,USER_UPDATE_URL } from '../shared/constants/urls';
 import { tap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { IUserRegister } from '../shared/interfaces/IUserRegister';
@@ -93,6 +93,22 @@ export class UserService {
   }  
   public get currentUser():User{
     return this.userSubject.value;
+  }
+
+  updateUser(userId: string, address: string): Observable<any> {
+    return this.http.put<any>(USER_UPDATE_URL+userId, { address }).pipe(
+      tap({
+        next: (response) => {
+          this.setUserToLocalStorage(response.user);
+          this.userSubject.next(response.user);
+          this.toastrService.success('Address updated successfully');
+          window.location.reload();
+        },
+        error: (error) => {
+          this.toastrService.error(error.error, 'Error updating address');
+        }
+      })
+    );
   }
 
   validateGoogleToken(token: string): Observable<User> {

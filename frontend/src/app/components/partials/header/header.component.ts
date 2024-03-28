@@ -35,6 +35,6 @@ logout(){
 }
 
 get isAuth(){
-  return this.user.token;
+  return this.user.id;
 }
 }

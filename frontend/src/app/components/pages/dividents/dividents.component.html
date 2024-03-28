@@ -4,6 +4,7 @@
       <thead>
         <tr>
           <th>Symbol</th>
+          <th>Label</th>
           <th>Dividend</th>
           <th>Adj Dividend</th>
           <th>Date</th>
@@ -15,6 +16,7 @@
       <tbody>
         <tr *ngFor="let dividend of dividendData">
           <td>{{ dividend.symbol }}</td>
+          <td>{{ dividend.label }}</td>
           <td>{{ dividend.dividend | number:'1.2-2' }}</td>
           <td>{{ dividend.adjDividend | number:'1.2-2' }}</td>
           <td>{{ dividend.date | date:'mediumDate' }}</td>

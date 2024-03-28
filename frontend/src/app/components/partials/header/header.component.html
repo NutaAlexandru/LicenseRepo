@@ -3,6 +3,7 @@
     <a routerLink="/" class="logo">Trading Platform</a>
     <nav>
       <ul>
+        <a *ngIf="isAuth" routerLink="/deposit">Deposit</a>
         <li *ngIf="!isAuth">
           <a routerLink="/login">Login</a>
         </li>
@@ -10,10 +11,11 @@
           <a routerLink="/dashboard">{{ user.name }}</a> <!-- Modifică aici -->
           <div class="menu">
             <a [routerLink]="['/profile', user.id]">Profile</a>
-            <a routerLink="/orders">Orders</a>
+            <a routerLink="/orders">Portofolio</a>
             <a (click)="logout()">Logout</a>
           </div>
         </li>
+        
         <!-- Alte elemente ale meniului pot rămâne neschimbate -->
       </ul>
     </nav>

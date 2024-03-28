@@ -7,6 +7,8 @@ export interface User{
     name:string;
     address:string;
     isAdmin:boolean;
+    balance:number;
+
 }
 
 export const UserSchema=new Schema<User>({
@@ -15,6 +17,11 @@ export const UserSchema=new Schema<User>({
     name:{type:String,required:true},
     address:{type:String,required:false},
     isAdmin:{type:Boolean,required:false},
+    balance: {
+        type: Number,
+        default: 0,
+        required:false // sau o valoare inițială specifică, dacă este cazul
+      },
 },
 {
     toJSON:{
@@ -28,26 +35,3 @@ export const UserSchema=new Schema<User>({
 );
 
 export const UserModel=model<User>('User',UserSchema);
-
-export interface googleUser{
-    id:string;
-    email:string;
-    name:string;
-}
-
-export const googleUserSchema=new Schema<googleUser>({
-    email:{type:String,required:true},
-    name:{type:String,required:true},
-},
-{
-    toJSON:{
-        virtuals:true,
-    },
-    toObject:{
-        virtuals:true,
-    },
-    timestamps:true,
-}
-);
-
-export const GoogleUserModel=model<googleUser>('GoogleUser',googleUserSchema);

@@ -1,0 +1,18 @@
+<div class="deposit-form">
+    <h2>Make a Deposit</h2>
+    <div class="input-container">
+      <label for="amount">Amount:</label>
+      <input type="number" id="amount" [(ngModel)]="amount" placeholder="Enter deposit amount" min="0">
+    </div>
+    
+    <div class="buttons">
+      <button (click)="deposit()">Deposit Now</button>
+    </div>
+  </div>
+
+  <div class="buttons-container">
+    <div class="buttons">
+        <app-paypall-buttons [transaction]="transaction"></app-paypall-buttons>
+    </div>
+  </div>
+  

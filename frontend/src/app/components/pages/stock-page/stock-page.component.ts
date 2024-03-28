@@ -11,6 +11,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import * as  Highcharts from 'highcharts/highstock';
 import { ICompanyInfo } from '../../../shared/interfaces/ICompanyInfo';
 import { IStockMarketData } from '../../../shared/interfaces/IStockMarketData';
+import { IStockPerformance } from '../../../shared/interfaces/IStockPerformance';
 
 
 @Component({
@@ -23,8 +24,9 @@ import { IStockMarketData } from '../../../shared/interfaces/IStockMarketData';
 })
 export class StockPageComponent implements OnInit{
   stock!:Stock;
-  companyProfile!: ICompanyInfo
+  companyProfile!: ICompanyInfo;
   marketData!:IStockMarketData;
+  priceChange!:IStockPerformance;
 
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options = {};
@@ -40,6 +42,8 @@ export class StockPageComponent implements OnInit{
           this.loadChartData();
           this.loadCompanyProfile(this.stock.symbol);
           this.loadMarketData(this.stock.symbol);
+          //this.loadPriceChange(this.stock.symbol);
+          
         });
       }
     });
@@ -54,6 +58,10 @@ export class StockPageComponent implements OnInit{
           title: {
             text: `${this.stock.symbol} Historical Stock Price`
           },
+          chart: {
+          
+            renderTo: 'container'
+        },
           xAxis: {
             type: 'datetime',
             dateTimeLabelFormats: {
@@ -87,7 +95,12 @@ export class StockPageComponent implements OnInit{
   }
   loadMarketData(symbol: string): void {
     this.stockService.getMarketData(symbol).subscribe(marketData => {
-      this.marketData = marketData[0]; 
+      this.marketData = marketData; 
+    });
+  }
+  loadPriceChange(symbol: string): void {
+    this.stockService.getPriceChange(symbol).subscribe((priceChange:IStockPerformance) => {
+      this.priceChange = priceChange; 
     });
   }
 }
