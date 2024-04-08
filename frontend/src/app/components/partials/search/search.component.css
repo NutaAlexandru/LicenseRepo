@@ -1,40 +1,36 @@
+/* Stilizează containerul care încadrează inputul și butonul */
 div {
-    display: flex; /* Alinează input-ul și butonul pe aceeași linie */
-    border: 1px solid #ccc; /* O bordură subtilă în jurul div-ului, opțional */
-    padding: 5px; /* Spațiu în interiorul div-ului */
-    border-radius: 5px; /* Margini rotunjite pentru div */
-    width: fit-content; /* Lățimea div-ului să se potrivească conținutului său */
-    margin: 0 auto; /* Centrarea div-ului */
+    display: flex;
+    align-items: center;
+    background-color: #f9f9f9; /* Fundal deschis pentru integrarea cu pagina */
+    padding: 8px; /* Spațiu în interiorul containerului */
+    border-radius: 25px; /* Borduri rotunjite pentru container */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Umbră subtilă pentru a ridica elementul */
 }
 
+/* Stilizează inputul de căutare */
 input[type="text"] {
-    border: 1px solid #ccc; /* O bordură subtilă pentru input */
-    padding: 10px; /* Spațiu în interiorul input-ului pentru text */
-    border-radius: 5px 0 0 5px; /* Margini rotunjite doar pe partea stângă */
-    outline: none; /* Înlătură outline-ul când input-ul este focalizat */
-    flex-grow: 1; /* Face input-ul să ocupe tot spațiul disponibil */
+    flex: 1; /* Permite inputului să ocupe spațiul disponibil */
+    padding: 10px;
+    margin-right: 8px; /* Spațiu între input și buton */
+    border: 2px solid transparent; /* Border transparent pentru a evita schimbări de dimensiune */
+    border-radius: 20px; /* Borduri rotunjite */
+    outline: none; /* Îndepărtează outline-ul când este focusat */
 }
 
+/* Stilizează butonul de căutare */
 button {
-    background-color: #007bff; /* O culoare de fundal frumoasă pentru buton */
-    color: white; /* Textul butonului alb */
-    border: none; /* Înlătură bordura butonului */
-    padding: 10px 20px; /* Spațiu în interiorul butonului */
-    border-radius: 0 5px 5px 0; /* Margini rotunjite doar pe partea dreaptă */
-    cursor: pointer; /* Schimbă cursorul pentru a indica că este clicabil */
-    transition: background-color 0.3s; /* Efect de tranziție pentru hover */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease;
 }
 
+/* Efect de hover pentru buton */
 button:hover {
-    background-color: #0056b3; /* Schimbă culoarea de fundal la hover */
-}
-
-/* Stiluri opționale pentru a îmbunătăți vizibilitatea focusului pentru accesibilitate */
-input[type="text"]:focus {
-    border-color: #007bff; /* Schimbă culoarea bordurii la focus */
-}
-
-button:focus {
-    outline: none; /* Înlătură outline-ul default */
-    box-shadow: 0 0 0 2px rgba(0,123,255,.5); /* Adaugă un shadow ca indicator de focus */
+    background-color: #0056b3;
 }

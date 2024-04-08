@@ -3,6 +3,7 @@
     <a routerLink="/" class="logo">Trading Platform</a>
     <nav>
       <ul>
+        <a *ngIf="isAuth">Balance:{{user.balance}} USD</a>
         <a *ngIf="isAuth" routerLink="/deposit">Deposit</a>
         <li *ngIf="!isAuth">
           <a routerLink="/login">Login</a>

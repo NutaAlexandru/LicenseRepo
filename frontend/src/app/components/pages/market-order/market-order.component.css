@@ -1,0 +1,70 @@
+.stock-list {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .stock-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 15px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .stock-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .stock-symbol {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
+  .stock-company {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .stock-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .stock-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .stock-change {
+    font-size: 1.2rem;
+    color: #666;
+  }
+  
+  .stock-change.positive {
+    color: #3c763d; /* Green for positive numbers */
+  }
+  
+  .stock-change.negative {
+    color: #a94442; /* Red for negative numbers */
+  }
+  
+  .stock-chart {
+    height: 50px; /* Setează înălțimea pentru grafic */
+    /* Adaugă stiluri pentru grafic aici */
+  }
+  
+  /* Adaugă responsivitate dacă este necesar */
+  @media (max-width: 768px) {
+    .stock-card {
+      flex-direction: column;
+    }
+  }
+  

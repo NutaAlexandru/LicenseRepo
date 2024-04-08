@@ -10,9 +10,8 @@
     </div>
   </div>
 
-  <div class="buttons-container">
+  <div *ngIf="showPaypalButton" class="buttons-container">
     <div class="buttons">
         <app-paypall-buttons [transaction]="transaction"></app-paypall-buttons>
     </div>
   </div>
-  

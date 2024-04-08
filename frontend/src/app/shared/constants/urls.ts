@@ -3,6 +3,12 @@ export const STOCKS_URL = BASE_URL+'/api/stocks';
 export const STOCK_SEARCH_URL = STOCKS_URL+'/search/';
 export const STOCK_BY_ID_URL = STOCKS_URL+'/';
 export const STOCK_HISTORIC=STOCKS_URL+'/historical/';
+export const STOCK_LOGO_URL=STOCKS_URL+'/company-logo/';
+
+export const MARKET_BIGGEST_GAINERS_URL=STOCKS_URL+'/stock-market-gainers';
+export const MARKET_BIGGEST_LOOSER_URL=STOCKS_URL+'/stock-market-losers';
+export const MARKET_MOST_ACTIVE_URL=STOCKS_URL+'/stock-market-actives';
+
 
 export const COMPANYINFO=STOCKS_URL+'/company-profile/';
 export const STOCKMARKETDATA=STOCKS_URL+'/market-data/';
@@ -11,6 +17,7 @@ export const STOCKPRICECHANGE=STOCKS_URL+'/stock-price-change/';
 export const TRANSACTION_INFO=BASE_URL+'/api/transactions';
 export const TRANSACTION_INFO_CREATE=TRANSACTION_INFO+'/create';
 export const TRANSACTION_INFO_UPDATE=TRANSACTION_INFO+'/update-balance';
+export const TRANSACTION_INFO_GET_ALL=TRANSACTION_INFO+'/user/';
 
 export const CRYPTO_URL = BASE_URL+'/api/cryptos';
 export const CRYPTO_SEARCH_URL = CRYPTO_URL+'/crypto/search/';
@@ -19,7 +26,8 @@ export const CRYPTO_HISTORIC=CRYPTO_URL+'/historical/';
 
 export const USER_LOGIN_URL = BASE_URL+'/api/users/login';
 export const USER_REGISTER_URL = BASE_URL+'/api/users/register';
-export const USER_UPDATE_URL=BASE_URL+'/api/users//update-user/';
+export const USER_UPDATE_URL=BASE_URL+'/api/users/update-user/';
+export const USER_DATA_URL=BASE_URL+'/api/users/return-user/';
 
 export const NEWS_URL=BASE_URL+'/api/news';
 export const DIVIDENTS_URL=BASE_URL+'/api/dividents'

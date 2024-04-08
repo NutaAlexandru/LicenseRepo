@@ -4,8 +4,6 @@ process.env.MONGO_URI;
 
 import express from "express";
 import cors from "cors";
-import { sample_stocks, sample_users } from "./data";
-import jwt from "jsonwebtoken";
 import stocksRouter from "./routers/stocks.router";
 import userRouter from "./routers/user.router";
 import newsRouter from "./routers/news.router" 

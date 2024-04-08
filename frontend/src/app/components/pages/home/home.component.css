@@ -2,61 +2,45 @@
     display: flex;
     justify-content: space-between;
     padding: 20px;
+    height: calc(100vh - 40px); /* Adjust height to fit the viewport */
   }
   
-  .lists, .informations {
-    flex: 1;
+  .lists,
+  .informations {
+    flex-basis: 48%; /* Split the container into two columns */
+    display: flex;
+    flex-direction: column;
   }
   
-  .list-selector, .component-selector {
+  .list-selector,
+  .component-selector {
+    display: flex;
+    justify-content: space-around;
     margin-bottom: 20px;
   }
   
   button {
-    background-color: #007BFF;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007bff;
     color: white;
-    padding: 10px 15px;
     border: none;
     border-radius: 5px;
-    cursor: pointer;
-    margin-right: 10px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s;
   }
   
   button:hover {
     background-color: #0056b3;
   }
   
-  .list-display, .component-display {
+  .list-display,
+  .component-display {
+    flex-grow: 1;
     border: 1px solid #ccc;
     padding: 20px;
-    border-radius: 5px;
-    height: 300px; /* Adjust based on content */
-    overflow-y: auto;
+    overflow-y: auto; /* Enable scroll if content overflows */
   }
   
-  .list-display > *, .component-display > * {
-    margin: 10px 0;
-  }
-  
-  /* Optional: Add more specific styles for your components */
-  app-stocks, app-cryptos, app-dividents, app-news {
-    display: block; /* Ensure proper spacing */
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .container {
-      flex-direction: column;
-    }
-  
-    .lists, .informations {
-      margin-bottom: 20px;
-    }
-  
-    button {
-      width: 100%;
-      margin-bottom: 10px; /* Stack buttons vertically on smaller screens */
-    }
-  }
+  /* Add more styles below for your specific components if needed. */
   

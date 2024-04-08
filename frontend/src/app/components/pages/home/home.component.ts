@@ -14,6 +14,7 @@ import { StockPageComponent } from '../stock-page/stock-page.component';
 import { CryptoPageComponent } from '../crypto-page/crypto-page.component';
 import { NewsComponent } from '../news/news.component';
 import { DividentsComponent } from '../dividents/dividents.component';
+import { MarketOrderComponent } from '../market-order/market-order.component';
 
 
 
@@ -21,13 +22,25 @@ import { DividentsComponent } from '../dividents/dividents.component';
   selector: 'app-home',
   standalone: true,
   providers: [StockService],
-  imports: [HttpClientModule,RouterModule,CommonModule,SearchComponent,NotFoundComponent,LoadingComponent,StocksComponent,CryptoComponent,NewsComponent,DividentsComponent],
+  imports: [
+    HttpClientModule,
+    RouterModule,
+    CommonModule,
+    SearchComponent,
+    NotFoundComponent,
+    LoadingComponent,
+    StocksComponent,
+    CryptoComponent,
+    NewsComponent,
+    DividentsComponent,
+    MarketOrderComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  selectedListComponent: string = 'Stocks'; // Default to Stocks for lists
-  selectedInformationComponent: string = 'Dividents'; // Default to Dividents for information
+  selectedListComponent: string = 'Stocks';
+  selectedInformationComponent: string = 'News';
+
 
   selectListComponent(componentName: string) {
     this.selectedListComponent = componentName;

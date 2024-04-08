@@ -11,11 +11,15 @@
         <div class="list-selector">
             <button (click)="selectListComponent('Stocks')">Stocks</button>
             <button (click)="selectListComponent('Cryptos')">Cryptos</button>
+            <button (click)="selectListComponent('Gainers')">Biggest Gainers</button>
+            <button (click)="selectListComponent('Losers')">Biggest Losers</button>
+            <button (click)="selectListComponent('Active')">Most Active</button>
         </div>
   
         <div class="list-display">
             <app-stocks *ngIf="selectedListComponent === 'Stocks'"></app-stocks>
-            <app-crypto *ngIf="selectedListComponent === 'Cryptos'"></app-crypto> <!-- Ensure component names are correct -->
+            <app-crypto *ngIf="selectedListComponent === 'Cryptos'"></app-crypto>
+            <app-market-order *ngIf="selectedListComponent=== 'Gainers' || selectedListComponent === 'Losers' || selectedListComponent === 'Active'" [selectedList]="selectedListComponent"></app-market-order>
         </div>
     </div>
     <div class="informations">

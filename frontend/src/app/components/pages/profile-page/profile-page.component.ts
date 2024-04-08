@@ -8,12 +8,13 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { InputContainerComponent } from '../../partials/input-container/input-container.component';
+import { TransactionHistoryComponent } from '../transaction-history/transaction-history.component';
 
 @Component({
   selector: 'app-profile-page',
   standalone: true,
   providers:[UserService,ToastrService],
-  imports: [CommonModule,RouterModule,HttpClientModule,FormsModule,InputContainerComponent
+  imports: [CommonModule,RouterModule,HttpClientModule,FormsModule,InputContainerComponent,TransactionHistoryComponent
   ],
   templateUrl: './profile-page.component.html',
   styleUrl: './profile-page.component.css'
@@ -22,6 +23,8 @@ export class ProfilePageComponent implements OnInit {
   user = this.userService.currentUser;
   editAddress: boolean = false;
   newAddress: string = '';
+  showTransactionHistory = false;
+
   constructor(private userService:UserService){
 
   }
@@ -49,4 +52,8 @@ export class ProfilePageComponent implements OnInit {
       });
   }
   
+  toggleTransactionHistory(): void {
+    this.showTransactionHistory = !this.showTransactionHistory;
+  }
+
 }

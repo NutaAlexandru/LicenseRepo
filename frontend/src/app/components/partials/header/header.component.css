@@ -2,16 +2,16 @@ header{
   position: relative;
   background: white;
   padding: 0;
-  border-bottom: 1px solid #e72929;
+  border-bottom: 1px solid #0056b3;
   z-index: 999;
 }
 
 a{
-  color: #af1313;
+  color: #0056b3;
 }
 
 a:hover{
-  background:#e72929;
+  background:#0056b3;
   color: white;
   cursor: pointer;
 }
@@ -39,7 +39,7 @@ ul a{
 }
 
 a span{
-  background: #ff4d4d;
+  background: #0056b3;
   color: white;
   padding: 0.1rem 0.45rem;
   border-radius: 100rem;

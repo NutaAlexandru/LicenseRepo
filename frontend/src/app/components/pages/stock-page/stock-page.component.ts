@@ -42,7 +42,7 @@ export class StockPageComponent implements OnInit{
           this.loadChartData();
           this.loadCompanyProfile(this.stock.symbol);
           this.loadMarketData(this.stock.symbol);
-          //this.loadPriceChange(this.stock.symbol);
+          this.loadPriceChange(this.stock.symbol);
           
         });
       }

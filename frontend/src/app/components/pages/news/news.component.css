@@ -1,38 +1,53 @@
-div {
-    border: 1px solid #ddd;
+.news-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* sau orice spațiere preferi între articole */
+    justify-content: center;
+  }
+  
+  .news-item {
+    flex-basis: calc(50% - 20px); /* Scadem 20px pentru a contabiliza spațierea dintre coloane */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-h2 {
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-img {
-    max-width:10%; /* Ajustează acest procentaj după cum dorești */
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+  }
+  
+  .news-item h2 {
+    font-size: 1.5em;
+    margin: 0.5em;
+  }
+  
+  .news-item img {
+    width: 100%;
     height: auto;
-}
-
-span {
     display: block;
-    color: #666;
-    margin-bottom: 10px;
-}
-
-a {
+  }
+  
+  .news-item span {
+    display: block;
+    padding: 0 0.5em;
+    color: #555;
+  }
+  
+  .news-item a {
     display: inline-block;
-    color: #0066cc;
-    text-decoration: none;
-    background-color: #ddd;
     padding: 10px 15px;
+    margin: 10px;
+    background: #007bff;
+    color: #fff;
+    text-decoration: none;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-a:hover {
-    background-color: #ccc;
-}
+  }
+  .news-container .news-item img {
+    width: 100%; /* sau o altă dimensiune relativă */
+    height: auto;
+    max-width: 300px; /* dimensiunea maximă pe care o dorești pentru imagine */
+  }
+  @media screen and (max-width: 768px) {
+    .news-item {
+      flex-basis: 100%; /* Fiecare articol va ocupa întreaga lățime a container-ului pe ecrane mici */
+    }
+  }
+  

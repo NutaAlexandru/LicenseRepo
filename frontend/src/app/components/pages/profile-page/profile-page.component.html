@@ -17,4 +17,13 @@
       <p><strong>Amount:</strong> {{ user.balance }}</p>
     </div>
   </div>
+
+  <div class="option-list">
+    <button (click)="toggleTransactionHistory()">View All Transactions</button>
+  </div>
+
+
+  <div class="transaction-container">
+    <app-transaction-history *ngIf="showTransactionHistory" [user]="user"></app-transaction-history>
+  </div>
   

@@ -1,33 +1,146 @@
 .profile-container {
-    background-color: #f9f9f9;
+    max-width: 600px;
+    margin: 20px auto;
     padding: 20px;
-    border-radius: 5px;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-container h2 {
+    color: #333;
+    border-bottom: 1px solid #e1e1e1;
+    padding-bottom: 10px;
     margin-bottom: 20px;
   }
   
   .profile-info p {
-    margin: 5px 0;
+    margin: 10px 0;
+    color: #555;
   }
   
   .profile-info strong {
-    font-weight: bold;
+    color: #000;
   }
   
-  .edit-address {
+  .edit-address,
+  .buttons {
+    display: flex;
     margin-top: 10px;
   }
   
-  .edit-address input {
-    margin-bottom: 10px;
-    padding: 5px;
-    width: 300px;
+  .edit-address input.input {
+    flex: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
   }
   
   .buttons button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
     margin-right: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: #5cb85c;
+    color: white;
   }
   
   .buttons button:last-child {
-    margin-right: 0;
+    background-color: #d9534f;
   }
+  
+  .buttons button:hover {
+    opacity: 0.9;
+  }
+  
+  /* Style pentru butonul de edit */
+  .profile-info button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    margin-left: 10px;
+  }
+  
+  .profile-info button:hover {
+    opacity: 0.8;
+  }
+  .option-list {
+    margin: 20px auto;
+    text-align: center;
+  }
+  
+  .option-list button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 5px;
+  }
+  
+  .option-list button:hover {
+    background-color: #0056b3;
+  }
+  
+  .transaction-container {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 800px;
+
+    border-radius: 8px;
+    
+  }
+  
+  .transaction-container > * {
+    margin-bottom: 20px;
+  }
+  
+  /* Asigurați-vă că containerul pentru istoricul tranzacțiilor este bine definit și vizibil */
+  .transaction-container app-transaction-history {
+    border-top: 2px solid #dee2e6;
+    padding-top: 20px;
+  }
+  
+
+  @media (max-width: 768px) {
+    .profile-container {
+      margin: 20px;
+    }
+  
+    .edit-address,
+    .buttons {
+      flex-direction: column;
+    }
+  
+    .edit-address input.input {
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  
+    .buttons button {
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+    .option-list button {
+        font-size: 14px;
+        padding: 8px 12px;
+      }
+    
+      .transaction-container {
+        margin: 20px;
+        padding: 15px;
+      }
+  }
+
+  
   

@@ -3,7 +3,7 @@ import { User } from '../shared/models/User';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IUserLogin } from '../shared/interfaces/IUserLogin';
 import { HttpClient } from '@angular/common/http';
-import { USER_LOGIN_URL, USER_REGISTER_URL,USER_LOGIN_WITH_GOOGLE_URL,USER_UPDATE_URL } from '../shared/constants/urls';
+import { USER_LOGIN_URL, USER_REGISTER_URL,USER_LOGIN_WITH_GOOGLE_URL,USER_UPDATE_URL,USER_DATA_URL } from '../shared/constants/urls';
 import { tap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { IUserRegister } from '../shared/interfaces/IUserRegister';
@@ -54,7 +54,6 @@ export class UserService {
       })
     )
   }
-
   logout() {
     this.userSubject.next(new User());
     if (typeof window !== 'undefined') {
@@ -90,7 +89,27 @@ export class UserService {
       localStorage.setItem(USER_KEY, JSON.stringify(user));
 
     }
-  }  
+  }
+  // depositUpdateUserToLocalStorage(userId: string) {
+  //   return this.http.get<{user: User, token: string}>(USER_DATA_URL + userId).pipe(
+  //     tap({
+  //       next: (response) => {
+  //         console.log(response);
+  //         const user = response.user;
+  //         user.token = response.token; // Presupunând că vrei să actualizezi și tokenul în modelul de User
+  //         this.setUserToLocalStorage(user);
+  //         this.userSubject.next(user);
+  //         this.toastrService.success('Deposit Successful');
+  //         window.location.reload();
+  //         // Nu este recomandat să folosești window.location.reload(); în aplicațiile SPA, deoarece reîncărcați întreaga pagină, ceea ce încalcă principiul Single Page Application.
+  //         // În schimb, ar trebui să actualizezi UI-ul prin Angular bindings.
+  //       },
+  //       error: (errorResponse) => {
+  //         this.toastrService.error(errorResponse.error, 'Deposit failed');
+  //       }
+  //     })
+  //   );
+  // }
   public get currentUser():User{
     return this.userSubject.value;
   }

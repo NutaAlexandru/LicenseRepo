@@ -1,12 +1,24 @@
 import { Injectable } from '@angular/core';
 import { Stock } from '../shared/models/Stock';
 import { Observable, map } from 'rxjs';
-import { STOCKS_URL, STOCK_SEARCH_URL,STOCK_BY_ID_URL, STOCK_HISTORIC ,COMPANYINFO,STOCKMARKETDATA,STOCKPRICECHANGE } from '../shared/constants/urls';
+import { 
+  STOCKS_URL,
+  STOCK_SEARCH_URL,
+  STOCK_BY_ID_URL,
+  STOCK_HISTORIC,
+  COMPANYINFO,
+  STOCKMARKETDATA,
+  STOCKPRICECHANGE,
+  MARKET_BIGGEST_GAINERS_URL,
+  MARKET_BIGGEST_LOOSER_URL,
+  MARKET_MOST_ACTIVE_URL,
+  STOCK_LOGO_URL } from '../shared/constants/urls';
 import { HttpClient } from '@angular/common/http';
 import { IHistory } from '../shared/interfaces/IHistory';
 import { ICompanyInfo} from '../shared/interfaces/ICompanyInfo'
 import { IStockMarketData } from '../shared/interfaces/IStockMarketData';
 import { IStockPerformance } from '../shared/interfaces/IStockPerformance';
+import { IStockTop } from '../shared/interfaces/IStockTop';
 
 @Injectable({
   providedIn: 'root'
@@ -51,9 +63,22 @@ export class StockService {
     );
   } 
 
-  
+  getMarketBiggestGainers():Observable<IStockTop[]>{
+    return this.http.get<IStockTop[]>(MARKET_BIGGEST_GAINERS_URL).pipe(
+      map(response => response)
+    );
+  }
 
-    
-  
+  getMarketBiggestLooser():Observable<IStockTop[]>{
+    return this.http.get<IStockTop[]>(MARKET_BIGGEST_LOOSER_URL).pipe(
+      map(response => response)
+    );
+  }
 
+  getMarketMostActive():Observable<IStockTop[]>{
+    return this.http.get<IStockTop[]>(MARKET_MOST_ACTIVE_URL).pipe(
+      map(response => response)
+    );
+  }
+      
 }

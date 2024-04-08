@@ -71,6 +71,18 @@ router.put('/update-user/:userId', expressAsyncHandler(async (req, res) => {
         res.send({ user: updatedUser, token });
 }));
 
+// router.get('/return-user/:userId', expressAsyncHandler( async (req,res ) =>{
+//     const { userId }=req.params;
+//     console.log(userId);
+//     const tempUser=await UserModel.findOne({_id:userId});
+//     if (!tempUser) {
+//         res.status(404).send({ message: 'User not found' });
+//         return;
+//     }
+//     const token=generateToken(tempUser);
+//     res.send( {user:tempUser,token} );
+// }));
+
 router.post("/register",expressAsyncHandler(async (req, res) => {
     const {email,password,name,address}=req.body;
     var temp=0;

@@ -63,13 +63,16 @@ export class PaypallButtonsComponent implements OnInit {
             next: (transactionId) => {
               console.log('Transaction created successfully with ID:', transactionId);
               self.transactionService.updateBalance(this.transaction).subscribe({
-                next: () => {
+                next: (response) => {
+                  //this.userService.depositUpdateUserToLocalStorage(this.transaction.user);
+                  console.log(this.transaction.user);
                   console.log('Balance updated successfully');
                 },
                 error: (error: any) => {
                   console.error('Error updating balance:', error);
                 }
               });
+              
             },
             error: (error:any) => {
             }

@@ -1,6 +1,9 @@
 import { Component,OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { UserService } from '../../../services/user.service';
+import { User } from '../../../shared/models/User';
+import { CommonModule } from '@angular/common';
 
 
 
@@ -8,11 +11,23 @@ import { NgModule } from '@angular/core';
 @Component({
   selector: 'app-first-page',
   standalone: true,
-  imports: [RouterModule],
+  providers:[UserService],
+  imports: [RouterModule,CommonModule],
   templateUrl: './first-page.component.html',
   styleUrl: './first-page.component.css'
 })
 export class FirstPageComponent{
   
+  user!:User;
+  constructor(private userService:UserService) {
+
+    userService.userObservable.subscribe((newUser)=>{
+      this.user = newUser;
+
+   });
+   //console.log(this.user);
+   //console.log(this.isAuth);
+  }
+
  
 }
