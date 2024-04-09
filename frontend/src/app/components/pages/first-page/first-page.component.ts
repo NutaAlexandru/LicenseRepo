@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { User } from '../../../shared/models/User';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -11,7 +12,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-first-page',
   standalone: true,
-  providers:[UserService],
+  providers:[UserService,ToastrService],
   imports: [RouterModule,CommonModule],
   templateUrl: './first-page.component.html',
   styleUrl: './first-page.component.css'
