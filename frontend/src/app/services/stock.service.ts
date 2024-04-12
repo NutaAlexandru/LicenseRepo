@@ -12,13 +12,16 @@ import {
   MARKET_BIGGEST_GAINERS_URL,
   MARKET_BIGGEST_LOOSER_URL,
   MARKET_MOST_ACTIVE_URL,
-  STOCK_LOGO_URL } from '../shared/constants/urls';
+  STOCK_LOGO_URL,
+  PURCHASE_INFO_CREATE, 
+  STOCKPRICE} from '../shared/constants/urls';
 import { HttpClient } from '@angular/common/http';
 import { IHistory } from '../shared/interfaces/IHistory';
 import { ICompanyInfo} from '../shared/interfaces/ICompanyInfo'
 import { IStockMarketData } from '../shared/interfaces/IStockMarketData';
 import { IStockPerformance } from '../shared/interfaces/IStockPerformance';
 import { IStockTop } from '../shared/interfaces/IStockTop';
+import { PurchaseOrder } from '../shared/models/PurchaseOrder';
 
 @Injectable({
   providedIn: 'root'
@@ -62,6 +65,11 @@ export class StockService {
       map(response => response)
     );
   } 
+  getPrice(stockSymbol:string):Observable<number>{
+    return this.http.get<number>(STOCKPRICE+stockSymbol).pipe(
+      map(response => response)
+    );
+  } 
 
   getMarketBiggestGainers():Observable<IStockTop[]>{
     return this.http.get<IStockTop[]>(MARKET_BIGGEST_GAINERS_URL).pipe(
@@ -79,6 +87,11 @@ export class StockService {
     return this.http.get<IStockTop[]>(MARKET_MOST_ACTIVE_URL).pipe(
       map(response => response)
     );
+  }
+
+  createPurchaseOrder(purchaseOrderData:PurchaseOrder): Observable<PurchaseOrder> {
+    
+    return this.http.post<PurchaseOrder>(PURCHASE_INFO_CREATE, purchaseOrderData);
   }
       
 }

@@ -13,11 +13,18 @@ export const MARKET_MOST_ACTIVE_URL=STOCKS_URL+'/stock-market-actives';
 export const COMPANYINFO=STOCKS_URL+'/company-profile/';
 export const STOCKMARKETDATA=STOCKS_URL+'/market-data/';
 export const STOCKPRICECHANGE=STOCKS_URL+'/stock-price-change/';
+export const STOCKPRICE=STOCKS_URL+'/stock-price/';
 
 export const TRANSACTION_INFO=BASE_URL+'/api/transactions';
 export const TRANSACTION_INFO_CREATE=TRANSACTION_INFO+'/create';
 export const TRANSACTION_INFO_UPDATE=TRANSACTION_INFO+'/update-balance';
 export const TRANSACTION_INFO_GET_ALL=TRANSACTION_INFO+'/user/';
+
+export const PURCHASE_INFO=BASE_URL+'/api/orders';
+export const PURCHASE_INFO_CREATE=PURCHASE_INFO+'/purchase-orders';
+export const PURCHASE_INFO_GET_ALL_URL=PURCHASE_INFO+'/user/purchase-orders/';
+
+export const PORTOFOLIO_INFO_GET_ALL_URL=PURCHASE_INFO+'/user/portofolio/';
 
 export const CRYPTO_URL = BASE_URL+'/api/cryptos';
 export const CRYPTO_SEARCH_URL = CRYPTO_URL+'/crypto/search/';

@@ -10,6 +10,7 @@ import newsRouter from "./routers/news.router"
 import dividentsRouter from "./routers/dividents.router"
 import cryptoRouter from "./routers/crypto.router"
 import transactionsRouter from "./routers/transactions.router"
+import purchaseRouter from "./routers/purchaseOrder.router"
 import { dbConnect } from "./configs/database.config";
 dbConnect();
 const app=express();
@@ -32,6 +33,7 @@ app.use("/api",newsRouter);
 app.use('/api',dividentsRouter);
 app.use('/api/cryptos',cryptoRouter);
 app.use('/api/transactions',transactionsRouter);
+app.use('/api/orders',purchaseRouter);
 
 const port = 5000;
 app.listen(port, () => {

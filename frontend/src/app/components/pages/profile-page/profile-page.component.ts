@@ -26,13 +26,13 @@ export class ProfilePageComponent implements OnInit {
   showTransactionHistory = false;
 
   constructor(private userService:UserService){
-
   }
   ngOnInit(): void {
   }
   
   toggleEditAddress(edit: boolean = true): void {
     this.editAddress = edit;
+    
     if (!edit) this.newAddress = this.user.address;
   }
 
@@ -41,6 +41,7 @@ export class ProfilePageComponent implements OnInit {
       alert("Please enter a new address.");
       return;
     }
+    
     this.userService.updateUser(this.user.id, this.newAddress)
       .subscribe({
         next: (updatedUser) => {

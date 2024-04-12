@@ -156,4 +156,18 @@ a:hover {
     font-weight: normal;
     text-align: right;
   }
+
+  .company-logo {
+    float: right;
+    width: 50px; /* Ajustează la dimensiunea dorită */
+    height: auto;
+  }
+  
+  .modal-title {
+    flex-grow: 1; /* Asigură-te că titlul se extinde pentru a face loc logo-ului */
+  }
+  
+  .modal-body {
+    clear: both; /* Clear float */
+  }
   

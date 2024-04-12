@@ -1,0 +1,98 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    gap: 20px; /* Asigură un spațiu între coloane */
+  }
+  
+  .portfolio-left,
+  .portfolio-right {
+    flex: 1;
+  }
+  
+  /* Stil pentru cardul fiecărui stock */
+  .stock-card {
+    margin-bottom: 20px; /* Spațiu între carduri */
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Stil pentru overview-ul contului și portofoliului */
+  .overview-container {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Stiluri textuale */
+  .stock-name,
+  .label,
+  .value {
+    display: block;
+  }
+  
+  .stock-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .stock-value,
+  .stock-change {
+    font-size: 1em;
+    margin-bottom: 5px;
+  }
+  
+  .stock-change.positive {
+    color: green;
+  }
+  
+  .stock-change.negative {
+    color: red;
+  }
+  
+  .label {
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .value {
+    font-size: 1.5em;
+    margin-top: 5px;
+  }
+  
+  /* Stil pentru răspunsul la schimbarea dimensiunii ecranului */
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+  
+    .portfolio-left,
+    .portfolio-right {
+      flex: none; /* Resetează flex-grow */
+      width: 100%; /* Ocupă toată lățimea pe mobil */
+      margin-bottom: 20px;
+    }
+  }
+  /* portofolio-page.component.css */
+.order-history {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+  }
+  
+  .order-detail {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+  }
+  
+  .order-detail div {
+    margin-bottom: 5px;
+  }
+  

@@ -12,7 +12,7 @@
           <a routerLink="/dashboard">{{ user.name }}</a> <!-- Modifică aici -->
           <div class="menu">
             <a [routerLink]="['/profile', user.id]">Profile</a>
-            <a routerLink="/orders">Portofolio</a>
+            <a routerLink="/portofolio">Portofolio</a>
             <a (click)="logout()">Logout</a>
           </div>
         </li>

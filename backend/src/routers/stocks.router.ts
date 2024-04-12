@@ -267,6 +267,43 @@ router.get('/stock-price-change/:symbol', (req, res) => {
     request.end();
 });
 
+// router.get('/stock-price/:symbol', (req, res) => {
+//     const symbol = req.params.symbol;
+//     const apiKey = '79Vi54NgDy5zAVPqBWiSLPxLVyq8VpPI'; // Înlocuiește YOUR_API_KEY cu cheia ta reală
+//     const options = {
+//         hostname: 'financialmodelingprep.com',
+//         port: 443,
+//         path: `/api/v3/quote-short/${symbol}?apikey=${apiKey}`,
+//         method: 'GET'
+//     };
+
+//     const request = https.request(options, response => {
+//         let data = '';
+
+//         response.on('data', chunk => {
+//             data += chunk;
+//         });
+
+//         response.on('end', () => {
+//             try {
+//                 const parsedData = JSON.parse(data);
+//                 const price=parsedData.price;
+//                 res.json(price);
+//             } catch (error) {
+//                 console.error('Error parsing JSON:', error);
+//                 res.status(500).send('An error occurred');
+//             }
+//         });
+//     });
+
+//     request.on('error', error => {
+//         console.error('Error with the request:', error);
+//         res.status(500).send('An error occurred');
+//     });
+
+//     request.end();
+// });
+
 
 router.get("/",expressAsyncHandler(async(req, res) => {
     const stocks=await StockModel.find();

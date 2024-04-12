@@ -8,7 +8,7 @@
     resetLinkText="Reset">
 </app-not-found>
 <ul>
-    <li *ngFor="let stock of stocks | slice:0:3">
+    <li *ngFor="let stock of stocks">
         <a routerLink="/stock/{{stock.id}}">
             <div class="content">
                 <div class="image">

@@ -1,0 +1,73 @@
+
+<div class="list-container">
+  <div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Accordion Item #1
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <div *ngFor="let order of portfolioItems" class="stock-card">
+            <div class="stock-name">{{ order.stockSymbol }}</div>
+            <div class="stock-value">{{ order.currentValue | currency:'USD':'symbol-narrow' }}</div>
+            <div class="stock-change" [ngClass]="{'positive': order.percentChange >= 0, 'negative': order.percentChange < 0}">
+              {{ order.percentChange | number:'1.2-2' }}%
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Accordion Item #2
+        </button>
+      </h2>
+      <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Accordion Item #3
+        </button>
+      </h2>
+      <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+<div class="overview-container">
+  <div class="account-value">
+    <div class="label">Account Amount</div>
+    <div class="value">{{ user.balance| currency:'USD':'symbol-narrow' }}</div>
+  </div>
+  <div class="portfolio-value">
+    <div class="label">Portfolio Value</div>
+    <div class="value">{{ portfolioValue | currency:'USD':'symbol-narrow' }}</div>
+  </div>
+</div>
+<div class="history-container">
+  <div class="order-history">
+    <h2>Istoric Comenzi</h2>
+    <div *ngFor="let order of purchaseOrders" class="order-detail">
+      <div>Data: {{ order.date | date: 'medium' }}</div>
+      <div>Simbol: {{ order.stockSymbol }}</div>
+      <div>Preț per acțiune: {{ order.stockPrice | currency: 'USD' }}</div>
+      <div>Număr acțiuni: {{ order.nrOfActions }}</div>
+      <div>Valoare totală: {{ (order.stockPrice * order.nrOfActions) | currency: 'USD' }}</div>
+      <div>Status: {{ order.status }}</div>
+    </div>
+  </div>
+</div>
+
+
