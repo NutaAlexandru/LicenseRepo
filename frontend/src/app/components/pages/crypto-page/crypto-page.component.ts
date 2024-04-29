@@ -6,6 +6,7 @@ import { CryptoService } from '../../../services/crypto.service';
 import { ActivatedRoute } from '@angular/router';
 import { NotFoundComponent } from '../../partials/not-found/not-found.component';
 import { CommonModule } from '@angular/common';
+import { ICryptoData } from '../../../shared/interfaces/ICryptoData';
 @Component({
   selector: 'app-crypto-page',
   standalone: true,
@@ -18,6 +19,7 @@ import { CommonModule } from '@angular/common';
 })
 export class CryptoPageComponent implements OnInit {
     crypto!:CryptoModel;
+    cryptoData:ICryptoData;
 
     Highcharts: typeof Highcharts = Highcharts;
     chartOptions: Highcharts.Options = {};
@@ -25,18 +27,22 @@ export class CryptoPageComponent implements OnInit {
     constructor(private activatedRoute:ActivatedRoute,private cryptoService:CryptoService){
 
     }
-    ngOnInit():void{
+    ngOnInit(): void {
       this.activatedRoute.params.subscribe(params => {
-        if(params.id) {
+        if (params.id) {
           this.cryptoService.getCryptosById(params.id).subscribe((cryptoData) => {
             this.crypto = cryptoData;
-            this.loadChartData();
+            //this.loadChartData();
+            this.loadCryptoData(this.crypto.symbol);
+            console.log(this.cryptoData);
           });
+          
         }
       });
     }
+    
     loadChartData(): void {
-      console.log(this.crypto.symbol);
+      //console.log(this.crypto.symbol);
       if (this.crypto && this.crypto.symbol) {
         this.cryptoService.getHistoricalData(this.crypto.symbol).subscribe(data => {
           this.chartOptions = {
@@ -65,6 +71,13 @@ export class CryptoPageComponent implements OnInit {
               type: 'line'
             }]
           };
+        });
+      }
+    }
+    loadCryptoData(symbol: string): void {
+      if (symbol) {
+        this.cryptoService.getData(symbol).subscribe(cryptoData => {
+          this.cryptoData = cryptoData;
         });
       }
     }

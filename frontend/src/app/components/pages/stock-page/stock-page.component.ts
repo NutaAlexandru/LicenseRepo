@@ -41,13 +41,10 @@ export class StockPageComponent implements OnInit{
   marketData!:IStockMarketData;
   priceChange!:IStockPerformance;
 
-  purchaseAmount: number = 0; // Suma introdusă de utilizator
+  purchaseAmount: number = 0;
   modalRef!: NgbModalRef; // Referința la modal
-
-  user:User;
-
   @ViewChild('buyModal') buyModal: any;
-
+  user:User;
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options = {};
 
@@ -117,7 +114,8 @@ export class StockPageComponent implements OnInit{
       nrOfActions: this.getMaximumShares(this.purchaseAmount),
       amount: this.purchaseAmount,
       status: PurchaseOrderStatus.Pending,
-      transactionType:PurchaseOrderType.Buy
+      transactionType:PurchaseOrderType.Buy,
+      type:'stock'
       // Restul câmpurilor dacă sunt necesare și nu sunt setate prin valori implicite în backend
     };
   

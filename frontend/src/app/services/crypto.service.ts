@@ -2,9 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { CryptoModel } from '../shared/models/Crypto';
-import { CRYPTO_BY_ID_URL,CRYPTO_HISTORIC,CRYPTO_SEARCH_URL,CRYPTO_URL } from '../shared/constants/urls';
+import { CRYPTO_BY_ID_URL,CRYPTO_HISTORIC,CRYPTO_SEARCH_URL,CRYPTO_URL,CRYPTO_DATA_URL } from '../shared/constants/urls';
 
 import { IHistory } from '../shared/interfaces/IHistory';
+import { ICryptoData } from '../shared/interfaces/ICryptoData';
+import { response } from 'express';
 @Injectable({
   providedIn: 'root'
 })
@@ -17,6 +19,12 @@ export class CryptoService {
       map(response => response)
     );
   } 
+
+  getData(stockSymbol:string):Observable<ICryptoData>{
+    return this.http.get<ICryptoData>(CRYPTO_DATA_URL+stockSymbol).pipe(
+    map(response => response)
+  );
+  }
 
   getAllCryptos():Observable<CryptoModel[]>{
     return this.http.get<CryptoModel[]>(CRYPTO_URL);

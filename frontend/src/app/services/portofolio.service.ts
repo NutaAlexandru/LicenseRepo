@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Portofolio, PurchaseOrder } from '../shared/models/PurchaseOrder';
-import {PURCHASE_INFO_GET_ALL_URL,PORTOFOLIO_INFO_GET_ALL_URL} from '../shared/constants/urls';
+import {PURCHASE_INFO_GET_ALL_URL,PORTOFOLIO_INFO_GET_ALL_URL,PORTOFOLIO_SELL_URL} from '../shared/constants/urls';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -17,5 +17,9 @@ export class PortofolioService {
 
   getUserPortofolio(userId: string):Observable<Portofolio[]> {
     return this.http.get<Portofolio[]>(PORTOFOLIO_INFO_GET_ALL_URL+userId);
+  }
+
+  sellStock(payload: any): Observable<any> {
+    return this.http.post(PORTOFOLIO_SELL_URL,payload);
   }
 }

@@ -9,12 +9,13 @@
       </h2>
       <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
         <div class="accordion-body">
-          <div *ngFor="let order of portfolioItems" class="stock-card">
-            <div class="stock-name">{{ order.stockSymbol }}</div>
-            <div class="stock-value">{{ order.currentValue | currency:'USD':'symbol-narrow' }}</div>
-            <div class="stock-change" [ngClass]="{'positive': order.percentChange >= 0, 'negative': order.percentChange < 0}">
-              {{ order.percentChange | number:'1.2-2' }}%
+          <div *ngFor="let item of portfolioItems" class="stock-card">
+            <div class="stock-name">{{ item.stockSymbol }}</div>
+            <div class="stock-value">{{ item.currentValue | currency:'USD':'symbol-narrow' }}</div>
+            <div class="stock-change" [ngClass]="{'positive': item.percentChange >= 0, 'negative': item.percentChange < 0}">
+              {{ item.percentChange | number:'1.2-2' }}%
             </div>
+            <button type="button" class="btn btn-danger" (click)="openSellModal(item)">Vinde</button>
           </div>
         </div>
       </div>
@@ -56,6 +57,11 @@
     <div class="value">{{ portfolioValue | currency:'USD':'symbol-narrow' }}</div>
   </div>
 </div>
+<highcharts-chart 
+  [Highcharts]="Highcharts"
+  [options]="chartOptions"
+  style="width: 100%; height: 400px; display: block;"
+></highcharts-chart>
 <div class="history-container">
   <div class="order-history">
     <h2>Istoric Comenzi</h2>
@@ -69,5 +75,30 @@
     </div>
   </div>
 </div>
+<ng-template #sellModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Vânzare {{ selectedStock?.stockSymbol }}</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="sellAmount">Număr disponibil de actiuni:{{ selectedStock?.nrOfActions }}</label>
+        <label for="sellAmount">Număr de acțiuni:</label>
+        <input type="number" class="form-control" id="sellAmount" [(ngModel)]="sellAmount" name="sellAmount" required>
+      </div>
+      <div>
+        Valoare totală estimată: {{ sellAmount * selectedStock?.currentPrice | currency:'USD':'symbol-narrow' }}
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Închide</button>
+    <button type="button" class="btn btn-primary" (click)="sellStock()">Confirmă vânzarea</button>
+  </div>
+</ng-template>
+
 
 

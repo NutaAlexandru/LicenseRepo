@@ -22,5 +22,21 @@
     color: #333;
     margin-bottom: 10px;
 }
-
+.card {
+    margin-top: 20px;
+    border-radius: 8px;
+  }
+  
+  .card-title {
+    color: #007bff; /* culoarea tematică Bootstrap pentru link-uri */
+  }
+  
+  .card-text {
+    margin-bottom: 0.5rem;
+  }
+  
+  .fw-bold {
+    font-weight: bold;
+  }
+  
 

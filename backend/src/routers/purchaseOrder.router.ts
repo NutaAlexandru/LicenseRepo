@@ -6,6 +6,8 @@ import { User, UserModel } from '../models/user.model';
 import { PurchaseOrderModel } from '../models/purchase.model';
 import { PortofolioModel } from '../models/purchase.model';
 import { TransactionsModel } from '../models/transaction.model';
+import { StockModel } from '../models/stocks.model';
+import { Stock } from '../models/stocks.model';
 const router = Router();
 
 router.get('/user/purchase-orders/:userId', expressAsyncHandler(async (req, res) => {
@@ -29,7 +31,7 @@ router.get('/user/portofolio/:userId', expressAsyncHandler(async (req, res) => {
 }));
 
 router.post('/purchase-orders', async (req, res) => {
-    const { userId, stockSymbol, stockPrice, stockId, nrOfActions, amount } = req.body;
+    const { userId, stockSymbol, stockPrice, stockId, nrOfActions, amount,type } = req.body;
     const user = await UserModel.findById(userId);
     if (!user) {
         return res.status(404).json({ message: 'User not found' });
@@ -37,14 +39,11 @@ router.post('/purchase-orders', async (req, res) => {
     if (user.balance < amount) {
         return res.status(400).json({ message: 'Insufficient funds' });
     }
-
-    // Validarea datelor
     if (!userId || !stockSymbol || isNaN(stockPrice) || !stockId || isNaN(nrOfActions) || nrOfActions <= 0 || isNaN(amount) || amount <= 0) {
         return res.status(400).json({ message: 'Invalid input data' });
     }
 
     try {
-        // Actualizează sau creează în portofoliu
         const existingPortfolio = await PortofolioModel.findOne({ userId: userId, stockSymbol: stockSymbol });
         if (existingPortfolio) {
             existingPortfolio.nrOfActions += nrOfActions;
@@ -56,7 +55,7 @@ router.post('/purchase-orders', async (req, res) => {
                 stockSymbol,
                 nrOfActions,
                 investedAmount: amount,
-                type: 'stock' // sau 'crypto', depinde de logica ta specifică
+                type: type // sau 'crypto', depinde de logica ta specifică
             });
             await newPortfolio.save();
         }
@@ -73,7 +72,7 @@ router.post('/purchase-orders', async (req, res) => {
             nrOfActions,
             amount,
             transactionType: 'buy',
-            status: 'pending'
+            status: 'executed'
         });
         await purchaseOrder.save();
 
@@ -85,6 +84,56 @@ router.post('/purchase-orders', async (req, res) => {
         res.status(500).json({ message: 'Internal server error', error: error.message });
     }
 });
+router.post('/portfolio/sell', async (req, res) => {
+    console.log(req.body);
+    const { nrOfAction, stockSymbol,stockPrice, userId } = req.body;
+    const amount=nrOfAction * stockPrice;
+    try {
+        const portfolioEntry = await PortofolioModel.findOne({ userId: userId, stockSymbol: stockSymbol });
+      if (!portfolioEntry) {
+        return res.status(404).send('Portfolio entry not found');
+      }
+  
+      // Actualizează numărul de acțiuni
+      if (portfolioEntry.nrOfActions< nrOfAction) {
+        return res.status(400).send('Not enough shares to sell');
+      }
+      portfolioEntry.investedAmount+=amount;
+      portfolioEntry.nrOfActions -= nrOfAction;
+      if (portfolioEntry.nrOfActions === 0) {
+        await portfolioEntry.deleteOne(); // Elimină intrarea dacă nu mai sunt acțiuni
+      } else {
+        await portfolioEntry.save(); // Altfel, actualizează intrarea existentă
+      }
+  
+      // Actualizează soldul utilizatorului
+      const user = await UserModel.findById(userId);
+      const stock = await StockModel.findOne({symbol:stockSymbol});
+      const stockId = stock?._id;
+      if (user) {
+        user.balance += nrOfAction * stockPrice;
+        await user.save();
+      }
+      const purchaseOrder = new PurchaseOrderModel({
+        userId,
+        stockSymbol,
+        stockPrice,
+        stockId,
+        nrOfActions:nrOfAction,
+        amount,
+        transactionType: 'sell',
+        status: 'executed'
+    });
+    await purchaseOrder.save();
+      
+  
+      res.send(JSON.stringify({ message: "Stock sold successfully" }));
+    } catch (error) {
+      console.error('Failed to sell stock', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+  
 
 
   export default router;

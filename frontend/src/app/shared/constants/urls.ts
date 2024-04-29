@@ -25,11 +25,13 @@ export const PURCHASE_INFO_CREATE=PURCHASE_INFO+'/purchase-orders';
 export const PURCHASE_INFO_GET_ALL_URL=PURCHASE_INFO+'/user/purchase-orders/';
 
 export const PORTOFOLIO_INFO_GET_ALL_URL=PURCHASE_INFO+'/user/portofolio/';
+export const PORTOFOLIO_SELL_URL=PURCHASE_INFO+'/portfolio/sell';
 
 export const CRYPTO_URL = BASE_URL+'/api/cryptos';
 export const CRYPTO_SEARCH_URL = CRYPTO_URL+'/crypto/search/';
 export const CRYPTO_BY_ID_URL = CRYPTO_URL+'/';
 export const CRYPTO_HISTORIC=CRYPTO_URL+'/historical/';
+export const CRYPTO_DATA_URL=CRYPTO_URL+'/quote/';
 
 export const USER_LOGIN_URL = BASE_URL+'/api/users/login';
 export const USER_REGISTER_URL = BASE_URL+'/api/users/register';

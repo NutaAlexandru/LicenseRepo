@@ -76,6 +76,43 @@ router.get('/historical/:symbol', (req, res) => {
     request.end();
 });
 
+router.get('/quote/:symbol', expressAsyncHandler(async (req, res) => {
+    const { symbol } = req.params;
+    const apiKey = '79Vi54NgDy5zAVPqBWiSLPxLVyq8VpPI'; // Înlocuiește cu cheia ta reală de la API
+    const options = {
+        hostname: 'financialmodelingprep.com',
+        port: 443,
+        path: `/api/v3/quote/${symbol}?apikey=${apiKey}`,
+        method: 'GET'
+    };
+
+    const request = https.request(options, response => {
+        let data = '';
+
+        response.on('data', chunk => {
+            data += chunk;
+        });
+
+        response.on('end', () => {
+            try {
+                const parsedData = JSON.parse(data);
+                res.json(parsedData);
+            } catch (error) {
+                console.error('Error parsing JSON:', error);
+                res.status(500).send({ message: 'Error parsing the crypto data' });
+            }
+        });
+    });
+
+    request.on('error', error => {
+        console.error('Error with the request:', error);
+        res.status(500).send('An error occurred with the crypto API request');
+    });
+
+    request.end();
+}));
+
+
 router.get("/",expressAsyncHandler(async(req, res) => {
     const crypto=await CryptoModel.find();
     res.send(crypto);
