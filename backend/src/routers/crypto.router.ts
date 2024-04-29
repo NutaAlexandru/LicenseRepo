@@ -96,7 +96,7 @@ router.get('/quote/:symbol', expressAsyncHandler(async (req, res) => {
         response.on('end', () => {
             try {
                 const parsedData = JSON.parse(data);
-                res.json(parsedData);
+                res.json(parsedData[0]);
             } catch (error) {
                 console.error('Error parsing JSON:', error);
                 res.status(500).send({ message: 'Error parsing the crypto data' });
