@@ -1,138 +1,178 @@
+<div class="container mt-4">
+  <app-not-found [visible]="!stock" notFoundMessage="Stock not found" resetLinkText="Homepage"></app-not-found>
+  <!-- Header responsive -->
+  <div class="row mb-2">
+    <div class="col-12">
+      <h1 class="display-4 text-center">{{stock.symbol}} - {{stock.exchangeShortName}}</h1>
+    </div>
+  </div>
+  <!-- Buy button centered -->
+  <div class="row mb-2">
+    <div class="col-12 text-center">
+      <button type="button" class="btn btn-primary" (click)="openBuyModal()">Buy</button>
+    </div>
+  </div>
 
-<app-not-found
-    [visible]="!stock"
-    notFoundMessage="Stock not found"
-    resetLinkText="Homepage">
-</app-not-found>
-<div *ngIf="stock" class="container">
-    <div class="details">
-        <div class="header">
-            <h1>{{stock.symbol}}</h1>
-            <h1>{{stock.exchangeShortName}}</h1>
-            <p>{{stock.type}}</p>
-            <p>{{stock.exchange}}</p>
-        </div>
-        <div class="price-container" *ngIf="marketData">
-            <div class="prices">
-              <div class="price-box">
-                <span class="label">Bid Price:</span>
-                <span class="value">{{ marketData.bidPrice}}</span>
+  <!-- Highcharts chart with responsive handling -->
+  <div class="row mt-2">
+    <div class="col-12">
+      <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions" style="width: 100%; height: 400px; display: block;"></highcharts-chart>
+    </div>
+  </div>
+
+    <div class="accordion accordion-flush mt-4" id="accordionFlushExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+            Key Ratios
+          </button>
+        </h2>
+        <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">
+            <div class="key-ratios mb-4" *ngIf="companyProfile">
+              <div class="card-body">
+                <h5 class="card-title">Key Ratios and Data</h5>
+                <p><span class="detail-label">Market Cap:</span> {{companyProfile.mktCap}}</p>
+                <p><span class="detail-label">Revenue:</span> {{companyProfile.volAvg}}</p>
+                <p><span class="detail-label">Last Dividend:</span> {{companyProfile.lastDiv}}</p>
+                <p><span class="detail-label">Beta:</span> {{companyProfile.beta}}</p>
               </div>
-              <div class="price-box">
-                <span class="label">Ask Price:</span>
-                <span class="value">{{ marketData.askPrice}}</span>
-              </div>
-              <div class="price-box">
-                <span class="label">Last Sale Price:</span>
-                <span class="value">{{ marketData.lastSalePrice}}</span>
+          </div>
+          <div class="container mt-2">
+            <div class="price-change-container" *ngIf="priceChange">
+              <div class="table-responsive">
+                <table class="table table-borderless">
+                  <thead>
+                    <tr class="text-white bg-dark">
+                      <th colspan="6">Price Change (%)</th>
+                    </tr>
+                    <tr class="text-white">
+                      <th scope="col">1D</th>
+                      <th scope="col">1W</th>
+                      <th scope="col">1M</th>
+                      <th scope="col">3M</th>
+                      <th scope="col">6M</th>
+                      <th scope="col">1Y</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="text-white">
+                      <td [ngClass]="{'text-danger': priceChange['1D'] < 0, 'text-success': priceChange['1D'] >= 0}">
+                        {{ priceChange['1D'] | number:'1.2-2' }}%
+                      </td>
+                      <td [ngClass]="{'text-danger': priceChange['5D'] < 0, 'text-success': priceChange['5D'] >= 0}">
+                        {{ priceChange['5D'] | number:'1.2-2' }}%
+                      </td>
+                      <td [ngClass]="{'text-danger': priceChange['1M'] < 0, 'text-success': priceChange['1M'] >= 0}">
+                        {{ priceChange['1M'] | number:'1.2-2' }}%
+                      </td>
+                      <td [ngClass]="{'text-danger': priceChange['3M'] < 0, 'text-success': priceChange['3M'] >= 0}">
+                        {{ priceChange['3M'] | number:'1.2-2' }}%
+                      </td>
+                      <td [ngClass]="{'text-danger': priceChange['6M'] < 0, 'text-success': priceChange['6M'] >= 0}">
+                        {{ priceChange['6M'] | number:'1.2-2' }}%
+                      </td>
+                      <td [ngClass]="{'text-danger': priceChange['1Y'] < 0, 'text-success': priceChange['1Y'] >= 0}">
+                        {{ priceChange['1Y'] | number:'1.2-2' }}%
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
-          <button type="button" class="btn btn-primary" (click)="openBuyModal()">Buy</button>
-          <ng-template #buyModal let-modal>
-            <div class="modal-header">
-              <h5 class="modal-title">Cumpărare {{ companyProfile?.companyName || 'Stock' }}</h5>
-              <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-            </div>
-            <div class="modal-body">
-              <img src="{{companyProfile?.image}}" alt="Company Logo" class="company-logo">
-              <form #buyForm="ngForm">
-                <div class="mb-3">
-                  <label for="amount" class="form-label">Suma:</label>
-                  <input type="number" class="form-control" id="amount" [(ngModel)]="purchaseAmount" name="amount" placeholder="Introduceți suma" required>
-                </div>
-                <div *ngIf="companyProfile?.price">
-                  Prețul pe acțiune este: {{ companyProfile.price | currency:'USD':'symbol-narrow' }}
-                  <br>
-                  Puteți cumpăra până la {{ getMaximumShares(purchaseAmount) | number:'1.2-2' }} acțiuni.
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Închide</button>
-              <button type="button" class="btn btn-primary" (click)="buyStock()">Verificare ordin</button>
-            </div>
-          </ng-template>
-    </div>
-    <div *ngIf="chartOptions">
-        <highcharts-chart 
-          [Highcharts]="Highcharts"
-          [options]="chartOptions"
-          [constructorType]=""
-          style="width: 100%; height: 400px; display: block;">
-        </highcharts-chart>
+          </div>
+        </div>
       </div>
-      <div class="key-ratios" *ngIf="companyProfile">
-        <p><span class="detail-label">Market Cap:</span> {{companyProfile.mktCap}}</p>
-        <p><span class="detail-label">Revenue:</span> {{companyProfile.volAvg}}</p>
-        <p><span class="detail-label">Last Divident:</span> {{companyProfile.lastDiv}}</p>
-        <p><span class="detail-label">Beta:</span> {{companyProfile.beta}}</p>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+            Company Profile
+          </button>
+        </h2>
+        <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">
+            <div class="company-profile-container" *ngIf="companyProfile">
+              <div class="company-header mb-3">
+                <img src="{{companyProfile.image}}" alt="Company Logo" class="img-thumbnail mb-2">
+                <h2 class="h3">{{companyProfile.companyName}}</h2>
+              </div>
+              <div class="company-details">
+                <p><span class="detail-label">CEO:</span> {{companyProfile.ceo}}</p>
+                <p><span class="detail-label">Sector:</span> {{companyProfile.sector}}</p>
+                <p><span class="detail-label">Industry:</span> {{companyProfile.industry}}</p>
+                <p><span class="detail-label">Address:</span> {{companyProfile.address}}, {{companyProfile.city}}, {{companyProfile.state}} {{companyProfile.zip}}</p>
+                <p><span class="detail-label">Website:</span> <a href="{{companyProfile.website}}" target="_blank">{{companyProfile.website}}</a></p>
+                <p class="company-description"><span class="detail-label">Description:</span> {{companyProfile.description}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <!-- <div class="stock-performance" *ngIf="priceChange">
-        <h2>{{ priceChange.symbol }} Performance</h2>
-        <div class="performance-table">
-            <div class="performance-row">
-                <span class="time-frame">1 Day</span>
-                <span class="value">{{ priceChange['1D'] }}</span>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+            Instrument Details
+          </button>
+        </h2>
+        <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">
+            <div class="container mt-2" *ngIf="companyProfile">
+              <div class="card">
+                <div class="card-header">
+                  Detalii Instrument
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                    <strong>TICKER: </strong>
+                    <span class="float-right">{{ companyProfile.symbol }}</span>
+                  </li>
+                  <li class="list-group-item">
+                    <strong>NUMELE COMPLET: </strong>
+                    <span class="float-right">{{ companyProfile.companyName }}</span>
+                  </li>
+                  <li class="list-group-item">
+                    <strong>NUMELE PIEȚEI: </strong>
+                    <span class="float-right">{{ companyProfile.exchangeShortName }}</span>
+                  </li>
+                  <li class="list-group-item">
+                    <strong>ISIN: </strong>
+                    <span class="float-right">{{ companyProfile.isin }}</span>
+                  </li>
+                  <li class="list-group-item">
+                    <strong>VALUTĂ: </strong>
+                    <span class="float-right">{{ companyProfile.currency }}</span>
+                  </li>
+                </ul>
+              </div>
             </div>
-            <div class="performance-row">
-                <span class="time-frame">5 Days</span>
-                <span class="value">{{ priceChange['5D'] }}</span>
-            </div>
-            <div class="performance-row">
-                <span class="time-frame">1 Month</span>
-                <span class="value">{{ priceChange['1M'] }}</span>
-            </div>
-            <div class="performance-row">
-                <span class="time-frame">3 Months</span>
-                <span class="value">{{ priceChange['3M'] }}</span>
-            </div>
-            <div class="performance-row">
-                <span class="time-frame">6 Months</span>
-                <span class="value">{{ priceChange['6M'] }}</span>
-            </div>
-            <div class="performance-row">
-                <span class="time-frame">Year-to-Date</span>
-                <span class="value">{{ priceChange.ytd }}</span>
-            </div>
-            <div class="performance-row">
-                <span class="time-frame">1 Year</span>
-                <span class="value">{{ priceChange['1Y'] }}</span>
-            </div>
-            <div class="performance-row">
-                <span class="time-frame">3 Years</span>
-                <span class="value">{{ priceChange['3Y'] }}</span>
-            </div>
-            <div class="performance-row">
-                <span class="time-frame">5 Years</span>
-                <span class="value">{{ priceChange['5Y'] }}</span>
-            </div>
-            <div class="performance-row">
-                <span class="time-frame">10 Years</span>
-                <span class="value">{{ priceChange['10Y'] }}</span>
-            </div>
-            <div class="performance-row">
-                <span class="time-frame">Max</span>
-                <span class="value">{{ priceChange.max }}</span>
-            </div>
+            
+          </div>
         </div>
-    </div> -->
-      <div class="company-profile-container" *ngIf="companyProfile">
-        <div class="company-header">
-            <img src="{{companyProfile.image}}" alt="Company Logo" class="company-logo">
-            <h2 class="company-title">{{companyProfile.companyName}}</h2>
-        </div>
-        <div class="company-details">
-            <p><span class="detail-label">CEO:</span> {{companyProfile.ceo}}</p>
-            <p><span class="detail-label">Sector:</span> {{companyProfile.sector}}</p>
-            <p><span class="detail-label">Industry:</span> {{companyProfile.industry}}</p>
-            <p><span class="detail-label">Address:</span> {{companyProfile.address}}, {{companyProfile.city}}, {{companyProfile.state}} {{companyProfile.zip}}</p>
-            <p><span class="detail-label">Website:</span> <a href="{{companyProfile.website}}" target="_blank">{{companyProfile.website}}</a></p>
-            <p class="company-description"><span class="detail-label">Description:</span> {{companyProfile.description}}</p>
-        </div>
+      </div>
     </div>
+    
+    <ng-template #buyModal let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title">Purchase {{ companyProfile?.companyName || 'Stock' }}</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <form #buyForm="ngForm">
+          <div class="mb-3">
+            <label for="amount" class="form-label">Amount:</label>
+            <input type="number" class="form-control" id="amount" [(ngModel)]="purchaseAmount" name="amount" placeholder="Enter amount" required>
+          </div>
+          <div *ngIf="companyProfile?.price">
+            Price per share is: {{ companyProfile.price | currency:'USD':'symbol-narrow' }}
+            <br>
+            You can buy up to {{ getMaximumShares(purchaseAmount) | number:'1.2-2' }} shares.
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
+        <button type="button" class="btn btn-primary" (click)="buyStock()">Place Order</button>
+      </div>
+    </ng-template>
 </div>
-
-
-
-

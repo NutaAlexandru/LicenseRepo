@@ -26,6 +26,7 @@ export const PURCHASE_INFO_GET_ALL_URL=PURCHASE_INFO+'/user/purchase-orders/';
 
 export const PORTOFOLIO_INFO_GET_ALL_URL=PURCHASE_INFO+'/user/portofolio/';
 export const PORTOFOLIO_SELL_URL=PURCHASE_INFO+'/portfolio/sell';
+export const PORTOFOLIO_INFO_GET_ALL=PURCHASE_INFO+'/user/portfolio/stats/';
 
 export const CRYPTO_URL = BASE_URL+'/api/cryptos';
 export const CRYPTO_SEARCH_URL = CRYPTO_URL+'/crypto/search/';

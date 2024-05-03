@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit{
      private router:Router,
      private authService: SocialAuthService,
      private toastrService: ToastrService) { 
-
+      
   }
 
   ngOnInit() {
@@ -56,6 +56,7 @@ export class LoginComponent implements OnInit{
     this.returnUrl = this.activatedRoute.snapshot.queryParams.returnUrl;
     
   }
+  
 
   get fc(){
     return this.loginForm.controls;
@@ -76,10 +77,6 @@ handleCredentialResponse(user: SocialUser): void {
     this.userService.validateGoogleToken(user.idToken).subscribe({
       next: (user) => {
         this.isSubmitted = true;
-       // console.log(user.token);
-       // console.log(localStorage)
-        //console.log(user);
-       
       },
       error: (error) => {
         console.error("Eroare la autentificarea cu Google: ", error);

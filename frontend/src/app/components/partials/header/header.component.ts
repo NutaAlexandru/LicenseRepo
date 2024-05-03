@@ -18,22 +18,23 @@ import { Console } from 'console';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-
+  isLoggedIn=false;
   user!:User;
   constructor(private userService:UserService) {
 
-    userService.userObservable.subscribe((newUser)=>{
-      this.user = newUser;
-
-   });
-   //console.log(this.user);
-   console.log(this.isAuth);
+    
+  //  //console.log(this.user);
+  //  console.log(this.isAuth);
   }
+ngOnInit(){
+  this.userService.userObservable.subscribe((newUser)=>{
+    this.user = newUser;
 
+  });
+}
 logout(){
   this.userService.logout();
 }
-
 get isAuth(){
   return this.user.token;
 }

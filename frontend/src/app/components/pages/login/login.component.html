@@ -1,67 +1,38 @@
+<div class="page">
+<div class="container mt-6">
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Loc pentru imagine -->
+            <img src="/assets/girl-2583442_640.jpg" alt="Description of image" class="img-fluid h-75">
+        </div>
+        <div class="col-md-6">
+            <div class="details">
+                <form [formGroup]="loginForm" (ngSubmit)="submit()" class="p-4 shadow-sm rounded bg-white">
+                    
+                    <text-input
+                    [control]="fc.email"
+                    [showErrors]="isSubmitted"
+                    type="email"
+                    label="email"></text-input>
 
-<div class="container">
-    
-    <div class="details">
-        <form [formGroup]="loginForm" (ngSubmit)="submit()">
-            
-            <text-input
-            [control]="fc.email"
-            [showErrors]="isSubmitted"
-            type="email"
-            label="email"></text-input>
-
-            <text-input
-            [control]="fc.password"
-            [showErrors]="isSubmitted"
-            type="password"
-            label="password"></text-input>
-            
-
-            <default-button text="Login"></default-button>
-            <asl-google-signin-button *ngIf="!user" type='standard' size='medium'>
-            </asl-google-signin-button>
-            <!-- <div id="g_id_onload"
-                data-client_id="878958543895-jvesiqudtoi4iaf3kfjjaaipqh51b164.apps.googleusercontent.com"
-                data-context="signin"
-                data-ux_mode="popup"
-                data-itp_support="true"
-                data-callback="handleCredentialResponse">
+                    <text-input
+                    [control]="fc.password"
+                    [showErrors]="isSubmitted"
+                    type="password"
+                    label="password"></text-input>
+                    
+                    <default-button text="Login"></default-button>
+                    <asl-google-signin-button *ngIf="!user" type='standard' size='medium'>
+                    </asl-google-signin-button>
+                    <div class="register mt-3">
+                        New user? &nbsp;
+                        <a routerLink="/register" [queryParams]="{returnUrl : returnUrl}">
+                          Register here
+                        </a>
+                    </div>
+                </form>
             </div>
-
-            <div class="g_id_signin"
-                data-type="standard"
-                data-shape="pill"
-                data-theme="filled_blue"
-                data-text="signin_with"
-                data-size="large"
-                data-logo_alignment="left">
-            </div> -->
-            <div class="register">
-                New user? &nbsp;
-                <a routerLink="/register" [queryParams]="{returnUrl : returnUrl}">
-                  Register here
-                </a>
-            </div>
-        </form>
+        </div>
     </div>
-    
 </div>
-
-
- <!-- <div id="g_id_onload"
-     data-client_id="878958543895-jvesiqudtoi4iaf3kfjjaaipqh51b164.apps.googleusercontent.com"
-     data-context="signin"
-     data-ux_mode="popup"
-     data-login_uri="http://localhost:5000/google/login"
-     data-itp_support="true">
 </div>
-
-<div class="g_id_signin"
-     data-type="standard"
-     data-shape="pill"
-     data-theme="filled_blue"
-     data-text="signin_with"
-     data-size="large"
-     data-logo_alignment="left">
-</div> -->
-

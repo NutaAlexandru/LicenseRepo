@@ -147,7 +147,12 @@ router.get('/historical/:symbol', (req, res) => {
         });
         
         response.on('end', () => {
-            res.json(JSON.parse(data));
+            const parsedData = JSON.parse(data);
+            if (Array.isArray(parsedData)) {
+                res.json(parsedData.reverse()); // Inversează ordinea datelor înainte de a trimite răspunsul
+            } else {
+                res.json(parsedData); // Trimite răspunsul așa cum este dacă nu este un array
+            }
         });
     });
 

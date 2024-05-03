@@ -1,51 +1,32 @@
 .searchbar {
-    width: 100%;
     padding: 10px;
-    top: 0; 
-    z-index: 100;
 }
 
-/* Stilizează lista de acțiuni */
 .list {
-    padding: 0;
     margin-top: 15px; /* Spațiu între bara de căutare și listă */
 }
 
-ul {
-    list-style-type: none; /* Îndepărtează stilul implicit al listei */
-    margin: 0;
-    padding: 0;
-}
-
-ul li {
+.list-group-item {
     background-color: #fff; /* Fundal alb pentru elementele listei */
-    margin-bottom: 10px; /* Spațiu între elementele listei */
-    padding: 10px;
     border-radius: 5px; /* Colțuri rotunjite pentru fiecare element al listei */
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Umbră subtilă pentru fiecare element al listei */
 }
 
-ul li a {
-    text-decoration: none; /* Îndepărtează sublinierea */
-    color: #333; /* Culoare text pentru lista de acțiuni */
+.list-group-item .name {
     display: flex;
-    justify-content: space-between; /* Spațiu între simbol și preț */
-    align-items: center;
-}
-
-ul li a .content {
-    width: 100%;
-}
-
-ul li a .content .name {
+    flex-direction: column;
     font-size: 1rem;
     font-weight: bold; /* Textul mai îndrăzneț pentru nume și preț */
 }
 
-/* Ajustări pentru dispozitivele mobile */
-@media screen and (max-width: 768px) {
-    .searchbar, .list ul li a .content .name {
+.list-group-item .name div:last-child {
+    color: #dc3545; /* Culoarea pentru schimbările de preț (poate fi ajustată la verde pentru creșteri) */
+}
+
+/* Media query-uri pentru ajustări suplimentare pe dispozitive mobile */
+@media (max-width: 768px) {
+    .searchbar, .list .list-group-item .name {
         padding: 10px;
-        font-size: 0.9rem; /* Mărește textul pentru lizibilitate */
+        font-size: 0.9rem; /* Ajustează dimensiunea fontului pentru lizibilitate pe dispozitive mobile */
     }
 }

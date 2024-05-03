@@ -1,18 +1,14 @@
-<app-not-found [visible]="!data || !data.length" resetLinkText="Reset"></app-not-found>
-<div class="stock-list">
-    <div *ngFor="let stock of data" class="stock-card">
-      <div class="stock-header">
-        <div class="stock-symbol">{{ stock.symbol }}</div>
+<div class="container mt-4">
+  <app-not-found [visible]="!data || !data.length" resetLinkText="Reset"></app-not-found>
+  <ul class="list-group">
+    <li *ngFor="let stock of data" class="list-group-item d-flex justify-content-between align-items-center">
+      <div>
+        <h5 class="mb-1">{{ stock.symbol }}</h5>
+        <small>{{ stock.price | currency:'USD':'symbol-narrow' }}</small>
       </div>
-      <div class="stock-body">
-        <div class="stock-price">{{ stock.price | currency:'USD':'symbol-narrow' }}</div>
-        <div class="stock-change" [ngClass]="{'positive': stock.change > 0, 'negative': stock.change < 0}">
-          {{ stock.change }} ({{ stock.changesPercentage | percent:'1.2-2' }})
-        </div>
-      </div>
-      <div class="stock-chart">
-        <!-- Aici ai include graficul. Presupun că ai o componentă/componentă de serviciu pentru asta. -->
-      </div>
-    </div>
+      <span [ngClass]="{'text-success': stock.change > 0, 'text-danger': stock.change < 0}">
+        {{ stock.change }} ({{ stock.changesPercentage | percent:'1.2-2' }})
+      </span>
+    </li>
+  </ul>
 </div>
-  

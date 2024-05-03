@@ -1,9 +1,9 @@
 export class PurchaseOrder{
     userId: string;
     date: Date;
-    stockSymbol:string;
-    stockPrice:number;
-    stockId:string;
+    symbol:string;
+    price:number;
+    id:string;
     nrOfActions:number;
     amount:number;
     status: 'executed' | 'pending' | 'cancelled';
@@ -12,7 +12,7 @@ export class PurchaseOrder{
 
 export class Portofolio{
     userId:string;
-    stockSymbol:string;
+    symbol:string;
     type:'stock' | 'crypto';
     nrOfActions:number;
     investedAmount:number;

@@ -4,18 +4,20 @@
     <div class="accordion-item">
       <h2 class="accordion-header">
         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Accordion Item #1
+          Stocks
         </button>
       </h2>
       <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
         <div class="accordion-body">
-          <div *ngFor="let item of portfolioItems" class="stock-card">
-            <div class="stock-name">{{ item.stockSymbol }}</div>
+          <div *ngFor="let item of getStocks()" class="stock-card">
+            <div *ngIf="item.type==='stock'">
+            <div class="stock-name">{{ item.symbol }}</div>
             <div class="stock-value">{{ item.currentValue | currency:'USD':'symbol-narrow' }}</div>
             <div class="stock-change" [ngClass]="{'positive': item.percentChange >= 0, 'negative': item.percentChange < 0}">
               {{ item.percentChange | number:'1.2-2' }}%
             </div>
             <button type="button" class="btn btn-danger" (click)="openSellModal(item)">Vinde</button>
+          </div>
           </div>
         </div>
       </div>
@@ -23,12 +25,19 @@
     <div class="accordion-item">
       <h2 class="accordion-header">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Accordion Item #2
+          Crypto
         </button>
       </h2>
       <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-        <div class="accordion-body">
-          <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+        <div *ngFor="let item of getCryptos()" class="stock-card">
+          <div *ngIf="item.type==='crypto'">
+          <div class="stock-name">{{ item.symbol }}</div>
+          <div class="stock-value">{{ item.currentValue | currency:'USD':'symbol-narrow' }}</div>
+          <div class="stock-change" [ngClass]="{'positive': item.percentChange >= 0, 'negative': item.percentChange < 0}">
+            {{ item.percentChange | number:'1.2-2' }}%
+          </div>
+          <button type="button" class="btn btn-danger" (click)="openSellModal(item)">Vinde</button>
+        </div>
         </div>
       </div>
     </div>
@@ -67,17 +76,17 @@
     <h2>Istoric Comenzi</h2>
     <div *ngFor="let order of purchaseOrders" class="order-detail">
       <div>Data: {{ order.date | date: 'medium' }}</div>
-      <div>Simbol: {{ order.stockSymbol }}</div>
-      <div>Preț per acțiune: {{ order.stockPrice | currency: 'USD' }}</div>
+      <div>Simbol: {{ order.symbol }}</div>
+      <div>Preț per acțiune: {{ order.price | currency: 'USD' }}</div>
       <div>Număr acțiuni: {{ order.nrOfActions }}</div>
-      <div>Valoare totală: {{ (order.stockPrice * order.nrOfActions) | currency: 'USD' }}</div>
+      <div>Valoare totală: {{ (order.price * order.nrOfActions) | currency: 'USD' }}</div>
       <div>Status: {{ order.status }}</div>
     </div>
   </div>
 </div>
 <ng-template #sellModal let-modal>
   <div class="modal-header">
-    <h5 class="modal-title">Vânzare {{ selectedStock?.stockSymbol }}</h5>
+    <h5 class="modal-title">Vânzare {{ selectedStock?.symbol }}</h5>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>

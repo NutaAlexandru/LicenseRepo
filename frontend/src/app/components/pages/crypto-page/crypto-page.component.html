@@ -13,8 +13,30 @@
             <p>{{crypto.stockExchange}}</p>
             
         </div>
-
-    <button> Buy</button>
+        <button type="button" class="btn btn-primary" (click)="openBuyModal()">Buy</button>
+    <ng-template #buyModal let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title">Cumpărare {{ cryptoData?.name || 'Stock' }}</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <form #buyForm="ngForm">
+          <div class="mb-3">
+            <label for="amount" class="form-label">Suma:</label>
+            <input type="number" class="form-control" id="amount" [(ngModel)]="purchaseAmount" name="amount" placeholder="Introduceți suma" required>
+          </div>
+          <div *ngIf="cryptoData?.price">
+            Prețul pe acțiune este: {{ cryptoData.price | currency:'USD':'symbol-narrow' }}
+            <br>
+            Puteți cumpăra până la {{ getMaximumTokens(purchaseAmount) | number:'1.2-2' }} acțiuni.
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Închide</button>
+        <button type="button" class="btn btn-primary" (click)="buyCrypto()">Verificare ordin</button>
+      </div>
+    </ng-template>
     </div>
     <div *ngIf="chartOptions.series"> <!-- Afișează graficul numai când datele seriei sunt disponibile -->
         <highcharts-chart 

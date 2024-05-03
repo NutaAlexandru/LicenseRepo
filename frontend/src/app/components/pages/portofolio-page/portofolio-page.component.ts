@@ -18,6 +18,7 @@ import { User } from '../../../shared/models/User';
 import { FormsModule } from '@angular/forms';
 import Highcharts from 'highcharts';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { CryptoService } from '../../../services/crypto.service';
 
 export interface ExtendedPurchaseOrder extends PurchaseOrder {
   currentPrice: number;
@@ -39,7 +40,8 @@ export interface ExtendedPortfolioItem  extends Portofolio {
     UserService,
     PortofolioService,
     ToastrService,
-    StockService
+    StockService,
+    CryptoService
   ],
   imports: [
     CommonModule,
@@ -53,7 +55,7 @@ export interface ExtendedPortfolioItem  extends Portofolio {
 })
 export class PortofolioPageComponent implements OnInit {
   stocksAmount:number;
-  cryptoAmount:number=3;
+  cryptoAmount:number;
   etfAmount:number=4;
   portfolioValue: number = 0; // Valoarea cumulativă a acțiunilor deținute
   sellAmount: number = 0;
@@ -66,54 +68,73 @@ export class PortofolioPageComponent implements OnInit {
 
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options ={}
-  loadChart(){
-    this.chartOptions= {
-      chart: {
-        type: 'pie'
-      },
-      title: {
-        text: 'Stocks, Crypto, and ETF Distribution'
-      },
-      series: [{
-        type: 'pie', // Specificați tipul de grafic pentru seria de date
-        name: 'Assets',
-        data: [
-          {
-            name: 'Stocks',
-            y: this.stocksAmount
-             // Variabila care stochează valoarea acțiunilor
-          },
-          {
-            name: 'Crypto',
-            y: this.cryptoAmount // Variabila care stochează valoarea criptomonedelor
-          },
-          {
-            name: 'ETF',
-            y: this.etfAmount // Variabila care stochează valoarea ETF-urilor
-          }
-        ]
-      }]
-    };
-  }
-
-  user:User=this.userService.currentUser;
+  
+  user!:User;
   companyProfile:ICompanyInfo
   constructor(
     private portfolioService: PortofolioService,
     private userService:UserService,
     private stockService:StockService,
     private modalService: NgbModal,
+    private cryptoService: CryptoService,
   ){
+    userService.userObservable.subscribe((newUser)=>{
+      this.user = newUser;
+    });
+    this.loadChart(this.user.id);
   }
+  
 
   ngOnInit(): void {
+    console.log("User ID at initialization:", this.user.id);
     this.loadPortfolio();
     this.loadOrders();
-    console.log(this.portfolioItems.length);
-    console.log(this.portfolioItems);
-    this.stocksAmount=this.portfolioItems.length;
-    this.loadChart();
-    
+  }
+  loadChart(userId: string){
+    this.portfolioService.getPortfolioStats(userId).subscribe({
+      next: (data) => {
+        this.stocksAmount = data.stocks;
+        this.cryptoAmount = data.cryptos;
+        //this.etfAmount = data.etfs || 0;  // Presupunând că ai date pentru ETF-uri și că s-ar putea să nu fie întotdeauna disponibile
+  
+        // Actualizarea graficului imediat după ce datele sunt disponibile
+        this.chartOptions = {
+          chart: {
+            type: 'pie'
+          },
+          title: {
+            text: 'Stocks, Crypto, and ETF Distribution'
+          },
+          series: [{
+            type: 'pie', // Specificați tipul de grafic pentru seria de date
+            name: 'Assets',
+            data: [
+              { name: 'Stocks', y: this.stocksAmount },
+              { name: 'Crypto', y: this.cryptoAmount },
+              { name: 'ETF', y: this.etfAmount }
+            ]
+          }]
+        };
+      },
+      error: (error) => {
+        console.error('Error retrieving portfolio stats:', error);
+      }
+    });
+  }
+
+  loadPortfolioStats(userId: string): void {
+    this.portfolioService.getPortfolioStats(userId).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.stocksAmount = data.stocks;
+        this.cryptoAmount = data.cryptos;
+        console.log(this.stocksAmount);
+        console.log(this.cryptoAmount);
+      },
+      error: (error) => {
+        console.error('Error retrieving portfolio stats:', error);
+      }
+    });
   }
 
   
@@ -124,30 +145,37 @@ export class PortofolioPageComponent implements OnInit {
   }
   loadPortfolio() {
     this.portfolioService.getUserPortofolio(this.user.id).subscribe(portfolioItems => {
+      const portfolioObservables = portfolioItems.map(item => {
+        if (item.type === 'stock') {
+          return this.stockService.getCompanyProfile(item.symbol).pipe(
+            map(profile => ({
+              ...item,
+              currentPrice: profile[0].price,
+              currentValue: profile[0].price * item.nrOfActions,
+              percentChange: (((profile[0].price * item.nrOfActions) - item.investedAmount) / item.investedAmount) * 100
+            }))
+          );
+        } else {
+          return this.cryptoService.getData(item.symbol).pipe(
+            map(profile => ({
+              ...item,
+              currentPrice: profile.price,
+              currentValue: profile.price * item.nrOfActions, // Presupunem că în loc de 'nrOfActions' folosim 'nrOfTokens' pentru cripto
+              percentChange: (((profile.price * item.nrOfActions) - item.investedAmount) / item.investedAmount) * 100
+            }))
+          );
+        }
+      });
       
-      console.log(portfolioItems.length);
-      const portfolioObservables = portfolioItems.map(item =>
-        this.stockService.getCompanyProfile(item.stockSymbol).pipe(
-          map(profile => ({
-            ...item,
-            currentPrice: profile[0].price, // Presupunem că getCompanyProfile întoarce direct profilul
-            currentValue: profile[0].price * item.nrOfActions,
-            percentChange: (((profile[0].price * item.nrOfActions) - item.investedAmount) / item.investedAmount) * 100
-          }))
-        )
-        
-      );
       forkJoin(portfolioObservables).subscribe(extendedItems => {
         this.portfolioItems = extendedItems;
         this.portfolioValue = extendedItems.reduce((sum, currentItem) => sum + currentItem.currentValue, 0);
-        const uniqueStocks = new Set(extendedItems.map(item => item.stockSymbol));
-            this.stocksAmount = uniqueStocks.size;
-            
+        const uniqueIdentifiers = new Set(extendedItems.map(item => item.symbol));
+        this.stocksAmount = uniqueIdentifiers.size;
       });
-      
     });
-    
-  }
+}
+
   loadOrders() {
     if (this.user && this.user.id) {
       this.portfolioService.getUserPurchaseOrders(this.user.id).subscribe({
@@ -172,9 +200,9 @@ export class PortofolioPageComponent implements OnInit {
   
     const payload = {
       userId: this.user.id,
-      stockSymbol: this.selectedStock.stockSymbol,
+      symbol: this.selectedStock.symbol,
       nrOfAction: this.sellAmount,
-      stockPrice: this.selectedStock.currentPrice,
+      price: this.selectedStock.currentPrice,
     };
   
     this.portfolioService.sellStock(payload).subscribe({
@@ -189,6 +217,14 @@ export class PortofolioPageComponent implements OnInit {
         console.error('Failed to sell stock:', error);
       }
     });
+  }
+
+  getStocks() {
+    return this.portfolioItems.filter(item => item.type === 'stock');
+  }
+  
+  getCryptos() {
+    return this.portfolioItems.filter(item => item.type === 'crypto');
   }
   
 }

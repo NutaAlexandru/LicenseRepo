@@ -23,7 +23,23 @@ router.post('/create', expressAsyncHandler(async (req, res) => {
         res.status(404).send({ message: 'User not found' });
         return;
     }
-
+    if(transactionData.type==='withdrawal' && userExists.balance<transactionData.amount){
+        res.status(400).send({ message: 'Insufficient funds' });
+        return;
+    }
+    else if(transactionData.type==='withdrawal' && transactionData.amount<0){
+        res.status(400).send({ message: 'Invalid amount' });
+        return;
+    }
+    else if(transactionData.type==='deposit' && transactionData.amount<0){
+        res.status(400).send({ message: 'Invalid amount' });
+        return;
+    }
+    else if(!transactionData.transactionId){
+        const { v4: uuidv4 } = require('uuid');
+        const id = uuidv4();
+        transactionData.transactionId = id;
+    }
     const newTransaction = new TransactionsModel({
         id:'',
         user: transactionData.user,
@@ -54,11 +70,12 @@ router.put('/update-balance', expressAsyncHandler(async (req, res) => {
     }
     if (transaction.type === 'deposit') {
         tempuser.balance +=transaction.amount;
-    }  else {
+    }  else if (transaction.type === 'withdrawal'){
+        tempuser.balance -= transaction.amount;}
+    else {
         res.status(400).send({ message: 'Invalid transaction type' });
         return;
     }
-
     try {
         const updatedUser = await tempuser.save();
         res.send({

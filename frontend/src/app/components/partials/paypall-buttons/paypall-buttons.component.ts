@@ -46,7 +46,7 @@ export class PaypallButtonsComponent implements OnInit {
           purchase_units: [
             {
               amount: {
-                currency_code: 'CAD',
+                currency_code: 'USD',
                 value: self.transaction.amount,
               },
             },
@@ -64,7 +64,7 @@ export class PaypallButtonsComponent implements OnInit {
               console.log('Transaction created successfully with ID:', transactionId);
               self.transactionService.updateBalance(this.transaction).subscribe({
                 next: (response) => {
-                  //this.userService.depositUpdateUserToLocalStorage(this.transaction.user);
+                  this.userService.depositUpdateUserToLocalStorage(this.transaction.user);
                   console.log(this.transaction.user);
                   console.log('Balance updated successfully');
                 },

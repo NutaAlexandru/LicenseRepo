@@ -1,36 +1,28 @@
-
-<!-- <a routerLink="/dividents">Dividents</a>
-<a routerLink="/news">News</a>
-<a routerLink="/stocks">Stocks</a>
-<a routerLink="/cryptos">Criptos</a> -->
-
-<!-- parent-component.html -->
-
-<div class="container">
-    <div class="lists">
-        <div class="list-selector">
-            <button (click)="selectListComponent('Stocks')">Stocks</button>
-            <button (click)="selectListComponent('Cryptos')">Cryptos</button>
-            <button (click)="selectListComponent('Gainers')">Biggest Gainers</button>
-            <button (click)="selectListComponent('Losers')">Biggest Losers</button>
-            <button (click)="selectListComponent('Active')">Most Active</button>
+<div class="container-fluid p-3 h-100">
+    <div class="row h-100">
+        <div class="col-md-5 d-flex flex-column p-2">
+            <div class="d-flex justify-content-around mb-3">
+                <button class="btn btn-primary" (click)="selectListComponent('Stocks')">Stocks/Etf</button>
+                <button class="btn btn-primary" (click)="selectListComponent('Cryptos')">Cryptos</button>
+                <button class="btn btn-primary" (click)="selectListComponent('Gainers')">Biggest Gainers</button>
+                <button class="btn btn-primary" (click)="selectListComponent('Losers')">Biggest Losers</button>
+                <button class="btn btn-primary" (click)="selectListComponent('Active')">Most Active</button>
+            </div>
+            <div class="flex-grow-1 border p-2 overflow-auto">
+                <app-stocks *ngIf="selectedListComponent === 'Stocks'"></app-stocks>
+                <app-crypto *ngIf="selectedListComponent === 'Cryptos'"></app-crypto>
+                <app-market-order *ngIf="selectedListComponent=== 'Gainers' || selectedListComponent === 'Losers' || selectedListComponent === 'Active'" [selectedList]="selectedListComponent"></app-market-order>
+            </div>
         </div>
-  
-        <div class="list-display">
-            <app-stocks *ngIf="selectedListComponent === 'Stocks'"></app-stocks>
-            <app-crypto *ngIf="selectedListComponent === 'Cryptos'"></app-crypto>
-            <app-market-order *ngIf="selectedListComponent=== 'Gainers' || selectedListComponent === 'Losers' || selectedListComponent === 'Active'" [selectedList]="selectedListComponent"></app-market-order>
-        </div>
-    </div>
-    <div class="informations">
-        <div class="component-selector">
-            <button (click)="selectInformationComponent('Dividents')">Dividents</button>
-            <button (click)="selectInformationComponent('News')">News</button>
-        </div>
-  
-        <div class="component-display">
-            <app-dividents *ngIf="selectedInformationComponent === 'Dividents'"></app-dividents>
-            <app-news *ngIf="selectedInformationComponent === 'News'"></app-news>
+        <div class="col-md-7 d-flex flex-column p-2">
+            <div class="d-flex justify-content-around mb-3">
+                <button class="btn btn-primary" (click)="selectInformationComponent('Dividents')">Dividents</button>
+                <button class="btn btn-primary" (click)="selectInformationComponent('News')">News</button>
+            </div>
+            <div class="flex-grow-1 border p-2 overflow-auto">
+                <app-dividents *ngIf="selectedInformationComponent === 'Dividents'"></app-dividents>
+                <app-news *ngIf="selectedInformationComponent === 'News'"></app-news>
+            </div>
         </div>
     </div>
 </div>

@@ -16,12 +16,12 @@ export interface PurchaseOrder{
 const purchaseOrderSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     date: { type: Date, default: Date.now },
-    stockSymbol: { type: String, required: true },
-    stockPrice: { type: Number, required: true },
-    stockId: { type: mongoose.Schema.Types.ObjectId, ref: 'Stock',required: true },
+    symbol: { type: String, required: true },
+    price: { type: Number, required: true },
+    id: { type: mongoose.Schema.Types.ObjectId, ref: 'Stock',required: true },
     nrOfActions: { type: Number, required: true },
     amount: { type: Number, required: true },
-    transactionType: { type: String, enum: ['buy', 'sell'], default: 'buy' },
+    transactionType: { type: String, enum: ['buy', 'sell']},
     status: { type: String, enum: ['executed', 'pending', 'cancelled'], default: 'pending' },
   },
   {
@@ -44,7 +44,7 @@ export interface Portofolio{
 
 const portfolioSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    stockSymbol: { type: String, required: true },
+    symbol: { type: String, required: true },
     type: { type: String, required: true, enum: ['stock', 'crypto'] },
     nrOfActions: { type: Number, required: true },
     investedAmount: { type: Number, required: true }

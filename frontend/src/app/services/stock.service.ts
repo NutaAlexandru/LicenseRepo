@@ -54,14 +54,14 @@ export class StockService {
     );
   } 
 
-  getMarketData(stockSymbol:string) :Observable<IStockMarketData>{
-    return this.http.get<IStockMarketData>(STOCKMARKETDATA+stockSymbol).pipe(
+  getMarketData(stockSymbol:string) :Observable<IStockMarketData[]>{
+    return this.http.get<IStockMarketData[]>(STOCKMARKETDATA+stockSymbol).pipe(
       map(response => response)
     );
   } 
 
-  getPriceChange(stockSymbol:string) :Observable<IStockPerformance>{
-    return this.http.get<IStockPerformance>(STOCKPRICECHANGE+stockSymbol).pipe(
+  getPriceChange(stockSymbol:string) :Observable<IStockPerformance[]>{
+    return this.http.get<IStockPerformance[]>(STOCKPRICECHANGE+stockSymbol).pipe(
       map(response => response)
     );
   } 

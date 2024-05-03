@@ -90,36 +90,32 @@ export class UserService {
 
     }
   }
-  // depositUpdateUserToLocalStorage(userId: string) {
-  //   return this.http.get<{user: User, token: string}>(USER_DATA_URL + userId).pipe(
-  //     tap({
-  //       next: (response) => {
-  //         console.log(response);
-  //         const user = response.user;
-  //         user.token = response.token; // Presupunând că vrei să actualizezi și tokenul în modelul de User
-  //         this.setUserToLocalStorage(user);
-  //         this.userSubject.next(user);
-  //         this.toastrService.success('Deposit Successful');
-  //         window.location.reload();
-  //         // Nu este recomandat să folosești window.location.reload(); în aplicațiile SPA, deoarece reîncărcați întreaga pagină, ceea ce încalcă principiul Single Page Application.
-  //         // În schimb, ar trebui să actualizezi UI-ul prin Angular bindings.
-  //       },
-  //       error: (errorResponse) => {
-  //         this.toastrService.error(errorResponse.error, 'Deposit failed');
-  //       }
-  //     })
-  //   );
-  // }
+  depositUpdateUserToLocalStorage(userId: string) {
+    return this.http.get<User>(USER_DATA_URL + userId).pipe(
+      tap({
+        next: (response) => {
+          console.log(response);
+          this.setUserToLocalStorage(response);
+          this.userSubject.next(response);
+          this.toastrService.success('Deposit Successful');
+          window.location.reload();
+        },
+        error: (errorResponse) => {
+          this.toastrService.error(errorResponse.error, 'Deposit failed');
+        }
+      })
+    );
+  }
   public get currentUser():User{
     return this.userSubject.value;
   }
 
   updateUser(userId: string, address: string): Observable<any> {
-    return this.http.put<any>(USER_UPDATE_URL+userId, { address }).pipe(
+    return this.http.put<User>(USER_UPDATE_URL+userId, { address }).pipe(
       tap({
         next: (response) => {
-          this.setUserToLocalStorage(response.user);
-          this.userSubject.next(response.user);
+          this.setUserToLocalStorage(response);
+          this.userSubject.next(response);
           this.toastrService.success('Address updated successfully');
           window.location.reload();
         },

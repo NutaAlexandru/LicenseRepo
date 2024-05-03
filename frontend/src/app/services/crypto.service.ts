@@ -2,11 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { CryptoModel } from '../shared/models/Crypto';
-import { CRYPTO_BY_ID_URL,CRYPTO_HISTORIC,CRYPTO_SEARCH_URL,CRYPTO_URL,CRYPTO_DATA_URL } from '../shared/constants/urls';
+import { CRYPTO_BY_ID_URL,CRYPTO_HISTORIC,CRYPTO_SEARCH_URL,CRYPTO_URL,CRYPTO_DATA_URL, PURCHASE_INFO_CREATE } from '../shared/constants/urls';
 
 import { IHistory } from '../shared/interfaces/IHistory';
 import { ICryptoData } from '../shared/interfaces/ICryptoData';
 import { response } from 'express';
+import { PurchaseOrder } from '../shared/models/PurchaseOrder';
 @Injectable({
   providedIn: 'root'
 })
@@ -36,6 +37,11 @@ export class CryptoService {
 
   getCryptosById(id:string):Observable<CryptoModel>{
     return this.http.get<CryptoModel>(CRYPTO_BY_ID_URL+id);
+  }
+
+  createPurchaseOrder(purchaseOrderData:PurchaseOrder): Observable<PurchaseOrder> {
+    
+    return this.http.post<PurchaseOrder>(PURCHASE_INFO_CREATE, purchaseOrderData);
   }
 
 

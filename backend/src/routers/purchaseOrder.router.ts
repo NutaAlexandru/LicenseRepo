@@ -8,6 +8,7 @@ import { PortofolioModel } from '../models/purchase.model';
 import { TransactionsModel } from '../models/transaction.model';
 import { StockModel } from '../models/stocks.model';
 import { Stock } from '../models/stocks.model';
+import { CryptoModel } from '../models/crypto.model';
 const router = Router();
 
 router.get('/user/purchase-orders/:userId', expressAsyncHandler(async (req, res) => {
@@ -31,7 +32,7 @@ router.get('/user/portofolio/:userId', expressAsyncHandler(async (req, res) => {
 }));
 
 router.post('/purchase-orders', async (req, res) => {
-    const { userId, stockSymbol, stockPrice, stockId, nrOfActions, amount,type } = req.body;
+    const { userId, symbol, price, id, nrOfActions, amount,type } = req.body;
     const user = await UserModel.findById(userId);
     if (!user) {
         return res.status(404).json({ message: 'User not found' });
@@ -39,12 +40,12 @@ router.post('/purchase-orders', async (req, res) => {
     if (user.balance < amount) {
         return res.status(400).json({ message: 'Insufficient funds' });
     }
-    if (!userId || !stockSymbol || isNaN(stockPrice) || !stockId || isNaN(nrOfActions) || nrOfActions <= 0 || isNaN(amount) || amount <= 0) {
+    if (!userId || !symbol || isNaN(price) || !id || isNaN(nrOfActions) || nrOfActions <= 0 || isNaN(amount) || amount <= 0) {
         return res.status(400).json({ message: 'Invalid input data' });
     }
 
     try {
-        const existingPortfolio = await PortofolioModel.findOne({ userId: userId, stockSymbol: stockSymbol });
+        const existingPortfolio = await PortofolioModel.findOne({ userId: userId, symbol: symbol });
         if (existingPortfolio) {
             existingPortfolio.nrOfActions += nrOfActions;
             existingPortfolio.investedAmount += amount;
@@ -52,7 +53,7 @@ router.post('/purchase-orders', async (req, res) => {
         } else {
             const newPortfolio = new PortofolioModel({
                 userId,
-                stockSymbol,
+                symbol,
                 nrOfActions,
                 investedAmount: amount,
                 type: type // sau 'crypto', depinde de logica ta specifică
@@ -66,9 +67,9 @@ router.post('/purchase-orders', async (req, res) => {
 
         const purchaseOrder = new PurchaseOrderModel({
             userId,
-            stockSymbol,
-            stockPrice,
-            stockId,
+            symbol,
+            price,
+            id,
             nrOfActions,
             amount,
             transactionType: 'buy',
@@ -86,10 +87,10 @@ router.post('/purchase-orders', async (req, res) => {
 });
 router.post('/portfolio/sell', async (req, res) => {
     console.log(req.body);
-    const { nrOfAction, stockSymbol,stockPrice, userId } = req.body;
-    const amount=nrOfAction * stockPrice;
+    const { nrOfAction, symbol,price, userId } = req.body;
+    const amount=nrOfAction * price;
     try {
-        const portfolioEntry = await PortofolioModel.findOne({ userId: userId, stockSymbol: stockSymbol });
+        const portfolioEntry = await PortofolioModel.findOne({ userId: userId, symbol: symbol });
       if (!portfolioEntry) {
         return res.status(404).send('Portfolio entry not found');
       }
@@ -100,6 +101,7 @@ router.post('/portfolio/sell', async (req, res) => {
       }
       portfolioEntry.investedAmount+=amount;
       portfolioEntry.nrOfActions -= nrOfAction;
+      portfolioEntry.investedAmount-=amount;
       if (portfolioEntry.nrOfActions === 0) {
         await portfolioEntry.deleteOne(); // Elimină intrarea dacă nu mai sunt acțiuni
       } else {
@@ -108,17 +110,21 @@ router.post('/portfolio/sell', async (req, res) => {
   
       // Actualizează soldul utilizatorului
       const user = await UserModel.findById(userId);
-      const stock = await StockModel.findOne({symbol:stockSymbol});
-      const stockId = stock?._id;
+      const stock = await StockModel.findOne({symbol:symbol});
+      var id = stock?._id;
+      if(!id){
+        const crypto = await CryptoModel.findOne({symbol:symbol});
+        id=crypto?._id;
+      }
       if (user) {
-        user.balance += nrOfAction * stockPrice;
+        user.balance += nrOfAction * price;
         await user.save();
       }
       const purchaseOrder = new PurchaseOrderModel({
         userId,
-        stockSymbol,
-        stockPrice,
-        stockId,
+        symbol,
+        price,
+        id,
         nrOfActions:nrOfAction,
         amount,
         transactionType: 'sell',
@@ -134,6 +140,21 @@ router.post('/portfolio/sell', async (req, res) => {
     }
   });
   
+  router.get('/user/portfolio/stats/:userId', expressAsyncHandler(async (req, res) => {
+    const userId = req.params.userId;
+    try {
+        const portfolioItems = await PortofolioModel.find({ userId: userId });
+        const stats = {
+            stocks: portfolioItems.filter(item => item.type === 'stock').length,
+            cryptos: portfolioItems.filter(item => item.type === 'crypto').length
+        };
+        res.status(200).send(stats);
+    } catch (error:any) {
+        res.status(500).send({ message: 'Error retrieving portfolio items', error: error.message });
+    }
+}));
+
+
 
 
   export default router;
