@@ -14,7 +14,7 @@ import { TransactionHistoryComponent } from '../transaction-history/transaction-
   selector: 'app-profile-page',
   standalone: true,
   providers:[UserService,ToastrService],
-  imports: [CommonModule,RouterModule,HttpClientModule,FormsModule,InputContainerComponent,TransactionHistoryComponent
+  imports: [CommonModule,RouterModule,HttpClientModule,FormsModule,TransactionHistoryComponent
   ],
   templateUrl: './profile-page.component.html',
   styleUrl: './profile-page.component.css'

@@ -1,26 +1,117 @@
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" 
-  data-bs-target="#exampleModal">
-  Launch demo modal
-</button>
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria- 
-  labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title text-danger" id="exampleModalLabel">Hey 
-      Bootstrap 5!!</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" 
-       aria-label="Close"></button>
+<div class="page">  
+  <div class="hero-part">
+    <div class="hero-text text-center text-white p-5">
+      <h1 class="display-3">INVESTING IN TOMORROW'S LEADERS</h1>
+      <p class="lead">Your best trading platform</p>
+      <button *ngIf="user.id" class="btn btn-primary" routerLink="/" class="logo">START TO INVEST</button>
+      <button *ngIf="!user.id" class="btn btn-primary" routerLink="/login" class="logo">START TO INVEST</button>
+    </div>
+  </div>
+  
+  <div class="info-section bg-light text-dark pt-5 pb-5" id="about">
+    <div class="container" >
+      <h2>About Our Platform</h2>
+      <p>This section can describe what your platform does, the services you offer, or why people should choose your trading platform. Here, you can also add links or calls to action, such as 'Learn More' or 'Sign Up' buttons.</p>
+      <a href="#" class="btn btn-primary">Learn More</a>
+    </div>
+
+  <div class="bg-dark text-white text-center p-3">
+      <div class="container">
+          <h2>Fearless Investments in Over 5 Industries</h2>
       </div>
-      <div class="modal-body text-danger">
-       Therichpost.com
+  </div>
+  
+  <div class="custom-section bg-dark text-white text-center p-5">
+      <div class="container">
+          <h2>Another Bold Statement Here</h2>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-warning" data-bs- 
-       dismiss="modal">Close</button>
+  </div>
+
+  <div class="container my-5">
+    <h2 class="text-center mb-4">Why Choose Our Platform?</h2>
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">We Invest Early</h5>
+            <p class="card-text">We identify and invest in talent at its inception, providing full support for growth.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Fearless but Educated Investments</h5>
+            <p class="card-text">We undertake thorough research to back every investment, ensuring it's both bold and smart.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">More than 30 Years Experience</h5>
+            <p class="card-text">Leverage three decades of industry insight for your startup's success.</p>
+          </div>
+        </div>
+      </div>
+      <!-- Mai adaugă alte carduri după modelul de mai sus, dacă este necesar -->
+    </div>
+  </div>
+  
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Contact Us</h2>
+    
+    <div class="row">
+      <div class="col-md-6">
+        <h4>For any inquiries, please call or email us:</h4>
+        <p><strong>Phone:</strong> 123-456-7890</p>
+        <p><strong>Email:</strong> info&#64;mysite.com</p>
+        
+        <h4>Our Address</h4>
+        <p>500 Terry Francois Street, San Francisco, CA 94158</p>
+        <p><strong>Email:</strong> info&#64;mysite.com</p>
+      </div>
+      <div class="col-md-6">
+        <h4>Alternatively</h4>
+        <p>You can fill in the following contact form:</p>
+        <form>
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Enter your name">
+          </div>
+          <div class="mb-3">
+            <label for="phone" class="form-label">Phone</label>
+            <input type="text" class="form-control" id="phone" placeholder="Enter your phone number">
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter your email">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
       </div>
     </div>
   </div>
+  <footer class="bg-dark text-white pt-3 pb-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p>500 Terry Francois Street, San Francisco, CA 94158</p>
+                <p>Email: info&#64;mysite.com | Phone: 123-456-7890</p>
+            </div>
+            <div class="col-md-6 text-md-right">
+                <a  class="text-white mr-2"><i class="fab fa-facebook-f"></i></a>
+                <a class="text-white mr-2"><i class="fab fa-twitter"></i></a>
+                <a  class="text-white mr-2"><i class="fab fa-linkedin-in"></i></a>
+                <a  class="text-white"><i class="fas fa-arrow-up"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 text-center mt-2">
+                © 2023 by Roland VC. Powered and secured by Wix
+            </div>
+        </div>
+    </div>
+</footer>
 </div>

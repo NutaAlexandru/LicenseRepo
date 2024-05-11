@@ -12,6 +12,7 @@ import { User } from '../../../shared/models/User';
 import { UserService } from '../../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { IHistory } from '../../../shared/interfaces/IHistory';
 @Component({
   selector: 'app-crypto-page',
   standalone: true,
@@ -51,48 +52,116 @@ export class CryptoPageComponent implements OnInit {
         if (params.id) {
           this.cryptoService.getCryptosById(params.id).subscribe((cryptoData) => {
             this.crypto = cryptoData;
-            //this.loadChartData();
+            this.resetChartData();
+            this.loadChartData(this.crypto.symbol);
             this.loadCryptoData(this.crypto.symbol);
-            
           });
-          
         }
       });
-      console.log(this.cryptoData);
+    }
+    resetChartData() {
+      this.chartOptions = {}; // Reset chart options to initial state
     }
     
-    loadChartData(): void {
-      //console.log(this.crypto.symbol);
-      if (this.crypto && this.crypto.symbol) {
-        this.cryptoService.getHistoricalData(this.crypto.symbol).subscribe(data => {
+    loadChartData(stockSymbol: string): void {
+      this.cryptoService.getHistoricalData(stockSymbol).subscribe(
+        data => {
+          const ohlc = data.map(item => [
+            (new Date(item.date)).getTime(), // Convert date to timestamp
+            parseFloat(item.open),
+            parseFloat(item.high),
+            parseFloat(item.low),
+            parseFloat(item.close)
+          ]);
+          const volume = data.map(item => [
+            (new Date(item.date)).getTime(), // Convert date to timestamp
+            parseInt(item.volume)
+          ]);
+    
+          // Build the chart options directly in the subscribe
           this.chartOptions = {
-            title: {
-              text: `${this.crypto.symbol} Historical Cryptocurrency Price`
+            stockTools: {
+              gui: {
+                enabled: true // enable or disable the stockTools GUI
+              }
             },
-            xAxis: {
-              type: 'datetime',
-              dateTimeLabelFormats: {
-                hour: '%H:%M', // formatul pentru ore
-            },
-            title: {
-              text: 'day'
-            },
-            tickInterval: 3600 * 1000,
-            },
-            yAxis: {
-              title: {
-                text: 'Price',
-                
+            yAxis: [{
+              labels: {
+                align: 'left'
+              },
+              height: '80%',
+              resize: {
+                enabled: true
+              }
+            }, {
+              labels: {
+                align: 'left'
+              },
+              top: '80%',
+              height: '20%',
+              offset: 0
+            }],
+            tooltip: {
+              shape: 'callout',
+              headerShape: 'callout',
+              borderWidth: 0,
+              shadow: false,
+              positioner: function(width, height, point) {
+                const chart = this.chart;
+                let position;
+    
+                if (point.isHeader) {
+                  position = {
+                    x: Math.max(
+                      chart.plotLeft,
+                      Math.min(
+                        point.plotX + chart.plotLeft - width / 2,
+                        chart.chartWidth - width - chart.options.chart.marginRight
+                      )
+                    ),
+                    y: point.plotY
+                  };
+                } else {
+                  const yAxisPosition = point.series.yAxis.toPixels(point.y, true);
+                  position = {
+                    x: point.series.chart.plotLeft,
+                    y: yAxisPosition - chart.plotTop
+                  };
+                }
+    
+                return position;
               }
             },
             series: [{
-              name: `${this.crypto.symbol} Cryptocurrency Price`,
-              data: data.map(item => [new Date(item.date).getTime(), item.close]),
-              type: 'line'
-            }]
+              type: 'line',
+              id: `${stockSymbol}-ohlc`, // Ensure dynamic ID
+              name: `${stockSymbol} Price`,
+              data: ohlc
+            }, {
+              type: 'column',
+              id: `${stockSymbol}-volume`, // Ensure dynamic ID
+              name: `${stockSymbol} Volume`,
+              data: volume,
+              yAxis: 1
+            }],
+            responsive: {
+              rules: [{
+                condition: {
+                  //maxWidth: 800
+                },
+                chartOptions: {
+                  rangeSelector: {
+                    inputEnabled: true,
+                  }
+                }
+              }]
+            }
           };
-        });
-      }
+        },
+        error => {
+          console.error('Error retrieving stock data', error);
+        }
+      );
     }
     loadCryptoData(symbol: string): void {
       if (symbol) {

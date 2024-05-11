@@ -16,9 +16,11 @@ import { forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../../../shared/models/User';
 import { FormsModule } from '@angular/forms';
-import Highcharts from 'highcharts';
 import { HighchartsChartModule } from 'highcharts-angular';
+import * as  Highcharts from 'highcharts/highstock';
 import { CryptoService } from '../../../services/crypto.service';
+import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 export interface ExtendedPurchaseOrder extends PurchaseOrder {
   currentPrice: number;
@@ -47,7 +49,9 @@ export interface ExtendedPortfolioItem  extends Portofolio {
     CommonModule,
     NgbModule,
     FormsModule,
-    HighchartsChartModule
+    HighchartsChartModule,
+    RouterModule,
+    HttpClientModule
 
   ],
   templateUrl: './portofolio-page.component.html',
@@ -62,14 +66,15 @@ export class PortofolioPageComponent implements OnInit {
   purchaseOrders: PurchaseOrder[] = [];
   portfolioItems: ExtendedPortfolioItem[] = [];
   selectedStock: ExtendedPortfolioItem | null = null;
+  showChart: boolean = false;
 
   modalRef!: NgbModalRef; // Referința la modal
   @ViewChild('sellModal') sellModal: any;
-
-  Highcharts: typeof Highcharts = Highcharts;
-  chartOptions: Highcharts.Options ={}
-  
   user!:User;
+   Highcharts: typeof Highcharts = Highcharts;
+   chartOptions: Highcharts.Options ={};
+  
+
   companyProfile:ICompanyInfo
   constructor(
     private portfolioService: PortofolioService,
@@ -77,64 +82,52 @@ export class PortofolioPageComponent implements OnInit {
     private stockService:StockService,
     private modalService: NgbModal,
     private cryptoService: CryptoService,
-  ){
-    userService.userObservable.subscribe((newUser)=>{
-      this.user = newUser;
-    });
-    this.loadChart(this.user.id);
-  }
+  ){}
   
 
   ngOnInit(): void {
-    console.log("User ID at initialization:", this.user.id);
+    this.userService.userObservable.subscribe((newUser)=>{
+      this.user = newUser;
+      console.log(this.user);
+      this.loadFunctions();
+    });
+  }
+  hideStats(){
+    this.showChart = false;
+  }
+  loadFunctions(){
     this.loadPortfolio();
     this.loadOrders();
+    this.loadPortfolioStats();
   }
-  loadChart(userId: string){
-    this.portfolioService.getPortfolioStats(userId).subscribe({
-      next: (data) => {
-        this.stocksAmount = data.stocks;
-        this.cryptoAmount = data.cryptos;
-        //this.etfAmount = data.etfs || 0;  // Presupunând că ai date pentru ETF-uri și că s-ar putea să nu fie întotdeauna disponibile
-  
-        // Actualizarea graficului imediat după ce datele sunt disponibile
-        this.chartOptions = {
-          chart: {
-            type: 'pie'
-          },
-          title: {
-            text: 'Stocks, Crypto, and ETF Distribution'
-          },
-          series: [{
-            type: 'pie', // Specificați tipul de grafic pentru seria de date
-            name: 'Assets',
-            data: [
-              { name: 'Stocks', y: this.stocksAmount },
-              { name: 'Crypto', y: this.cryptoAmount },
-              { name: 'ETF', y: this.etfAmount }
-            ]
-          }]
-        };
-      },
-      error: (error) => {
-        console.error('Error retrieving portfolio stats:', error);
-      }
-    });
+  loadChartData() {
+
+    const data = [
+      { name: 'Stocks', y: this.stocksAmount, sliced: true, selected: true },
+      { name: 'Cryptocurrencies', y: this.cryptoAmount }
+    ];
+    this.chartOptions = {
+      chart: {
+        type: 'pie'
+    },
+    title: {
+        text: 'Distribution of assets in your portfolio'
+    },
+    series: [{
+      type: 'pie',
+      id: 'Stats',
+      name: 'Stats',
+      data: data
+    }]
+    };
+    this.showChart = true;
   }
 
-  loadPortfolioStats(userId: string): void {
-    this.portfolioService.getPortfolioStats(userId).subscribe({
-      next: (data) => {
-        console.log(data);
+  loadPortfolioStats(): void {
+    this.portfolioService.getPortfolioStats(this.user.id).subscribe( (data) => {
         this.stocksAmount = data.stocks;
         this.cryptoAmount = data.cryptos;
-        console.log(this.stocksAmount);
-        console.log(this.cryptoAmount);
-      },
-      error: (error) => {
-        console.error('Error retrieving portfolio stats:', error);
-      }
-    });
+      });
   }
 
   
@@ -187,6 +180,11 @@ export class PortofolioPageComponent implements OnInit {
         }
       });
     }
+  }
+  displayLimit = 3;
+
+  showMore(): void {
+    this.displayLimit += 3;
   }
   openSellModal(item: ExtendedPortfolioItem) {
     this.selectedStock = item;

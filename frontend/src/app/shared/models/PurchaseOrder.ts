@@ -13,6 +13,7 @@ export class PurchaseOrder{
 export class Portofolio{
     userId:string;
     symbol:string;
+    symbolId:string;
     type:'stock' | 'crypto';
     nrOfActions:number;
     investedAmount:number;

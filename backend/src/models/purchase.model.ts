@@ -45,6 +45,7 @@ export interface Portofolio{
 const portfolioSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     symbol: { type: String, required: true },
+    symbolId: { type: mongoose.Schema.Types.ObjectId, required: true },
     type: { type: String, required: true, enum: ['stock', 'crypto'] },
     nrOfActions: { type: Number, required: true },
     investedAmount: { type: Number, required: true }

@@ -1,14 +1,15 @@
 <header>
   <div class="container">
-    <a routerLink="/" class="logo">Trading Platform</a>
+    <a routerLink="/hello" class="logo">Trading Platform</a>
     <nav>
       <ul>
+        
         <a *ngIf="isAuth" routerLink="/deposit">Balance:{{user.balance}} USD</a>
         <li *ngIf="!isAuth">
           <a routerLink="/login">Login</a>
         </li>
         <li *ngIf="isAuth" class="menu-container">
-          <a routerLink="/dashboard">{{ user.name }}</a> <!-- Modifică aici -->
+          <a>{{ user.name }}</a> <!-- Modifică aici -->
           <div class="menu">
             <a [routerLink]="['/profile', user.id]">Profile</a>
             <a routerLink="/portofolio">Portofolio</a>

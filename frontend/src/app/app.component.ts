@@ -5,6 +5,10 @@ import { HomeComponent } from './components/pages/home/home.component';
 import { HttpClientModule,HTTP_INTERCEPTORS} from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoadingComponent } from './components/partials/loading/loading.component';
+import { User } from './shared/models/User';
+import { UserService } from './services/user.service';
+import { FirstPageComponent } from './components/pages/first-page/first-page.component';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -14,18 +18,20 @@ import { LoadingComponent } from './components/partials/loading/loading.componen
   selector: 'app-root',
   standalone: true,
   providers: [],
-  imports: [ReactiveFormsModule,HttpClientModule,RouterOutlet,HeaderComponent,HomeComponent,RouterModule,LoadingComponent],
+  imports: [ReactiveFormsModule,HttpClientModule,RouterOutlet,HeaderComponent,HomeComponent,RouterModule,LoadingComponent,FirstPageComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 
 export class AppComponent implements OnInit {
+
   title = 'frontend';
   isLoading = true;
   constructor(){
     setTimeout(() => {
       this.isLoading = false;
     }, 3000);
+
   }
 
   ngOnInit() {

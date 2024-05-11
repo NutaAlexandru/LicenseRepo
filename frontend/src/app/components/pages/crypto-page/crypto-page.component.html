@@ -1,80 +1,98 @@
-<app-not-found
-    [visible]="!crypto"
-    notFoundMessage="Stock not found"
-    resetLinkText="Homepage">
-</app-not-found>
-<div *ngIf="crypto" class="container">
-    <div class="details">
-        <div class="header">
-            <p>{{crypto.name}}</p>
-            <h1>{{crypto.symbol}}</h1>
-            <h1>{{crypto.exchangeShortNumber}}</h1>
-            <p>{{crypto.currency}}</p>
-            <p>{{crypto.stockExchange}}</p>
-            
+<div class="container mt-4">
+  <app-not-found [visible]="!crypto" notFoundMessage="Crypto not found" resetLinkText="Homepage"></app-not-found>
+  
+  <!-- Header responsive -->
+  <div class="row mb-2" *ngIf="crypto && cryptoData">
+      <div class="col-12">
+          <div class="title" style="text-align: center;">
+              <h1 class="display-4">{{ crypto.symbol }} - {{ crypto.exchangeShortNumber }}</h1>
+              <h2>{{ crypto.name }}</h2>
+              <p>{{ crypto.currency }}</p>
+              <p>{{ crypto.stockExchange }}</p>
+          </div>
+      </div>
+      <div class="col-12 d-flex align-items-center justify-content-between">
+          <div class="price" style="flex-grow: 1; text-align: left;">
+              ${{ cryptoData.price }}
+          </div>
+          <div class="logo" style="flex-grow: 1; text-align: right;">
+              <!-- <img src="{{ cryptoData }}" alt="Crypto Logo" style="width: auto; max-height: 60px;"> -->
+          </div>
+      </div>
+      <ng-template #buyModal let-modal>
+        <div class="modal-header">
+            <h5 class="modal-title">Purchase {{ cryptoData?.name || 'Crypto' }}</h5>
+            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
         </div>
-        <button type="button" class="btn btn-primary" (click)="openBuyModal()">Buy</button>
-    <ng-template #buyModal let-modal>
-      <div class="modal-header">
-        <h5 class="modal-title">Cumpărare {{ cryptoData?.name || 'Stock' }}</h5>
-        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-      </div>
-      <div class="modal-body">
-        <form #buyForm="ngForm">
-          <div class="mb-3">
-            <label for="amount" class="form-label">Suma:</label>
-            <input type="number" class="form-control" id="amount" [(ngModel)]="purchaseAmount" name="amount" placeholder="Introduceți suma" required>
-          </div>
-          <div *ngIf="cryptoData?.price">
-            Prețul pe acțiune este: {{ cryptoData.price | currency:'USD':'symbol-narrow' }}
-            <br>
-            Puteți cumpăra până la {{ getMaximumTokens(purchaseAmount) | number:'1.2-2' }} acțiuni.
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Închide</button>
-        <button type="button" class="btn btn-primary" (click)="buyCrypto()">Verificare ordin</button>
-      </div>
+        <div class="modal-body">
+            <form #buyForm="ngForm">
+                <div class="mb-3">
+                    <label for="amount" class="form-label">Amount:</label>
+                    <input type="number" class="form-control" id="amount" [(ngModel)]="purchaseAmount" name="amount" placeholder="Introduceți suma" required>
+                </div>
+                <div *ngIf="cryptoData?.price">
+                    Price per share is: {{ cryptoData.price | currency:'USD':'symbol-narrow' }}
+                    <br>
+                    You can buy up to {{ getMaximumTokens(purchaseAmount) | number:'1.2-2' }} shares.
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
+            <button type="button" class="btn btn-primary" (click)="buyCrypto()">Place Order</button>
+        </div>
     </ng-template>
-    </div>
-    <div *ngIf="chartOptions.series"> <!-- Afișează graficul numai când datele seriei sunt disponibile -->
-        <highcharts-chart 
-          [Highcharts]="Highcharts"
-          [options]="chartOptions"
-          
-          style="width: 100%; height: 400px; display: block;">
-        </highcharts-chart>
+  </div>
+
+  <!-- Buy button centered -->
+  <div class="row mb-2">
+      <div class="col-12 text-center">
+          <button type="button" class="btn btn-primary" (click)="openBuyModal()">Buy</button>
       </div>
-      <div class="container mt-3">
-        <div class="row">
-          <div class="col-6">
-            <div class="card shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title">Day's Range</h5>
-                <p class="card-text">
-                  Low: <span class="fw-bold">{{cryptoData?.dayLow}}</span>
-                </p>
-                <p class="card-text">
-                  High: <span class="fw-bold">{{cryptoData?.dayHigh}}</span>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="card shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title">52W Range</h5>
-                <p class="card-text">
-                  Low: <span class="fw-bold">{{cryptoData?.yearLow}}</span>
-                </p>
-                <p class="card-text">
-                  High: <span class="fw-bold">{{cryptoData?.yearHigh}}</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+  </div>
+
+  <!-- Highcharts chart with responsive handling -->
+  <div class="row mt-2">
+      <div class="col-12">
+          <highcharts-chart [Highcharts]="Highcharts" [constructorType]="'stockChart'" [options]="chartOptions" style="width: 100%; height: 400px; display: block;"></highcharts-chart>
       </div>
-      
+  </div>
+
+  <!-- Accordion for additional data -->
+  <div class="accordion accordion-flush mt-4" id="accordionFlushExample">
+      <div class="accordion-item">
+          <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                  Trading Range
+              </button>
+          </h2>
+          <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body">
+                  <div class="row">
+                      <div class="col-6">
+                          <div class="card shadow-sm">
+                              <div class="card-body">
+                                  <h5 class="card-title">Day's Range</h5>
+                                  <p class="card-text">Low: <span class="fw-bold">{{cryptoData?.dayLow}}</span></p>
+                                  <p class="card-text">High: <span class="fw-bold">{{cryptoData?.dayHigh}}</span></p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-6">
+                          <div class="card shadow-sm">
+                              <div class="card-body">
+                                  <h5 class="card-title">52W Range</h5>
+                                  <p class="card-text">Low: <span class="fw-bold">{{cryptoData?.yearLow}}</span></p>
+                                  <p class="card-text">High: <span class="fw-bold">{{cryptoData?.yearHigh}}</span></p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <!-- Buy Modal Template -->
+  
 </div>

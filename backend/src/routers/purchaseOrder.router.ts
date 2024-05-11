@@ -30,6 +30,19 @@ router.get('/user/portofolio/:userId', expressAsyncHandler(async (req, res) => {
         res.status(500).send({ message: 'Error retrieving transactions for user', error: error.message });
     }
 }));
+router.get('/user/portfolio/stats/:userId', expressAsyncHandler(async (req, res) => {
+    const {userId} = req.params;
+    try {
+        const portfolioItems = await PortofolioModel.find({ userId: userId });
+        const stats = {
+            stocks: portfolioItems.filter(item => item.type === 'stock').length,
+            cryptos: portfolioItems.filter(item => item.type === 'crypto').length
+        };
+        res.status(200).send(stats);
+    } catch (error:any) {
+        res.status(500).send({ message: 'Error retrieving portfolio items', error: error.message });
+    }
+}));
 
 router.post('/purchase-orders', async (req, res) => {
     const { userId, symbol, price, id, nrOfActions, amount,type } = req.body;
@@ -54,6 +67,7 @@ router.post('/purchase-orders', async (req, res) => {
             const newPortfolio = new PortofolioModel({
                 userId,
                 symbol,
+                symbolId: id,
                 nrOfActions,
                 investedAmount: amount,
                 type: type // sau 'crypto', depinde de logica ta specifică
@@ -139,22 +153,4 @@ router.post('/portfolio/sell', async (req, res) => {
       res.status(500).send('Internal Server Error');
     }
   });
-  
-  router.get('/user/portfolio/stats/:userId', expressAsyncHandler(async (req, res) => {
-    const userId = req.params.userId;
-    try {
-        const portfolioItems = await PortofolioModel.find({ userId: userId });
-        const stats = {
-            stocks: portfolioItems.filter(item => item.type === 'stock').length,
-            cryptos: portfolioItems.filter(item => item.type === 'crypto').length
-        };
-        res.status(200).send(stats);
-    } catch (error:any) {
-        res.status(500).send({ message: 'Error retrieving portfolio items', error: error.message });
-    }
-}));
-
-
-
-
   export default router;

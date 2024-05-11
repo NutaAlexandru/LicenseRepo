@@ -44,6 +44,7 @@ export class StockPageComponent implements OnInit{
   companyProfile!:ICompanyInfo;
   marketData!:IStockMarketData;
   priceChange!:IStockPerformance;
+  chartData!:IHistory[];
 
   purchaseAmount: number = 0;
   modalRef!: NgbModalRef; // Referința la modal
@@ -51,7 +52,7 @@ export class StockPageComponent implements OnInit{
   user:User;
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options = {};
-
+  updateFlag = false;
   constructor(
     private activatedRoute:ActivatedRoute,
     private stockService:StockService,
@@ -61,21 +62,27 @@ export class StockPageComponent implements OnInit{
       userService.userObservable.subscribe((newUser)=>{
         this.user = newUser;
     }
+    
   )}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
-      if(params.id) {
-        this.stockService.getStocksById(params.id).subscribe((stockData) => {
-          this.stock = stockData;
-          this.loadChartData(this.stock.symbol);
-          this.loadCompanyProfile(this.stock.symbol);
-          //this.loadMarketData(this.stock.symbol);
-          //this.loadPriceChange(this.stock.symbol);
-          
-        });
-      }
+      this.resetChartData(); // Reset chart data
+      this.loadStockData(params.id);
     });
+  }
+  loadStockData(stockId: string) {
+    this.stockService.getStocksById(stockId).subscribe(stockData => {
+      this.stock = stockData;
+      this.loadChartData(this.stock.symbol);
+      this.loadCompanyProfile(this.stock.symbol);
+      this.loadMarketData(this.stock.symbol);
+      this.loadPriceChange(this.stock.symbol);
+    });
+  }
+  resetChartData() {
+    this.chartOptions = {}; // Reset or set to initial state
+    this.updateFlag = false; // Reset update flag
   }
   loadPriceChange(symbol: string): void {
     this.stockService.getPriceChange(symbol).subscribe((priceChange) => {
@@ -149,152 +156,102 @@ export class StockPageComponent implements OnInit{
     });
   }
   loadChartData(stockSymbol: string): void {
-    this.stockService.getHistoricalData(stockSymbol).subscribe({
-      next: (data) => {
-        this.buildChart(data);
-      },
-      error: (error) => {
-        console.error('Error retrieving stock data', error);
-      }
+    this.stockService.getHistoricalData(stockSymbol).subscribe(data => {
+      const ohlc = data.map(item => [
+        (new Date(item.date)).getTime(), // Convert date to timestamp
+        parseFloat(item.open),
+        parseFloat(item.high),
+        parseFloat(item.low),
+        parseFloat(item.close)
+      ]);
+  
+      const volume = data.map(item => [
+        (new Date(item.date)).getTime(), // Convert date to timestamp
+        parseInt(item.volume)
+      ]);
+  
+      // Now, set the chart options inside the subscribe block
+      this.chartOptions = {
+        stockTools: {
+          gui: {
+            enabled: true // Enable or disable the stockTools GUI
+          }
+        },
+        yAxis: [{
+          labels: {
+            align: 'left'
+          },
+          height: '80%',
+          resize: {
+            enabled: true
+          }
+        }, {
+          labels: {
+            align: 'left'
+          },
+          top: '80%',
+          height: '20%',
+          offset: 0
+        }],
+        tooltip: {
+          shape: 'callout',
+          headerShape: 'callout',
+          borderWidth: 0,
+          shadow: false,
+          positioner: function(width, height, point) {
+            const chart = this.chart;
+            let position;
+  
+            if (point.isHeader) {
+              position = {
+                x: Math.max(
+                  chart.plotLeft,
+                  Math.min(
+                    point.plotX + chart.plotLeft - width / 2,
+                    chart.chartWidth - width - chart.options.chart.marginRight
+                  )
+                ),
+                y: point.plotY
+              };
+            } else {
+              const yAxisPosition = point.series.yAxis.toPixels(point.y, true);
+              position = {
+                x: point.series.chart.plotLeft,
+                y: yAxisPosition - chart.plotTop
+              };
+            }
+  
+            return position;
+          }
+        },
+        series: [{
+          type: 'ohlc',
+          id: 'aapl-ohlc',
+          name: 'AAPL Stock Price',
+          data: ohlc
+        }, {
+          type: 'column',
+          id: 'aapl-volume',
+          name: 'AAPL Volume',
+          data: volume,
+          yAxis: 1
+        }],
+        responsive: {
+          rules: [{
+            condition: {
+              // maxWidth: 800
+            },
+            chartOptions: {
+              rangeSelector: {
+                inputEnabled: true,
+              }
+            }
+          }]
+        }
+      };
+      this.updateFlag = true; // Update the flag to refresh the chart
     });
   }
-  buildChart(stockData: IHistory[]): void {
-    const ohlc = stockData.map(item => [
-      new Date(item.date).toLocaleDateString('ro-RO'),
-      parseFloat(item.open),
-      parseFloat(item.high),
-      parseFloat(item.low),
-      parseFloat(item.close)
-    ]);
-    const volume = stockData.map(item => [
-      new Date(item.date).toLocaleDateString('ro-RO'),
-      parseInt(item.volume)
-    ]);
-    this.chartOptions = {
-      yAxis: [{
-        labels: {
-          align: 'left'
-        },
-        height: '80%',
-        resize: {
-          enabled: true
-        }
-      }, {
-        labels: {
-          align: 'left'
-        },
-        top: '80%',
-        height: '20%',
-        offset: 0
-      }],
-      tooltip: {
-        shape: 'callout',
-        headerShape: 'callout',
-        borderWidth: 0,
-        shadow: false,
-        positioner: function(width, height, point) {
-          const chart = this.chart;
-          let position;
   
-          if (point.isHeader) {
-            position = {
-              x: Math.max(
-                // Left side limit
-                chart.plotLeft,
-                Math.min(
-                  point.plotX + chart.plotLeft - width / 2,
-                  // Right side limit
-                  chart.chartWidth - width - chart.options.chart.marginRight
-                )
-              ),
-              y: point.plotY
-            };
-          } else {
-            const yAxisPosition = point.series.yAxis.toPixels(point.y, true);
-            position = {
-              x: point.series.chart.plotLeft,
-              y: yAxisPosition - chart.plotTop
-            };
-          }
-  
-          return position;
-        }
-      },
-      series: [{
-        type: 'ohlc',
-        id: 'aapl-ohlc',
-        name: 'AAPL Stock Price',
-        data: ohlc
-      }, {
-        type: 'column',
-        id: 'aapl-volume',
-        name: 'AAPL Volume',
-        data: volume,
-        yAxis: 1
-      }],
-      responsive: {
-        rules: [{
-          condition: {
-            maxWidth: 800
-          },
-          chartOptions: {
-            rangeSelector: {
-              inputEnabled: false
-            }
-          }
-        }]
-      }
-    };
-  }
-  
-
-  // loadChartData(): void {
-  //   console.log(this.stock.symbol);
-  //   if (this.stock && this.stock.symbol) {
-  //     this.stockService.getHistoricalData(this.stock.symbol).subscribe(data => {
-  //       // const ohlc = data.map(item => [
-  //       //        new Date(item.date).getTime(),
-  //       //        parseFloat(item.open),
-  //       //        parseFloat(item.high),
-  //       //        parseFloat(item.low),
-  //       //        parseFloat(item.close)
-  //       //      ]);
-  //       this.chartOptions = {
-  //         rangeSelector: {
-  //           selected: 1},
-  //           accessibility:{
-  //             enabled:true
-  //           },
-  //         stockTools: {
-  //           gui: {
-  //               enabled: true // Activare instrumente de analiză
-  //           }
-  //       },
-  //         title: {
-  //             text: `${this.stock.symbol} Historical Stock Price`
-  //         },
-  //         xAxis: {
-  //             type: 'datetime',
-  //             dateTimeLabelFormats: {
-  //                 hour: '%H:%M', // format for hours
-  //             },
-  //             title: {
-  //                 text: 'Day'
-  //             },
-  //         },
-  //         yAxis: {
-  //             title: {
-  //                 text: 'Price'
-  //             }
-  //         },
-  //         series: [{
-  //             name: `${this.stock.symbol} Stock Price`,
-  //             data: data.map(item => [new Date(item.date).getTime(), item.close]),
-  //             type: 'line'
-  //         }]
-  //     };
-  //     });
-  //   }
-  // }
   
 }

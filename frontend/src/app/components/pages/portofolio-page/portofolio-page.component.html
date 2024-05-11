@@ -1,9 +1,10 @@
 
 <div class="list-container">
+  <button routerLink="/" class="btn btn-primary">Go to Homepage</button>
   <div class="accordion" id="accordionExample">
     <div class="accordion-item">
       <h2 class="accordion-header">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
           Stocks
         </button>
       </h2>
@@ -11,7 +12,8 @@
         <div class="accordion-body">
           <div *ngFor="let item of getStocks()" class="stock-card">
             <div *ngIf="item.type==='stock'">
-            <div class="stock-name">{{ item.symbol }}</div>
+            <div class="stock-name"><a routerLink="/stock/{{item.symbolId}}">{{ item.symbol }}</a></div>
+            <div class="stock-amount">{{ item.nrOfActions | number: '1.2-2' }} actions</div>
             <div class="stock-value">{{ item.currentValue | currency:'USD':'symbol-narrow' }}</div>
             <div class="stock-change" [ngClass]="{'positive': item.percentChange >= 0, 'negative': item.percentChange < 0}">
               {{ item.percentChange | number:'1.2-2' }}%
@@ -31,7 +33,8 @@
       <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
         <div *ngFor="let item of getCryptos()" class="stock-card">
           <div *ngIf="item.type==='crypto'">
-          <div class="stock-name">{{ item.symbol }}</div>
+          <div class="stock-name"><a routerLink="/crypto/{{item.symbolId}}">{{item.symbol}}</a></div>
+          <div class="stock-amount">{{ item.nrOfActions | number: '1.2-2' }} coins</div>
           <div class="stock-value">{{ item.currentValue | currency:'USD':'symbol-narrow' }}</div>
           <div class="stock-change" [ngClass]="{'positive': item.percentChange >= 0, 'negative': item.percentChange < 0}">
             {{ item.percentChange | number:'1.2-2' }}%
@@ -41,40 +44,39 @@
         </div>
       </div>
     </div>
-    <div class="accordion-item">
-      <h2 class="accordion-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Accordion Item #3
-        </button>
-      </h2>
-      <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-        <div class="accordion-body">
-          <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-        </div>
-      </div>
-    </div>
   </div>
   
-</div>
-<div class="overview-container">
-  <div class="account-value">
-    <div class="label">Account Amount</div>
-    <div class="value">{{ user.balance| currency:'USD':'symbol-narrow' }}</div>
+
+<div class="overview-container" style="display: flex; justify-content: space-between;">
+  <!-- Details Container -->
+  <div class="details-container" style="flex: 1;">
+    <div class="account-value">
+      <div class="label">Account Amount</div>
+      <div class="value">{{ user.balance | currency: 'USD':'symbol-narrow' }}</div>
+    </div>
+    <div class="portfolio-value">
+      <div class="label">Portfolio Value</div>
+      <div class="value">{{ portfolioValue | currency: 'USD':'symbol-narrow' }}</div>
+    </div>
+    <button type="button" *ngIf="!showChart" class="btn btn-primary" (click)="loadChartData()">Show statistics</button>
+    <button type="button" *ngIf="showChart" class="btn btn-primary" (click)="hideStats()">Hide statistics</button>
   </div>
-  <div class="portfolio-value">
-    <div class="label">Portfolio Value</div>
-    <div class="value">{{ portfolioValue | currency:'USD':'symbol-narrow' }}</div>
+
+  <!-- Chart Container -->
+  <div class="chart-container" style="flex: 2;">
+    <highcharts-chart *ngIf="showChart"
+      [Highcharts]="Highcharts"
+      [options]="chartOptions"
+      style="width: 100%; height: 400px; display: block;">
+    </highcharts-chart>
   </div>
 </div>
-<highcharts-chart 
-  [Highcharts]="Highcharts"
-  [options]="chartOptions"
-  style="width: 100%; height: 400px; display: block;"
-></highcharts-chart>
+
+
 <div class="history-container">
   <div class="order-history">
     <h2>Istoric Comenzi</h2>
-    <div *ngFor="let order of purchaseOrders" class="order-detail">
+    <div *ngFor="let order of purchaseOrders | slice:0:displayLimit" class="order-detail">
       <div>Data: {{ order.date | date: 'medium' }}</div>
       <div>Simbol: {{ order.symbol }}</div>
       <div>Preț per acțiune: {{ order.price | currency: 'USD' }}</div>
@@ -82,8 +84,11 @@
       <div>Valoare totală: {{ (order.price * order.nrOfActions) | currency: 'USD' }}</div>
       <div>Status: {{ order.status }}</div>
     </div>
+    <button *ngIf="displayLimit < purchaseOrders.length" (click)="showMore()" class="btn btn-primary">Show More</button>
   </div>
 </div>
+</div>
+
 <ng-template #sellModal let-modal>
   <div class="modal-header">
     <h5 class="modal-title">Vânzare {{ selectedStock?.symbol }}</h5>

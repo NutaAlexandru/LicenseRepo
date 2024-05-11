@@ -95,4 +95,20 @@
   .order-detail div {
     margin-bottom: 5px;
   }
-  
+
+  /* overview.component.css */
+.overview-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* Aligns items to the top */
+}
+
+.details-container {
+  flex: 1; /* Takes up 1 portion of the container */
+  padding-right: 20px; /* Adds some spacing between the containers */
+}
+
+.chart-container {
+  flex: 2; /* Takes up 2 portions of the container, making it larger than the details container */
+  padding-left: 20px; /* Adds some spacing between the containers */
+}

@@ -1,0 +1,99 @@
+/* Stilizează secțiunea hero-part */
+.hero-part {
+    background-image: url('/assets/businessman-3213659_1920.jpg'); /* Înlocuiește cu calea imaginii tale */
+    background-size: cover; /* Asigură-te că imaginea acoperă întreaga secțiune */
+    background-position: center; /* Centrează imaginea în div */
+    height: 95vh; /* Setează înălțimea secțiunii să ocupe întregul ecran vertical */
+    display: flex; /* Folosește flex pentru a alinia textul */
+    align-items: center; /* Centrează conținutul pe verticală */
+    justify-content: center; /* Centrează conținutul pe orizontală */
+  }
+  
+  /* Îmbunătățește textul din hero-part */
+  .hero-text {
+    max-width: 900px; /* Setează o lățime maximă pentru text */
+    background-color: rgba(0, 0, 0, 0.5); /* Adaugă un fundal semi-transparent negru pentru text */
+    padding: 40px; /* Adaugă padding pentru a separa textul de marginile div-ului */
+    border-radius: 8px; /* Adaugă margini rotunjite pentru un aspect mai plăcut */
+  }
+  
+  /* Stiluri suplimentare pentru titlul principal și paragraf */
+  .hero-part h1 {
+    font-size: 3rem; /* Mareste dimensiunea fontului pentru titlu */
+    margin-bottom: 20px; /* Adaugă spațiu sub titlu */
+  }
+  
+  .hero-part p {
+    font-size: 1.5rem; /* Mareste dimensiunea fontului pentru paragraf */
+    line-height: 1.4; /* Setează înălțimea liniei pentru paragraf */
+  }
+
+  .custom-section {
+    background-image: url('/assets/entrepreneur-4664707_1920.jpg'); /* Înlocuiește cu calea imaginii tale */
+    background-size: cover; /* Asigură-te că imaginea acoperă întreaga secțiune */
+    background-position: center; /* Centrează imaginea în div */
+    height: 50vh; /* Setează înălțimea secțiunii */
+    display: flex; /* Folosește flex pentru a alinia textul */
+    align-items: center; /* Centrează conținutul pe verticală */
+    justify-content: center; /* Centrează conținutul pe orizontală */
+}
+
+.custom-section h2 {
+    font-size: 2.5rem; /* Mareste dimensiunea fontului pentru titlu */
+    background-color: rgba(0, 0, 0, 0.5); /* Adaugă un fundal semi-transparent negru pentru text */
+    padding: 20px; /* Adaugă padding pentru a separa textul de marginile div-ului */
+    border-radius: 8px; /* Adaugă margini rotunjite pentru un aspect mai plăcut */
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Adaugă o umbră pentru a crea un efect de profunzime */
+    transition: transform 0.3s ease-in-out; /* Adaugă un efect de animație la hover */
+  }
+  
+  .card:hover {
+    transform: scale(1.05); /* Mărește cardul la hover pentru a atrage atenția */
+  }
+  
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrare verticală a conținutului în card */
+  }
+
+  
+  .form-label {
+    color: #333; /* Culoare pentru etichetele formularului */
+  }
+  
+  .btn-primary {
+    background-color: #004085; /* Personalizează culoarea butonului, dacă este necesar */
+  }
+
+  footer {
+    background-color: #333; /* Dark background */
+    color: white; /* White text color */
+}
+
+footer p, footer a {
+    color: inherit; /* Ensures links are the same color as the text */
+    margin-right: 15px;
+}
+
+footer a:hover {
+    color: #ccc; /* Lighter shade on hover */
+    text-decoration: none; /* Removes underline */
+}
+
+.fab, .fas {
+    /* Font Awesome icons adjustment */
+    margin-right: 10px;
+}
+
+footer .row {
+    align-items: center;
+}
+
+
+  
+
+  

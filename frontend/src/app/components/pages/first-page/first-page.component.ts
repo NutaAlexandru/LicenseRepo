@@ -18,16 +18,12 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './first-page.component.css'
 })
 export class FirstPageComponent{
-  
-  user!:User;
-  constructor(private userService:UserService) {
-
+  user!:User
+  constructor(userService:UserService){
     userService.userObservable.subscribe((newUser)=>{
       this.user = newUser;
-
-   });
-   //console.log(this.user);
-   //console.log(this.isAuth);
+      console.log(this.user);
+  });
   }
 
  

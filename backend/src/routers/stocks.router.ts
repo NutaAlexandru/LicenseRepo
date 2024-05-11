@@ -130,7 +130,7 @@ router.get("/seed", expressAsyncHandler(async (req, res) => {
 
 router.get('/historical/:symbol', (req, res) => {
     const { symbol } = req.params;
-    const from = req.query.from || '2023-03-17'; 
+    const from = req.query.from || '2022-03-17'; 
     const to = req.query.to || getTodayDateString();
     const options = {
         hostname: 'financialmodelingprep.com',
