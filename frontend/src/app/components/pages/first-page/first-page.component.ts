@@ -19,12 +19,10 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class FirstPageComponent{
   user!:User
-  constructor(userService:UserService){
+  constructor(private userService:UserService){
     userService.userObservable.subscribe((newUser)=>{
       this.user = newUser;
       console.log(this.user);
   });
-  }
-
- 
+  } 
 }

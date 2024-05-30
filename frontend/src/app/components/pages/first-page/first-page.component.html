@@ -1,121 +1,69 @@
-<div class="page">
-  <div class="top-section bg-info text-white text-center p-1">
-    <p>When investing, your capital is at risk and you may get back less than invested. Past performance doesn’t guarantee future results.</p>
-  </div>  
-  <div class="hero-part">
-    <div class="hero-text text-center text-white p-5">
-      <h1 class="display-3">INVESTING IN TOMORROW'S LEADERS</h1>
-      <p class="lead">Your best trading platform</p>
-      <button *ngIf="user.id" class="btn btn-primary" routerLink="/home" class="logo">START TO INVEST</button>
-      <button *ngIf="!user.id" class="btn btn-primary" routerLink="/login" class="logo">START TO INVEST</button>
-    </div>
-  </div>
-  
-  <div class="info-section bg-light text-dark pt-5 pb-5" id="about">
-    <div class="container" >
-      <h2>About Our Platform</h2>
-      <p>This section can describe what your platform does, the services you offer, or why people should choose your trading platform. Here, you can also add links or calls to action, such as 'Learn More' or 'Sign Up' buttons.</p>
-      <a href="#" class="btn btn-primary">Learn More</a>
-    </div>
+<header>
+  <nav>
+    <div class="logo">TradingPlatform</div>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">Why Us</a></li>
+      <li><a href="#">Team</a></li>
+      <li><a routerLink="/login">Login</a></li>
+    </ul>
+  </nav>
+</header>
 
-  <div class="bg-dark text-white text-center p-3">
-      <div class="container">
-          <h2>Fearless Investments in Over 5 Industries</h2>
-      </div>
+<section class="hero">
+  <div class="hero-content">
+    <h1>TradingPlatform - Your Gateway to the World of Trading</h1>
+    <p>Welcome to TradingPlatform, your trusted platform for trading stocks and cryptocurrencies. We are dedicated to providing a seamless trading experience, with powerful tools and top-notch support. Whether you're a beginner making your first steps in the trading world or an experienced professional, TradingPlatform is the right place for you.</p>
+    <a href="#" class="button">Learn More</a>
   </div>
-  
-  <div class="custom-section bg-dark text-white text-center p-5">
-      <div class="container">
-          <h2>Another Bold Statement Here</h2>
-      </div>
+  <div class="hero-image">
+    <img src="assets/slider-img.png" alt="Crypto Image">
   </div>
+</section>
 
-  <div class="container my-5">
-    <h2 class="text-center mb-4">Why Choose Our Platform?</h2>
-    <div class="row">
-      <div class="col-md-4 mb-4">
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">We Invest Early</h5>
-            <p class="card-text">We identify and invest in talent at its inception, providing full support for growth.</p>
-          </div>
-        </div>
+<section class="services">
+  <div class="container">
+    <h2>Our <span class="highlight">Services</span></h2>
+    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.</p>
+    <div class="services-cards">
+      <div class="card">
+        <img src="assets/s1.png" alt="Currency Wallet">
+        <h3>CURRENCY WALLET</h3>
+        <p>Fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using.</p>
+        <a href="#" class="button">Read More</a>
       </div>
-      <div class="col-md-4 mb-4">
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">Fearless but Educated Investments</h5>
-            <p class="card-text">We undertake thorough research to back every investment, ensuring it's both bold and smart.</p>
-          </div>
-        </div>
+      <div class="card">
+        <img src="assets/s2.png" alt="Security Storage">
+        <h3>SECURITY STORAGE</h3>
+        <p>Fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using.</p>
+        <a href="#" class="button">Read More</a>
       </div>
-      <div class="col-md-4 mb-4">
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">More than 30 Years Experience</h5>
-            <p class="card-text">Leverage three decades of industry insight for your startup's success.</p>
-          </div>
-        </div>
+      <div class="card">
+        <img src="assets/s3.png" alt="Expert Support">
+        <h3>EXPERT SUPPORT</h3>
+        <p>Fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using.</p>
+        <a href="#" class="button">Read More</a>
       </div>
-      <!-- Mai adaugă alte carduri după modelul de mai sus, dacă este necesar -->
     </div>
+    <a href="#" class="button view-all">View All</a>
   </div>
-  
-  <div class="container mt-5">
-    <h2 class="text-center mb-4">Contact Us</h2>
-    
-    <div class="row">
-      <div class="col-md-6">
-        <h4>For any inquiries, please call or email us:</h4>
-        <p><strong>Phone:</strong> 123-456-7890</p>
-        <p><strong>Email:</strong> info&#64;mysite.com</p>
-        
-        <h4>Our Address</h4>
-        <p>500 Terry Francois Street, San Francisco, CA 94158</p>
-        <p><strong>Email:</strong> info&#64;mysite.com</p>
+</section>
+<section class="about-us">
+  <div class="container">
+    <h2>About <span class="highlight">Us</span></h2>
+    <p>Magni quod blanditiis non minus sed aut voluptatum illum quisquam aspernatur ullam vel beatae rerum ipsum voluptatibus.</p>
+    <div class="about-content">
+      <div class="about-image">
+        <img src="assets/about-img.png" alt="About Us Image">
       </div>
-      <div class="col-md-6">
-        <h4>Alternatively</h4>
-        <p>You can fill in the following contact form:</p>
-        <form>
-          <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" placeholder="Enter your name">
-          </div>
-          <div class="mb-3">
-            <label for="phone" class="form-label">Phone</label>
-            <input type="text" class="form-control" id="phone" placeholder="Enter your phone number">
-          </div>
-          <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" placeholder="Enter your email">
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+      <div class="about-text">
+        <h3>We Are Finexo</h3>
+        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All</p>
+        <p>Molestiae odio earum non qui cumque provident voluptates, repellendus exercitationem, possimus at iste corrupti officiis unde alias eius ducimus reiciendis soluta eveniet. Nobis ullam ab omnis quasi expedita.</p>
+        <a href="#" class="button">Read More</a>
       </div>
     </div>
   </div>
-  <footer class="bg-dark text-white pt-3 pb-3">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <p>500 Terry Francois Street, San Francisco, CA 94158</p>
-                <p>Email: info&#64;mysite.com | Phone: 123-456-7890</p>
-            </div>
-            <div class="col-md-6 text-md-right">
-                <a  class="text-white mr-2"><i class="fab fa-facebook-f"></i></a>
-                <a class="text-white mr-2"><i class="fab fa-twitter"></i></a>
-                <a  class="text-white mr-2"><i class="fab fa-linkedin-in"></i></a>
-                <a  class="text-white"><i class="fas fa-arrow-up"></i></a>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-12 text-center mt-2">
-                © 2023 by Roland VC. Powered and secured by Wix
-            </div>
-        </div>
-    </div>
-</footer>
-</div>
-
+</section>
