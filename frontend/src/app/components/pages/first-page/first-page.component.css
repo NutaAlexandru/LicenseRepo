@@ -92,6 +92,19 @@ footer a:hover {
 footer .row {
     align-items: center;
 }
+.top-section {
+  background-color: #0056b3; /* Bootstrap info blue, change as needed */
+  color: white; /* Text color */
+  padding: 10px 0; /* Padding above and below the text */
+  font-size: 14px; /* Smaller font size for disclaimer text */
+  text-align: center; /* Center align the text */
+}
+
+/* Ensure the text is legible and not too large */
+.top-section p {
+  margin: 0; /* Removes default paragraph margins */
+  line-height: 1.5; /* Good line height for readability */
+}
 
 
   

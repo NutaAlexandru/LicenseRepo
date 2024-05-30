@@ -1,28 +1,47 @@
+<div class="container">
 <div class="container-fluid p-3 h-100">
-    <div class="row h-100">
-        <div class="col-md-5 d-flex flex-column p-2">
-            <div class="d-flex justify-content-around mb-3">
-                <button class="btn btn-primary" (click)="selectListComponent('Stocks')">Stocks/Etf</button>
-                <button class="btn btn-primary" (click)="selectListComponent('Cryptos')">Cryptos</button>
-                <button class="btn btn-primary" (click)="selectListComponent('Gainers')">Biggest Gainers</button>
-                <button class="btn btn-primary" (click)="selectListComponent('Losers')">Biggest Losers</button>
-                <button class="btn btn-primary" (click)="selectListComponent('Active')">Most Active</button>
-            </div>
-            <div class="flex-grow-1 border p-2 overflow-auto">
+    <div class="d-flex justify-content-around mb-3">
+        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio102" autocomplete="off">
+            <label class="btn btn-light blue-text" for="btnradio102" (click)="selectInformationComponent('News')"><i class="bi bi-newspaper"> News</i></label>
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+            <label class="btn btn-light blue-text" for="btnradio1" (click)="selectListComponent('Stocks')"><i class="bi bi-trophy"> Best Tranzactions</i></label>
+          
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+            <label class="btn btn-light blue-text" for="btnradio2" (click)="selectListComponent('Cryptos')" ><i class="bi bi-currency-bitcoin"> Crypto</i></label>
+          
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+            <label class="btn btn-light blue-text" for="btnradio3" (click)="selectListComponent('Favorites')"><i class="bi bi-star"> Watching List</i></label>
+
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
+            <label class="btn btn-light blue-text" for="btnradio4" (click)="selectListComponent('Gainers')"><i class="bi bi-graph-up-arrow"> Biggest Gainers</i></label>
+
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off">
+            <label class="btn btn-light blue-text" for="btnradio5" (click)="selectListComponent('Losers')"><i class="bi bi-graph-down-arrow"> Biggest Losers</i></label>
+
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio6" autocomplete="off">
+            <label class="btn btn-light blue-text" for="btnradio6" (click)="selectListComponent('Active')"><i class="bi bi-fire"> Most Active</i></label>
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio101" autocomplete="off">
+            <label class="btn btn-light blue-text" for="btnradio101" (click)="selectInformationComponent('Dividents')"><i class="bi bi-calendar4-week"> Dividents</i></label>
+          
+          </div>
+    </div>
+    <div class="row h-100" >
+        <div class="col-md-4 d-flex flex-column p-2 " >
+            <div class="flex-grow-1 overflow-auto">
                 <app-stocks *ngIf="selectedListComponent === 'Stocks'"></app-stocks>
                 <app-crypto *ngIf="selectedListComponent === 'Cryptos'"></app-crypto>
+                <app-favorites *ngIf="selectedListComponent === 'Favorites'"></app-favorites>
                 <app-market-order *ngIf="selectedListComponent=== 'Gainers' || selectedListComponent === 'Losers' || selectedListComponent === 'Active'" [selectedList]="selectedListComponent"></app-market-order>
             </div>
         </div>
-        <div class="col-md-7 d-flex flex-column p-2">
-            <div class="d-flex justify-content-around mb-3">
-                <button class="btn btn-primary" (click)="selectInformationComponent('Dividents')">Dividents</button>
-                <button class="btn btn-primary" (click)="selectInformationComponent('News')">News</button>
-            </div>
-            <div class="flex-grow-1 border p-2 overflow-auto">
+        <div class="col-md-8 d-flex flex-column p-2">
+            <div class="flex-grow-1 overflow-auto">
                 <app-dividents *ngIf="selectedInformationComponent === 'Dividents'"></app-dividents>
                 <app-news *ngIf="selectedInformationComponent === 'News'"></app-news>
             </div>
         </div>
     </div>
 </div>
+</div>
+

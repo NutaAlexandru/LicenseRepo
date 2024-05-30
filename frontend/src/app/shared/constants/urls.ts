@@ -4,6 +4,8 @@ export const STOCK_SEARCH_URL = STOCKS_URL+'/search/';
 export const STOCK_BY_ID_URL = STOCKS_URL+'/';
 export const STOCK_HISTORIC=STOCKS_URL+'/historical/';
 export const STOCK_LOGO_URL=STOCKS_URL+'/company-logo/';
+export const STOCK_TOOGLE_FAVORITE_URL=STOCKS_URL+'/toggle-favorite/';
+export const STOCK_FAVORITES_URL=STOCKS_URL+'/favorites';
 
 export const MARKET_BIGGEST_GAINERS_URL=STOCKS_URL+'/stock-market-gainers';
 export const MARKET_BIGGEST_LOOSER_URL=STOCKS_URL+'/stock-market-losers';

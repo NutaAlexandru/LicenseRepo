@@ -1,67 +1,94 @@
-header{
-  position: relative;
+header {
   background: white;
-  padding: 0;
-  border-bottom: 1px solid #0056b3;
-  z-index: 999;
+  padding: 0.5rem 1rem;
+border-bottom: none;
+}
+.nav-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.nav-item {
+  list-style: none;
 }
 
-a{
-  color: #0056b3;
-}
-
-a:hover{
-  background:#0056b3;
-  color: white;
+.logo {
+  height: 50px;
   cursor: pointer;
 }
 
-.container{
-  margin: 0 auto;
+.balance-container {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff; /* Fundal alb pentru container */
+  border-radius: 20px; /* Margini rotunjite */
+  padding: 5px 15px; /* Padding pentru spațiu intern */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Umbra ușoară pentru efect de elevație */
+  font-size: 16px; /* Dimensiune font adecvată pentru vizibilitate */
+  cursor: pointer;
 }
 
-a.logo{
-  font-weight: bold;
-  padding: 1rem;
+.balance-icon { /* Culoarea portocalie pentru icon */
+  color: #0056b3;
+  border-radius: 50%; /* Cerc complet */
+  padding: 5px; /* Mărimea iconului */
+  margin-right: 10px; /* Spațiu între icon și text */
 }
 
-ul{
-  display: flex;
-  list-style-type: none;
-  margin: 0;
+.balance-text {
+  flex-grow: 1; /* Textul ocupă restul spațiului */
 }
 
-ul a{
-  padding: 1rem;
-  display: inline-block;
+.bi-chevron-down {
+  color: #cccccc; /* Culoare pentru săgeată */
+  margin-left: 10px; /* Spațiu între text și săgeată */
 }
 
-a span{
-  background: #0056b3;
-  color: white;
-  padding: 0.1rem 0.45rem;
-  border-radius: 100rem;
-  font-size:0.9rem;
+
+.nav-link {
+  color: #0056b3;
+  cursor: pointer;
 }
 
-.menu-container{
+.nav-link:hover {
+  background-color: #e9ecef; /* Culoare de fundal gri deschis pentru hover */
+  color: #0056b3; /* Culoare de text albastru închis la hover */
+}
+
+.menu-container {
   position: relative;
 }
 
-.menu{
-  position:absolute;
-  z-index:1;
-  background:whitesmoke;
+.menu {
   display: none;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.menu-container:hover .menu {
+  display: block;
+  cursor: pointer;
 }
 
-.menu-container:hover .menu{
+.menu a {
+  color: #0056b3;
+  padding: 12px 16px;
+  text-decoration: none;
   display: block;
 }
 
-.menu a{
-  width: 100%;
-  min-width:8rem;
+.menu a:hover {
+  background-color: #f1f1f1;
+}
+@media (max-width: 768px) {
+  .balance-container {
+    font-size: 14px; /* Mărimea fontului mai mică pe dispozitive mobile */
+    padding: 3px 10px;
+  }
+
+  .balance-icon {
+    padding: 3px; /* Icon mai mic */
+  }
 }

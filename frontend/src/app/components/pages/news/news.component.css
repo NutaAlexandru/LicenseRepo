@@ -1,7 +1,11 @@
 .news-container .card-body {
-  padding: 1rem;  /* Spațiere internă pentru text */
+  padding: 0.5rem;
 }
 
 .news-container .card-title {
-  font-size: 1.5rem;  /* Mărimea fontului pentru titlu */
+  font-size: 0.5rem;
+}
+
+.news-container .news-title {
+  font-size: 0.75rem; /* Ajustează această valoare după preferințele tale */
 }

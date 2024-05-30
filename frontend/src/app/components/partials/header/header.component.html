@@ -1,24 +1,46 @@
 <header>
-  <div class="container">
-    <a routerLink="/hello" class="logo">Trading Platform</a>
-    <nav>
-      <ul>
-        
-        <a *ngIf="isAuth" routerLink="/deposit">Balance:{{user.balance}} USD</a>
-        <li *ngIf="!isAuth">
-          <a routerLink="/login">Login</a>
-        </li>
-        <li *ngIf="isAuth" class="menu-container">
-          <a>{{ user.name }}</a> <!-- Modifică aici -->
-          <div class="menu">
-            <a [routerLink]="['/profile', user.id]">Profile</a>
-            <a routerLink="/portofolio">Portofolio</a>
-            <a (click)="logout()">Logout</a>
+  <div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center">
+      <!-- Logo și Balanța în partea stângă -->
+      <div class="d-flex align-items-center">
+        <img src="assets/logo.jpg" routerLink="/" alt="logo" class="logo" />
+        <div *ngIf="isAuth" class="balance-container ms-3">
+          <div class="balance-box">
+            <i class="bi bi-bank2 balance-icon"></i>
+            <span routerLink="/deposit" class="balance-text">{{user.balance | number: '1.2-2'}}</span>
+            <i class="bi bi-chevron-down"></i>
           </div>
-        </li>
-        
-        <!-- Alte elemente ale meniului pot rămâne neschimbate -->
-      </ul>
-    </nav>
+        </div>                    
+      </div>
+
+      <!-- Navigația în mijloc -->
+      <nav class="mx-auto">
+        <ul class="nav">
+          <li class="nav-item">
+            <a routerLink="/home" class="nav-link bi bi-house-fill"></a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/portofolio" class="nav-link bi bi-pie-chart-fill"></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link bi bi-list">
+              <!-- <button (click)="changeBackground(1)">Background 1</button>
+              <button (click)="changeBackground(2)">Background 2</button> -->
+            </a>
+        </ul>
+      </nav>
+
+      <!-- Meniul utilizatorului în partea dreaptă -->
+      <div *ngIf="isAuth" class="menu-container">
+        <a class="nav-link bi bi-person-lines-fill">{{ user.name }}</a>
+        <div class="menu">
+          <a [routerLink]="['/profile', user.id]" class="dropdown-item bi bi-person-circle">Profile</a>
+          <a (click)="logout()" class="dropdown-item bi bi-box-arrow-right">Logout</a>
+        </div>
+      </div>
+      <div *ngIf="!isAuth">
+        <a routerLink="/login" class="bi bi-box-arrow-in-right">Login</a>
+      </div>
+    </div>
   </div>
 </header>

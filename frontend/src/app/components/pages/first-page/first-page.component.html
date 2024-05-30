@@ -1,9 +1,12 @@
-<div class="page">  
+<div class="page">
+  <div class="top-section bg-info text-white text-center p-1">
+    <p>When investing, your capital is at risk and you may get back less than invested. Past performance doesn’t guarantee future results.</p>
+  </div>  
   <div class="hero-part">
     <div class="hero-text text-center text-white p-5">
       <h1 class="display-3">INVESTING IN TOMORROW'S LEADERS</h1>
       <p class="lead">Your best trading platform</p>
-      <button *ngIf="user.id" class="btn btn-primary" routerLink="/" class="logo">START TO INVEST</button>
+      <button *ngIf="user.id" class="btn btn-primary" routerLink="/home" class="logo">START TO INVEST</button>
       <button *ngIf="!user.id" class="btn btn-primary" routerLink="/login" class="logo">START TO INVEST</button>
     </div>
   </div>
@@ -115,3 +118,4 @@
     </div>
 </footer>
 </div>
+

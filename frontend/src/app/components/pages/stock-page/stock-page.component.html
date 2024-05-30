@@ -6,6 +6,8 @@
     <div class="col-12">
         <div class="title" style="text-align: center;">
             <h1 class="display-4">{{ stock.symbol }} - {{ stock.exchangeShortName }}</h1>
+            <i *ngIf="!stock.favorite" class="bi bi-suit-heart" (click)="onToggleFavorite(stock)"></i>
+            <i *ngIf="stock.favorite" class="bi bi-suit-heart-fill" (click)="onToggleFavorite(stock)"></i>
         </div>
     </div>
     <div class="col-12 d-flex align-items-center justify-content-between">

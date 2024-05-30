@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div class="container mt-4 news-container">
   <div class="row">
     <div *ngFor="let article of articles" class="col-md-6 mb-4">
       <div class="card h-100">
@@ -23,3 +23,25 @@
     </div>
   </div>
 </div>
+
+
+<!-- <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div *ngFor="let article of articles; let i = index" class="carousel-item" [class.active]="i === 0" [attr.data-bs-interval]="10000">
+      <img [src]="article.image" class="d-block w-100" alt="News image">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>{{ article.title }}</h5>
+        <p>{{ article.author }}</p>
+        <a [href]="article.link" target="_blank" class="btn btn-primary">Read more</a>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div> -->

@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CoreModule } from '../../../modules/core/core.module';
 import { NgModule } from '@angular/core';
 import { Console } from 'console';
+import { BackgroundService } from '../../../services/background.service';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +21,7 @@ import { Console } from 'console';
 export class HeaderComponent {
   isLoggedIn=false;
   user!:User;
-  constructor(private userService:UserService) {
+  constructor(private userService:UserService,private backgroundService:BackgroundService) {
 
     
   //  //console.log(this.user);
@@ -37,5 +38,8 @@ logout(){
 }
 get isAuth(){
   return this.user.token;
+}
+changeBackground(index: number) {
+  this.backgroundService.changeBackground(index);
 }
 }

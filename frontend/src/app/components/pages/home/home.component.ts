@@ -15,6 +15,7 @@ import { CryptoPageComponent } from '../crypto-page/crypto-page.component';
 import { NewsComponent } from '../news/news.component';
 import { DividentsComponent } from '../dividents/dividents.component';
 import { MarketOrderComponent } from '../market-order/market-order.component';
+import { FavoritesComponent } from '../favorites/favorites.component';
 
 
 
@@ -33,7 +34,8 @@ import { MarketOrderComponent } from '../market-order/market-order.component';
     CryptoComponent,
     NewsComponent,
     DividentsComponent,
-    MarketOrderComponent],
+    MarketOrderComponent,
+    FavoritesComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

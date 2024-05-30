@@ -15,8 +15,8 @@ import { DepositPageComponent } from './components/pages/deposit-page/deposit-pa
 import { PortofolioPageComponent } from './components/pages/portofolio-page/portofolio-page.component';
 
 export const routes: Routes = [
-    {path:'hello',component:FirstPageComponent},
-    {path:'',component:HomeComponent},
+    {path:'',component:FirstPageComponent},
+    {path:'home',component:HomeComponent},
     {path:'demo',component:HomeComponent},
     {path:'search/:searchTerm',component:StocksComponent},
     {path:'stock/:id',component:StockPageComponent},

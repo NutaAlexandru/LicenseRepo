@@ -12,9 +12,10 @@ import {
   MARKET_BIGGEST_GAINERS_URL,
   MARKET_BIGGEST_LOOSER_URL,
   MARKET_MOST_ACTIVE_URL,
-  STOCK_LOGO_URL,
+  STOCK_TOOGLE_FAVORITE_URL,
   PURCHASE_INFO_CREATE, 
-  STOCKPRICE} from '../shared/constants/urls';
+  STOCKPRICE,
+  STOCK_FAVORITES_URL} from '../shared/constants/urls';
 import { HttpClient } from '@angular/common/http';
 import { IHistory } from '../shared/interfaces/IHistory';
 import { ICompanyInfo} from '../shared/interfaces/ICompanyInfo'
@@ -92,6 +93,15 @@ export class StockService {
   createPurchaseOrder(purchaseOrderData:PurchaseOrder): Observable<PurchaseOrder> {
     
     return this.http.post<PurchaseOrder>(PURCHASE_INFO_CREATE, purchaseOrderData);
+  }
+
+  toggleFavorite(stockId: string): Observable<any> {
+    console.log(stockId);
+    return this.http.put(STOCK_TOOGLE_FAVORITE_URL+stockId,{});
+  }
+
+  getFavoriteStocks(): Observable<any[]> {
+    return this.http.get<any[]>(STOCK_FAVORITES_URL);
   }
       
 }

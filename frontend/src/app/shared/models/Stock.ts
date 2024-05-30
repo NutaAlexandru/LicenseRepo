@@ -6,4 +6,5 @@ export class Stock{
     exchange:string;
     exchangeShortName:string;
     type:string;
+    favorite:boolean;
 }

@@ -19,6 +19,7 @@ import { LoadingComponent } from '../../partials/loading/loading.component';
 export class StocksComponent {
   isSearchOn:boolean=true;
   stocks:Stock[] = [];
+  displayLimit = 10;
   constructor(private stockService:StockService,private activatedRoute:ActivatedRoute) {
     let stocksObs:Observable<Stock[]>;
     activatedRoute.params.subscribe(params => {
@@ -37,6 +38,20 @@ export class StocksComponent {
       }
       )
     })
+  }
+  onToggleFavorite(stock: Stock) {
+    console.log(stock);
+    this.stockService.toggleFavorite(stock.id).subscribe({
+      next: updatedStock => {
+        console.log('Favorite toggled', updatedStock);
+        stock.favorite = !stock.favorite; 
+      },
+      error: error => console.error('Error toggling favorite:', error)
+    });
+  }
+
+  showMore(): void {
+    this.displayLimit += 10;
   }
   
   

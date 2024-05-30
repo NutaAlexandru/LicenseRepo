@@ -8,6 +8,7 @@ export interface Stock{
         exchange:string;
         exchangeShortName:string;
         type:string;
+        favorite:boolean;
 }
 
 export const StockSchema=new Schema<Stock>({
@@ -17,6 +18,7 @@ export const StockSchema=new Schema<Stock>({
     exchange:{type:String,required:false},
     exchangeShortName:{type:String,required:false},
     type:{type:String,required:false},
+    favorite: { type: Boolean, default: false }
 },
 {
     toJSON:{

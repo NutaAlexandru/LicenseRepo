@@ -1,7 +1,7 @@
 
-@if(isLoading){<app-loading></app-loading>}
-@else if (!isLoading) {
-    <ul class="background">
+<app-loading *ngIf="isLoading"></app-loading>
+<div *ngIf="!isLoading">
+    <!-- <ul class="background1" *ngIf="backgroundNumber===1"> 
         <li></li>
         <li></li>
         <li></li>
@@ -33,6 +33,30 @@
         <li></li>
         <li></li>
      </ul>
-    <app-header></app-header>
+     <div class="background2" *ngIf="backgroundNumber===2">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+     </div> -->
+     <app-header></app-header>
     <router-outlet></router-outlet>
-}
+</div>
+    
+    

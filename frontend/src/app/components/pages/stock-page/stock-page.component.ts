@@ -225,14 +225,14 @@ export class StockPageComponent implements OnInit{
           }
         },
         series: [{
-          type: 'ohlc',
-          id: 'aapl-ohlc',
-          name: 'AAPL Stock Price',
+          type: 'line',
+          id: 'line',
+          name: `Stock Price`,
           data: ohlc
         }, {
           type: 'column',
-          id: 'aapl-volume',
-          name: 'AAPL Volume',
+          id: 'volume',
+          name: 'Volume',
           data: volume,
           yAxis: 1
         }],
@@ -252,6 +252,15 @@ export class StockPageComponent implements OnInit{
       this.updateFlag = true; // Update the flag to refresh the chart
     });
   }
-  
+  onToggleFavorite(stock: Stock) {
+    console.log(stock);
+    this.stockService.toggleFavorite(stock.id).subscribe({
+      next: updatedStock => {
+        console.log('Favorite toggled', updatedStock);
+        stock.favorite = !stock.favorite; 
+      },
+      error: error => console.error('Error toggling favorite:', error)
+    });
+  }
   
 }

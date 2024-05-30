@@ -1,4 +1,20 @@
 /* Stiluri personalizate suplimentare dacă sunt necesare */
 .overflow-auto {
-  max-height: calc(100vh - 145px); /* Ajustează înălțimea dacă este necesar */
+  max-height: calc(100vh - 145px);
 }
+.blue-text {
+  color: #0056b3;
+  margin: 0 5px;
+  border: none; /* Înlătură bordura */
+    background-color: transparent; /* Fundal transparent */ /* Culoare albastră; poți ajusta codul de culoare conform preferințelor */
+}
+
+.blue-text:hover, .blue-text:focus {
+  background-color: #e9ecef; /* Culoare de fundal gri deschis pentru hover */
+  color: #0056b3; /* Culoare de text albastru închis la hover */
+}
+/* background alb */
+html {
+  background-color: #fff;
+}
+

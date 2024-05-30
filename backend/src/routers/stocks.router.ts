@@ -106,15 +106,17 @@ router.get("/seed", expressAsyncHandler(async (req, res) => {
 
     https.get(options, (apiRes) => {
         let rawData = '';
-
+    
         apiRes.on('data', (chunk) => {
             rawData += chunk;
         });
-
+    
         apiRes.on('end', async () => {
             try {
                 const stockData = JSON.parse(rawData);
-                const limitedStockData = stockData.slice(0, 400); // Limitați la primele 100 de înregistrări
+                // Filtrăm doar obiectele care sunt de tipul 'stock'
+                const filteredStockData = stockData.filter((item: any) => item.type === 'stock' && item.exchangeShortName === 'NASDAQ');
+                const limitedStockData = filteredStockData.slice(0, 400); // Limităm la primele 400 de înregistrări
                 await StockModel.create(limitedStockData);
                 res.send("Seed is done now. Stocks have been added to the database.");
             } catch (error) {
@@ -127,6 +129,38 @@ router.get("/seed", expressAsyncHandler(async (req, res) => {
         res.status(500).send("Error calling the API.");
     });
 }));
+
+router.get('/favorites', async (req, res) => {
+    try {
+        const favorites = await StockModel.find({ favorite: true });
+        res.send(favorites);
+    } catch (error) {
+        console.error('Error fetching favorite stocks:', error);
+        res.status(500).send(error);
+    }
+});
+
+router.put('/toggle-favorite/:id', async (req, res) => {
+    const stockId = req.params.id;
+    console.log('stockId:', stockId);
+    try {
+        // Căutăm stocul pentru a obține starea curentă a 'favorite'
+        const stock = await StockModel.findById(stockId);
+        if (!stock) {
+            return res.status(404).send('Stock not found');
+        }
+
+        // Toggle starea de 'favorite'
+        const updatedStock = await StockModel.findByIdAndUpdate(stockId, {
+            $set: { favorite: !stock.favorite }
+        }, { new: true }); // Asigurăm că răspunsul include documentul actualizat
+
+        res.send(updatedStock);
+    } catch (error) {
+        console.error('Error updating favorite status:', error);
+        res.status(500).send(error);
+    }
+});
 
 router.get('/historical/:symbol', (req, res) => {
     const { symbol } = req.params;

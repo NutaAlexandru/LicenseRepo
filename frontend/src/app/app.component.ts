@@ -9,6 +9,8 @@ import { User } from './shared/models/User';
 import { UserService } from './services/user.service';
 import { FirstPageComponent } from './components/pages/first-page/first-page.component';
 import { ToastrService } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
+import { BackgroundService } from './services/background.service';
 
 
 
@@ -18,7 +20,7 @@ import { ToastrService } from 'ngx-toastr';
   selector: 'app-root',
   standalone: true,
   providers: [],
-  imports: [ReactiveFormsModule,HttpClientModule,RouterOutlet,HeaderComponent,HomeComponent,RouterModule,LoadingComponent,FirstPageComponent],
+  imports: [ReactiveFormsModule,HttpClientModule,RouterOutlet,HeaderComponent,HomeComponent,RouterModule,LoadingComponent,FirstPageComponent,CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -27,7 +29,8 @@ export class AppComponent implements OnInit {
 
   title = 'frontend';
   isLoading = true;
-  constructor(){
+  backgroundNumber: number;
+  constructor(private backgroundService: BackgroundService){
     setTimeout(() => {
       this.isLoading = false;
     }, 3000);
@@ -35,6 +38,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.backgroundService.currentBackground.subscribe(index => {
+      this.backgroundNumber = index;
+      // Opțional, gestionează încărcarea aici dacă este necesar
+      this.isLoading = false;
+    });
   }
 
 

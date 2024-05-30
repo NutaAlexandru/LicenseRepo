@@ -67,6 +67,7 @@ export class PortofolioPageComponent implements OnInit {
   portfolioItems: ExtendedPortfolioItem[] = [];
   selectedStock: ExtendedPortfolioItem | null = null;
   showChart: boolean = false;
+  displayLimit = 0;
 
   modalRef!: NgbModalRef; // Referința la modal
   @ViewChild('sellModal') sellModal: any;
@@ -181,7 +182,7 @@ export class PortofolioPageComponent implements OnInit {
       });
     }
   }
-  displayLimit = 3;
+
 
   showMore(): void {
     this.displayLimit += 3;

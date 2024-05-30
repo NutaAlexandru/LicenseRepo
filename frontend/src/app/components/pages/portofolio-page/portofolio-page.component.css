@@ -1,114 +1,56 @@
 .container {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    gap: 20px; /* Asigură un spațiu între coloane */
-  }
-  
-  .portfolio-left,
-  .portfolio-right {
-    flex: 1;
-  }
-  
-  /* Stil pentru cardul fiecărui stock */
-  .stock-card {
-    margin-bottom: 20px; /* Spațiu între carduri */
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Stil pentru overview-ul contului și portofoliului */
-  .overview-container {
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Stiluri textuale */
-  .stock-name,
-  .label,
-  .value {
-    display: block;
-  }
-  
-  .stock-name {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .stock-value,
-  .stock-change {
-    font-size: 1em;
-    margin-bottom: 5px;
-  }
-  
-  .stock-change.positive {
-    color: green;
-  }
-  
-  .stock-change.negative {
-    color: red;
-  }
-  
-  .label {
-    font-weight: bold;
-    color: #555;
-  }
-  
-  .value {
-    font-size: 1.5em;
-    margin-top: 5px;
-  }
-  
-  /* Stil pentru răspunsul la schimbarea dimensiunii ecranului */
-  @media (max-width: 768px) {
-    .container {
-      flex-direction: column;
-    }
-  
-    .portfolio-left,
-    .portfolio-right {
-      flex: none; /* Resetează flex-grow */
-      width: 100%; /* Ocupă toată lățimea pe mobil */
-      margin-bottom: 20px;
-    }
-  }
-  /* portofolio-page.component.css */
-.order-history {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #f7f7f7;
-    border: 1px solid #ccc;
-  }
-  
-  .order-detail {
-    border-bottom: 1px solid #ddd;
-    padding: 10px 0;
-  }
-  
-  .order-detail div {
-    margin-bottom: 5px;
-  }
-
-  /* overview.component.css */
-.overview-container {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start; /* Aligns items to the top */
+  padding: 10px; /* Spațiu redus */
+  gap: 10px; /* Spațiu redus între elemente */
 }
 
-.details-container {
-  flex: 1; /* Takes up 1 portion of the container */
-  padding-right: 20px; /* Adds some spacing between the containers */
+.stock-card {
+  margin-bottom: 10px; /* Spațiu redus între carduri */
+  padding: 10px; /* Spațiu intern redus */
+  border-radius: 8px; /* Păstrăm rotunjirea pentru estetică */
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Umbra subtilă pentru efect de adâncime */
 }
 
-.chart-container {
-  flex: 2; /* Takes up 2 portions of the container, making it larger than the details container */
-  padding-left: 20px; /* Adds some spacing between the containers */
+.overview-container, .order-history {
+  padding: 10px; /* Uniformizare și reducere */
+  border-radius: 8px; /* Păstrăm rotunjirea pentru estetică */
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Umbra subtilă pentru efect de adâncime */
+}
+
+.stock-name, .stock-value, .stock-change, .label, .value {
+  margin-bottom: 5px; /* Redus pentru a economisi spațiu vertical */
+}
+
+.value {
+  font-size: 1.2em; /* Mărire ușoară pentru vizibilitate */
+}
+
+/* Ajustări pentru dispozitive mobile */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .portfolio-left, .portfolio-right, .details-container, .chart-container {
+    width: 100%;
+    margin-bottom: 10px; /* Redus de la 20px */
+    padding: 0; /* Eliminat padding-ul lateral pentru a maximiza spațiul disponibil */
+  }
+}
+
+.details-container, .chart-container {
+  padding-right: 10px; /* Redus pentru a economisi spațiu */
+  padding-left: 10px; /* Redus pentru a economisi spațiu */
+}
+
+.order-detail {
+  padding: 5px 0; /* Redus pentru a fi mai compact */
+  margin-bottom: 5px; /* Spațiu redus între detaliile comenzii */
+}
+
+.order-detail div {
+  margin-bottom: 3px; /* Redus pentru compactitate */
 }
