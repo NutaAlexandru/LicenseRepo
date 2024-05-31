@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit{
       }
     });
 
-    this.returnUrl = this.activatedRoute.snapshot.queryParams.returnUrl;
+    this.returnUrl = '/home';
     
   }
   

@@ -201,6 +201,7 @@ nav ul li a {
 
 .about-image img {
   max-width: 100%;
+  animation: levitate 3s ease-in-out infinite;
 }
 
 .about-text {
@@ -224,3 +225,219 @@ nav ul li a {
   text-decoration: none;
   border-radius: 5px;
 }
+.why-choose-us {
+  background-color: #fff;
+  color: #000;
+  padding: 60px 0;
+  text-align: center;
+}
+
+.why-choose-us .container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.why-choose-us h2 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.why-choose-us .highlight {
+  color: #00aaff;
+}
+
+.choose-cards {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 40px;
+}
+
+.choose-card {
+  width: 45%;
+  text-align: center;
+}
+
+.choose-card img {
+  max-width: 100px;
+  margin-bottom: 20px;
+}
+
+.choose-card h3 {
+  margin-bottom: 20px;
+}
+
+.choose-card p {
+  font-size: 1em;
+  color: #555;
+}
+/* Stiluri pentru secțiunea Testimonials */
+.testimonials {
+  background-color: #f8f9fa;
+  color: #000;
+  padding: 60px 0;
+  text-align: center;
+}
+
+.testimonials .container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.testimonials h2 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.testimonials .highlight {
+  color: #00aaff;
+}
+
+.testimonials-slider-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.testimonials-slider {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.testimonial {
+  min-width: 45%;
+  box-sizing: border-box;
+  padding: 20px;
+  margin: 10px;
+  background-color: #fff;
+  text-align: left;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.testimonial-image img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  border: 2px solid #00aaff;
+}
+
+.testimonial-content h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+  color: #333;
+}
+
+.testimonial-content p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.testimonial-content p.subtitle {
+  font-size: 0.9em;
+  color: #777;
+}
+
+.testimonial-nav {
+  margin-top: 20px;
+}
+
+.testimonial-nav button {
+  background-color: #00aaff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.testimonial-nav button:hover {
+  background-color: #0077cc;
+}
+/* Stiluri pentru footer */
+.footer {
+  background-color: #0a043c;
+  color: #fff;
+  padding: 40px 0;
+}
+
+.footer .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.footer-column {
+  flex: 1;
+  min-width: 220px;
+  margin: 10px;
+}
+
+.footer-column h3 {
+  margin-bottom: 20px;
+  color: #00aaff;
+}
+
+.footer-column p, .footer-column ul, .footer-column form {
+  margin: 0;
+  padding: 0;
+}
+
+.footer-column ul {
+  list-style: none;
+}
+
+.footer-column ul li {
+  margin-bottom: 10px;
+}
+
+.footer-column ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer-column ul li a:hover {
+  text-decoration: underline;
+}
+
+.footer-column .social-icons a {
+  margin-right: 10px;
+}
+
+.footer-column .social-icons img {
+  width: 24px;
+  height: 24px;
+}
+
+.footer-column form {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-column input[type="email"] {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.footer-column button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #00aaff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.footer-column button:hover {
+  background-color: #0077cc;
+}
+

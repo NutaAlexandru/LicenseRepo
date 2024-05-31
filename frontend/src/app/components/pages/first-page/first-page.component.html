@@ -3,10 +3,9 @@
     <div class="logo">TradingPlatform</div>
     <ul>
       <li><a href="#">Home</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Services</a></li>
-      <li><a href="#">Why Us</a></li>
-      <li><a href="#">Team</a></li>
+      <li><a href="#aboutus">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#whyus">Why Us</a></li>
       <li><a routerLink="/login">Login</a></li>
     </ul>
   </nav>
@@ -15,7 +14,7 @@
 <section class="hero">
   <div class="hero-content">
     <h1>TradingPlatform - Your Gateway to the World of Trading</h1>
-    <p>Welcome to TradingPlatform, your trusted platform for trading stocks and cryptocurrencies. We are dedicated to providing a seamless trading experience, with powerful tools and top-notch support. Whether you're a beginner making your first steps in the trading world or an experienced professional, TradingPlatform is the right place for you.</p>
+    <p>Welcome to TradingPlatform, your trusted platform for trading stocks and CFDs. We offer powerful tools and top-notch support to ensure you have a seamless trading experience. Whether you're a beginner or a professional, TradingPlatform is the right place for you.</p>
     <a href="#" class="button">Learn More</a>
   </div>
   <div class="hero-image">
@@ -23,47 +22,141 @@
   </div>
 </section>
 
-<section class="services">
+
+<section class="services" id="services">
   <div class="container">
     <h2>Our <span class="highlight">Services</span></h2>
-    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.</p>
+    <p>At TradingPlatform, we offer a variety of services to meet all your trading needs, from stocks to CFDs. Our platform is designed to provide you with the best trading experience possible.</p>
     <div class="services-cards">
       <div class="card">
         <img src="assets/s1.png" alt="Currency Wallet">
-        <h3>CURRENCY WALLET</h3>
-        <p>Fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using.</p>
+        <h3>STOCK TRADING</h3>
+        <p>Trade a wide range of stocks from major global markets with our advanced trading tools and real-time market data.</p>
         <a href="#" class="button">Read More</a>
       </div>
       <div class="card">
         <img src="assets/s2.png" alt="Security Storage">
-        <h3>SECURITY STORAGE</h3>
-        <p>Fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using.</p>
+        <h3>CFD TRADING</h3>
+        <p>Gain exposure to various asset classes such as forex, commodities, and indices through our CFD trading services.</p>
         <a href="#" class="button">Read More</a>
       </div>
       <div class="card">
         <img src="assets/s3.png" alt="Expert Support">
-        <h3>EXPERT SUPPORT</h3>
-        <p>Fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using.</p>
+        <h3>MARKET ANALYSIS</h3>
+        <p>Stay informed with our in-depth market analysis and insights from industry experts to make better trading decisions.</p>
         <a href="#" class="button">Read More</a>
       </div>
     </div>
     <a href="#" class="button view-all">View All</a>
   </div>
 </section>
-<section class="about-us">
+
+<section class="about-us" id="aboutus">
   <div class="container">
     <h2>About <span class="highlight">Us</span></h2>
-    <p>Magni quod blanditiis non minus sed aut voluptatum illum quisquam aspernatur ullam vel beatae rerum ipsum voluptatibus.</p>
+    <p>At TradingPlatform, we are committed to providing a robust and reliable trading environment for our users. Our platform is designed to cater to both novice and professional traders.</p>
     <div class="about-content">
       <div class="about-image">
         <img src="assets/about-img.png" alt="About Us Image">
       </div>
       <div class="about-text">
-        <h3>We Are Finexo</h3>
-        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All</p>
-        <p>Molestiae odio earum non qui cumque provident voluptates, repellendus exercitationem, possimus at iste corrupti officiis unde alias eius ducimus reiciendis soluta eveniet. Nobis ullam ab omnis quasi expedita.</p>
+        <h3>We Are TradingPlatform</h3>
+        <p>With years of experience in the financial markets, we offer a comprehensive trading platform that provides access to a wide range of financial instruments. Our mission is to empower traders by providing them with the tools and resources they need to succeed.</p>
+        <p>We believe in transparency, security, and customer satisfaction. Our team is dedicated to ensuring that you have the best trading experience possible.</p>
         <a href="#" class="button">Read More</a>
       </div>
     </div>
   </div>
 </section>
+
+<section class="why-choose-us" id="whyus">
+  <div class="container">
+    <h2>Why Choose <span class="highlight">Us</span></h2>
+    <div class="choose-cards">
+      <div class="choose-card">
+        <img src="assets/w1.png" alt="Expert Management">
+        <h3>Expert Management</h3>
+        <p>Our team of experts ensures that you receive the best guidance and support in your trading journey. We are here to help you succeed.</p>
+      </div>
+      <div class="choose-card">
+        <img src="assets/w2.png" alt="Secure Investment">
+        <h3>Secure Investment</h3>
+        <p>Your investments are secure with us. We use the latest security measures to protect your assets and personal information.</p>
+      </div>
+      <div class="choose-card">
+        <img src="assets/w3.png" alt="Advanced Tools">
+        <h3>Advanced Tools</h3>
+        <p>Access a wide range of advanced trading tools and features to enhance your trading strategies and make informed decisions.</p>
+      </div>
+      <div class="choose-card">
+        <img src="assets/w4.png" alt="Customer Support">
+        <h3>Customer Support</h3>
+        <p>Our dedicated customer support team is available 24/7 to assist you with any queries or issues you may have.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="container">
+    <h2>What says our <span class="highlight">Customers</span></h2>
+    <div class="testimonials-slider-wrapper">
+      <div class="testimonials-slider" [style.transform]="transformStyle">
+        <div class="testimonial" *ngFor="let testimonial of testimonials">
+          <div class="testimonial-image">
+            <img [src]="testimonial.image" [alt]="testimonial.name">
+          </div>
+          <div class="testimonial-content">
+            <h3>{{testimonial.name}}</h3>
+            <p class="subtitle">{{testimonial.subtitle}}</p>
+            <p>{{testimonial.text}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-nav">
+      <button (click)="prev()">‹</button>
+      <button (click)="next()">›</button>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-column">
+      <h3>Address</h3>
+      <p>📍 123 Trading Street, Financial District, City</p>
+      <p>📞 Call +01 1234567890</p>
+      <p>📧 support&#64;tradingplatform.com</p>
+      <div class="social-icons">
+        <a href="#"><i class="bi bi-facebook"></i></a>
+        <a href="#"><i class="bi bi-twitter"></i></a>
+        <a href="#"><i class="bi bi-linkedin"></i></a>
+        <a href="#"><i class="bi bi-instagram"></i></a>
+      </div>
+    </div>
+    <div class="footer-column">
+      <h3>Info</h3>
+      <p>At TradingPlatform, we are committed to providing a seamless and secure trading experience. Our platform uses cutting-edge technology to ensure fast and reliable trading services.</p>
+    </div>
+    <div class="footer-column">
+      <h3>Links</h3>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#aboutus">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#whyus">Why Us</a></li>
+        <li><a href="#team">Team</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h3>Subscribe</h3>
+      <form>
+        <input type="email" placeholder="Enter email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</footer>
+
+

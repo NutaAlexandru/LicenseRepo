@@ -32,7 +32,7 @@
 
       <!-- Meniul utilizatorului în partea dreaptă -->
       <div *ngIf="isAuth" class="menu-container">
-        <a class="nav-link bi bi-person-lines-fill">{{ user.name }}</a>
+        <a class="nav-link bi bi-person-lines-fill"></a>
         <div class="menu">
           <a [routerLink]="['/profile', user.id]" class="dropdown-item bi bi-person-circle">Profile</a>
           <a (click)="logout()" class="dropdown-item bi bi-box-arrow-right">Logout</a>
