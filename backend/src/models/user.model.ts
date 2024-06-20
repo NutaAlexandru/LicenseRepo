@@ -6,7 +6,7 @@ export interface User{
     password:string;
     name:string;
     address:string;
-    isAdmin:boolean;
+    isDemo:boolean;
     balance:number;
 
 }
@@ -16,7 +16,7 @@ export const UserSchema=new Schema<User>({
     password:{type:String,required:false},
     name:{type:String,required:true},
     address:{type:String,required:false},
-    isAdmin:{type:Boolean,required:false},
+    isDemo:{type:Boolean,required:false},
     balance: {
         type: Number,
         default: 0,
@@ -33,5 +33,33 @@ export const UserSchema=new Schema<User>({
     timestamps:true,
 }
 );
+export interface DemoUser {
+    id: string;
+    email: string;
+    name: string;
+    address: string;
+    isDemo: boolean;
+    balance: number;
+  }
+  
+  export const DemoUserSchema = new Schema<DemoUser>({
+    email: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
+    address: { type: String, required: false },
+    isDemo: { type: Boolean, required: true, default: true },
+    balance: { type: Number, default: 99999999, required: true },
+  }, {
+    toJSON: {
+      virtuals: true,
+    },
+    toObject: {
+      virtuals: true,
+    },
+    timestamps: true,
+  });
+  
+  export const DemoUserModel = model<DemoUser>('DemoUser', DemoUserSchema);
+
+
 
 export const UserModel=model<User>('User',UserSchema);

@@ -1,13 +1,17 @@
 header {
   background: white;
   padding: 0.5rem 1rem;
-border-bottom: none;
+  border-bottom: none;
+  z-index: 1000; /* Ensure the header has a high z-index */
+  position: relative; /* Ensure the header's z-index is respected */
 }
+
 .nav-center {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
 }
+
 .nav-item {
   list-style: none;
 }
@@ -29,7 +33,7 @@ border-bottom: none;
 }
 
 .balance-icon { /* Culoarea portocalie pentru icon */
-  color: #0056b3;
+  color: #004494;
   border-radius: 50%; /* Cerc complet */
   padding: 5px; /* Mărimea iconului */
   margin-right: 10px; /* Spațiu între icon și text */
@@ -44,44 +48,39 @@ border-bottom: none;
   margin-left: 10px; /* Spațiu între text și săgeată */
 }
 
-
 .nav-link {
-  color: #0056b3;
+  color: #004494;
   cursor: pointer;
 }
 
 .nav-link:hover {
   background-color: #e9ecef; /* Culoare de fundal gri deschis pentru hover */
-  color: #0056b3; /* Culoare de text albastru închis la hover */
+  color: #004494; /* Culoare de text albastru închis la hover */
 }
 
-.menu-container {
-  position: relative;
-}
-
-.menu {
-  display: none;
+.dropdown-menu {
   position: absolute;
-  right: 0;
+  top: 0;
+  right: 0; /* Position the menu to the right */
+  margin-top: 0.5rem;
   background-color: white;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-  z-index: 1;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  z-index: 1050; /* Ensure the dropdown has a higher z-index */
 }
-.menu-container:hover .menu {
-  display: block;
+
+.dropdown-item {
+  color: #004494;
+  padding: 10px 20px;
   cursor: pointer;
+  display: block; /* Ensure items are block elements */
 }
 
-.menu a {
-  color: #0056b3;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.menu a:hover {
+.dropdown-item:hover {
   background-color: #f1f1f1;
 }
+
 @media (max-width: 768px) {
   .balance-container {
     font-size: 14px; /* Mărimea fontului mai mică pe dispozitive mobile */
@@ -91,4 +90,19 @@ border-bottom: none;
   .balance-icon {
     padding: 3px; /* Icon mai mic */
   }
+}
+
+.demo-account-btn {
+  background-color: #004494;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.demo-account-btn:hover {
+  background-color: #004494;
 }

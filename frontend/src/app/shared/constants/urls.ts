@@ -40,8 +40,12 @@ export const USER_LOGIN_URL = BASE_URL+'/api/users/login';
 export const USER_REGISTER_URL = BASE_URL+'/api/users/register';
 export const USER_UPDATE_URL=BASE_URL+'/api/users/update-user/';
 export const USER_DATA_URL=BASE_URL+'/api/users/return-user/';
+export const USER_SWITCH_TO_DEMO_URL =BASE_URL+ '/api/users/switch-to-demo';
+export const USER_SWITCH_TO_REAL_URL=BASE_URL+'/api/users/switch-to-real';
 
 export const NEWS_URL=BASE_URL+'/api/news';
 export const DIVIDENTS_URL=BASE_URL+'/api/dividents'
+
+export const MARKET_STATUS_URL=BASE_URL+'/api/marketstatus/market-status/';
 
 export const USER_LOGIN_WITH_GOOGLE_URL=BASE_URL+'/api/users/google/login';

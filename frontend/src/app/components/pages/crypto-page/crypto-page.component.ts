@@ -35,9 +35,11 @@ export class CryptoPageComponent implements OnInit {
     purchaseAmount: number = 0;
     modalRef!: NgbModalRef; // Referința la modal
     @ViewChild('buyModal') buyModal: any;
+    @ViewChild('buyConfirmModal') buyConfirmModal: any; 
 
     Highcharts: typeof Highcharts = Highcharts;
     chartOptions: Highcharts.Options = {};
+    updateFlag = false;
 
     constructor(private activatedRoute:ActivatedRoute,
       private cryptoService:CryptoService,
@@ -61,11 +63,13 @@ export class CryptoPageComponent implements OnInit {
     }
     resetChartData() {
       this.chartOptions = {}; // Reset chart options to initial state
+      this.updateFlag = false; // Reset update flag
     }
     
     loadChartData(stockSymbol: string): void {
       this.cryptoService.getHistoricalData(stockSymbol).subscribe(
         data => {
+          console.log('Crypto historical data:', data);
           const ohlc = data.map(item => [
             (new Date(item.date)).getTime(), // Convert date to timestamp
             parseFloat(item.open),
@@ -157,6 +161,7 @@ export class CryptoPageComponent implements OnInit {
               }]
             }
           };
+          this.updateFlag = true; // Update the flag to refresh the chart
         },
         error => {
           console.error('Error retrieving stock data', error);
@@ -173,29 +178,32 @@ export class CryptoPageComponent implements OnInit {
     openBuyModal() {
       this.modalRef = this.modalService.open(this.buyModal, { ariaLabelledBy: 'modal-basic-title' });
     }
-    buyCrypto() {
+    openBuyConfirmModal() {
+      this.modalRef.close(); // Închide modalul de achiziție
+      this.modalRef = this.modalService.open(this.buyConfirmModal, { ariaLabelledBy: 'modal-confirm-title' });
+    }
+    confirmBuyCrypto() {
       if (!this.cryptoData) {
-          console.error('Crypto profile is not loaded.');
-          return;
+        console.error('Crypto profile is not loaded.');
+        return;
       }
       if (this.user.balance < this.purchaseAmount) {
-          console.error('Insufficient balance to make the purchase.');
-          return;
+        console.error('Insufficient balance.');
+        return;
       }
-      
       enum PurchaseOrderStatus {
-          Pending = 'pending',
-          Executed = 'executed',
-          Cancelled = 'cancelled',
-      }
-      
-      enum PurchaseOrderType {
-          Buy = 'buy',
-          Sell = 'sell',
-      }
+        Pending = 'pending',
+        Executed = 'executed',
+        Cancelled = 'cancelled',
+    }
     
+    enum PurchaseOrderType {
+        Buy = 'buy',
+        Sell = 'sell',
+    }
+  
       const purchaseOrderData = {
-          userId: this.user.id,
+        userId: this.user.id,
           date: new Date(),
           symbol: this.cryptoData.symbol, // Se referă la simbolul criptomonedei
           price: this.cryptoData.price, // Prețul actual al criptomonedei
@@ -206,16 +214,39 @@ export class CryptoPageComponent implements OnInit {
           transactionType: PurchaseOrderType.Buy,
           type: 'crypto' // Specificăm că este o tranzacție cu criptomonede
       };
-    
+      console.log(purchaseOrderData);
+  
       this.cryptoService.createPurchaseOrder(purchaseOrderData).subscribe({
-          next: (response) => {
-              console.log('Crypto purchase order created:', response);
-              this.modalService.dismissAll(); // Închide modalul după succes
-          },
-          error: (error) => {
-              console.error('Failed to create crypto purchase order:', error);
-          }
+        next: (response) => {
+          this.userService.depositUpdateUserToLocalStorage(this.user.id).subscribe({
+            next: (response) => {
+              console.log(response);
+            },
+            error: (errorResponse) => {
+              console.error('Failed to update:', errorResponse);
+            }
+          });
+          console.log('Purchase order created:', response);
+          this.modalService.dismissAll();
+        },
+        error: (error) => {
+          console.error('Failed to create purchase order:', error);
+        }
       });
+    }
+    buyCrypto() {
+      if (!this.cryptoData) {
+        // Gestionează cazul în care profilul criptomonedei nu este încărcat
+        console.error('Crypto profile is not loaded.');
+        return;
+      }
+      if (this.user.balance < this.purchaseAmount) {
+        console.error('Insufficient balance.');
+        return;
+      }
+  
+      // Deschide modalul de confirmare
+      this.openBuyConfirmModal();
   }
   getMaximumTokens(amount: number): number {
     if (!this.cryptoData || !this.cryptoData.price) {

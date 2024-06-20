@@ -1,37 +1,148 @@
-/* Optional: Stiluri personalizate suplimentare dacă sunt necesare */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+}
+
 .login-overlay-header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 80px; /* Ajustează înălțimea pentru a se potrivi cu headerul tău */
-    background-color: white;
+    background-color: #fff; /* Asigură-te că este albastru */
     z-index: 1001; /* Asigură-te că acest header suplimentar are un z-index mai mare decât headerul principal */
-  }
-.input-container label {
-    display: block;
-    margin-bottom: 5px;
-    color: #FFFFFF;
 }
 
-.input-container input {
+.login-wrapper {
+    display: flex;
     width: 100%;
-    padding: 10px;
-    border: 1px solid #FFFFFF;
-    border-radius: 5px;
+    height: 100%;
+    position: relative;
+    z-index: 1002;
 }
 
-.input-container input::placeholder {
-    color: #FFFFFF;
+.left-section {
+    flex: 1;
+    background: url('/assets/Login.png') no-repeat left center;
+    background-size: cover;
+    z-index: 1003;
 }
 
-.errorList {
+.right-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+}
+
+.login-container {
+    background: rgb(255, 255, 255); /* White background with slight transparency */
+    border-radius: 10px;
+    padding: 100px; /* Reduced padding */
+    max-width: 100%; /* Reduced max-width */
+    width: 90%; /* Ensure it fits smaller screens */
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 15px; /* Reduced margin */
+}
+
+.login-header h1 {
+    margin: 0;
+    font-size: 22px; /* Reduced font size */
+    color: #333;
+}
+
+.login-form-container {
+    width: 100%;
+}
+
+.input-group {
+    margin-bottom: 15px; /* Reduced margin */
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 6px; /* Reduced margin */
+    font-weight: bold;
+    color: #333;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 8px; /* Reduced padding */
+    border: none;
+    border-bottom: 2px solid #f0f2f5;
+    box-sizing: border-box;
+}
+
+.input-group input.error {
+    border-bottom-color: #d9534f;
+}
+
+.error-message {
     color: #d9534f;
-    margin-top: -10px;
-    margin-bottom: 20px;
-    font-size: 0.9em;
+    font-size: 0.8em; /* Reduced font size */
+    margin-top: 4px; /* Reduced margin */
 }
 
-.page {
-    background-color: #FFFFFF; /* Asigură-te că fundalul este alb */
+.terms-conditions {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px; /* Reduced margin */
+}
+
+.terms-conditions input {
+    margin-right: 8px; /* Reduced margin */
+}
+
+.terms-conditions label {
+    font-size: 0.9em;
+    color: #333;
+}
+
+.terms-conditions a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.terms-conditions a:hover {
+    text-decoration: underline;
+}
+
+.login-button {
+    width: 100%;
+    padding: 12px; /* Reduced padding */
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px; /* Reduced font size */
+    transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #0056b3;
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 15px; /* Reduced margin */
+}
+
+.login-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
 }

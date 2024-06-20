@@ -4,6 +4,6 @@ export class User{
     name:string;
     address:string;
     token:string;
-    isAdmin:boolean;
+    isDemo:boolean;
     balance:number;
 }

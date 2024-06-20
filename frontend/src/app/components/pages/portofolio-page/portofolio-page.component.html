@@ -1,100 +1,80 @@
+<div class="portfolio-container">
+  <!-- Account Statistics -->
+  <div class="account-statistics mb-4">
+    <div class="statistic">
+      <div class="label">Account Balance</div>
+      <div class="value">{{ user.balance | currency: 'USD':'symbol-narrow' }}</div>
+    </div>
+    <div class="statistic">
+      <div class="label">Portfolio Value</div>
+      <div class="value">{{ portfolioValue | currency: 'USD':'symbol-narrow' }}</div>
+    </div>
+    <button type="button" *ngIf="!showChart" class="btn btn-primary mt-2" (click)="loadChartData()">Show statistics</button>
+    <button type="button" *ngIf="showChart" class="btn btn-primary mt-2" (click)="hideStats()">Hide statistics</button>
+  </div>
 
-<div class="list-container">
-  <div class="row h-100" >
-    <div class="col-md-4 d-flex flex-column p-2 " >
-      <div class="accordion" id="accordionExample">
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-              Invest
-            </button>
-          </h2>
-          <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-              <div *ngFor="let item of getStocks()" class="stock-card">
-                <div *ngIf="item.type==='stock'">
-                <div class="stock-name"><a routerLink="/stock/{{item.symbolId}}">{{ item.symbol }}</a></div>
-                <div class="stock-amount">{{ item.nrOfActions | number: '1.2-2' }} actions</div>
-                <div class="stock-value">{{ item.currentValue | currency:'USD':'symbol-narrow' }}</div>
-                <div class="stock-change" [ngClass]="{'positive': item.percentChange >= 0, 'negative': item.percentChange < 0}">
-                  {{ item.percentChange | number:'1.2-2' }}%
-                </div>
-                <button type="button" class="btn btn-danger" (click)="openSellModal(item)">Vinde</button>
-              </div>
-              </div>
-            </div>
+  <!-- Chart Section -->
+  <div class="chart-section mb-4" *ngIf="showChart">
+    <highcharts-chart
+      [Highcharts]="Highcharts"
+      [options]="chartOptions"
+      style="width: 100%; height: 400px; display: block;">
+    </highcharts-chart>
+  </div>
+
+  <div class="row">
+    <!-- Invest Section -->
+    <div class="col-md-6 invest-section">
+      <h2>Invest</h2>
+      <div *ngFor="let item of getStocks()" class="stock-card">
+        <div *ngIf="item.type==='stock'">
+          <div class="stock-name"><a routerLink="/stock/{{item.symbolId}}">{{ item.symbol }}</a></div>
+          <div class="stock-amount">{{ item.nrOfAction | number: '1.2-2' }} actions</div>
+          <div class="stock-value">{{ item.currentValue | currency:'USD':'symbol-narrow' }}</div>
+          <div class="stock-change" [ngClass]="{'positive': item.percentChange >= 0, 'negative': item.percentChange < 0}">
+            {{ item.percentChange | number:'1.2-2' }}%
           </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-              CFD
-            </button>
-          </h2>
-          <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-            <div *ngFor="let item of getCryptos()" class="stock-card">
-              <div *ngIf="item.type==='crypto'">
-              <div class="stock-name"><a routerLink="/crypto/{{item.symbolId}}">{{item.symbol}}</a></div>
-              <div class="stock-amount">{{ item.nrOfActions | number: '1.2-2' }} coins</div>
-              <div class="stock-value">{{ item.currentValue | currency:'USD':'symbol-narrow' }}</div>
-              <div class="stock-change" [ngClass]="{'positive': item.percentChange >= 0, 'negative': item.percentChange < 0}">
-                {{ item.percentChange | number:'1.2-2' }}%
-              </div>
-              <button type="button" class="btn btn-danger" (click)="openSellModal(item)">Vinde</button>
-            </div>
-            </div>
-          </div>
+          <button type="button" class="btn btn-danger" (click)="openSellModal(item)">Sell</button>
         </div>
       </div>
-      <!-- Chart Container -->
-    <div class="chart-container" style="flex: 2;">
-      <highcharts-chart *ngIf="showChart"
-        [Highcharts]="Highcharts"
-        [options]="chartOptions"
-        style="width: 100%; height: 400px; display: block;">
-      </highcharts-chart>
     </div>
-    </div>
-    <div class="col-md-8 d-flex flex-column p-2">
-      <div class="flex-grow-1 overflow-auto">
-        <div class="overview-container" style="display: flex; justify-content: space-between;">
-          <!-- Details Container -->
-          <div class="details-container" style="flex: 1;">
-            <div class="account-value">
-              <div class="label">Account Amount</div>
-              <div class="value">{{ user.balance | currency: 'USD':'symbol-narrow' }}</div>
-            </div>
-            <div class="portfolio-value">
-              <div class="label">Portfolio Value</div>
-              <div class="value">{{ portfolioValue | currency: 'USD':'symbol-narrow' }}</div>
-            </div>
-            <button type="button" *ngIf="!showChart" class="btn btn-primary" (click)="loadChartData()">Show statistics</button>
-            <button type="button" *ngIf="showChart" class="btn btn-primary" (click)="hideStats()">Hide statistics</button>
-          </div> 
-      </div> 
-      <div class="history-container">
-        <div class="order-history">
-          <h2>Istoric Comenzi</h2>
-          <div *ngFor="let order of purchaseOrders | slice:0:displayLimit" class="order-detail">
-            <div>Data: {{ order.date | date: 'medium' }}</div>
-            <div>Simbol: {{ order.symbol }}</div>
-            <div>Preț per acțiune: {{ order.price | currency: 'USD' }}</div>
-            <div>Număr acțiuni: {{ order.nrOfActions }}</div>
-            <div>Valoare totală: {{ (order.price * order.nrOfActions) | currency: 'USD' }}</div>
-            <div>Status: {{ order.status }}</div>
+
+    <!-- CFD Section -->
+    <div class="col-md-6 cfd-section">
+      <h2>CFD</h2>
+      <div *ngFor="let item of getCryptos()" class="stock-card">
+        <div *ngIf="item.type==='crypto'">
+          <div class="stock-name"><a routerLink="/crypto/{{item.symbolId}}">{{item.symbol}}</a></div>
+          <div class="stock-amount">{{ item.nrOfAction | number: '1.2-2' }} coins</div>
+          <div class="stock-value">{{ item.currentValue | currency:'USD':'symbol-narrow' }}</div>
+          <div class="stock-change" [ngClass]="{'positive': item.percentChange >= 0, 'negative': item.percentChange < 0}">
+            {{ item.percentChange | number:'1.2-2' }}%
           </div>
-          <button *ngIf="displayLimit < purchaseOrders.length" (click)="showMore()" class="btn btn-primary">Show More</button>
+          <button type="button" class="btn btn-danger" (click)="openSellModal(item)">Sell</button>
         </div>
       </div>
+    </div>
   </div>
-    
-  </div>
+
+  <!-- Pending Orders -->
+  <div class="pending-orders-container mt-4">
+    <h2>Pending Orders</h2>
+    <div class="pending-orders">
+      <div *ngFor="let order of getPendingOrders() | slice:0:displayLimit" class="stock-card">
+        <div class="stock-name">{{ order.symbol }}</div>
+        <div class="stock-amount">Number of actions: {{ order.nrOfActions }}</div>
+        <div class="stock-value">Price per action: {{ order.price | currency: 'USD' }}</div>
+        <div class="stock-change">Total value: {{ (order.price * order.nrOfActions) | currency: 'USD' }}</div>
+        <div class="order-status">Status: {{ order.status }}</div>
+      </div>
+      <button *ngIf="displayLimit < purchaseOrders.length" (click)="showMore()" class="btn btn-primary">Show More</button>
+    </div>
   </div>
 </div>
 
 <ng-template #sellModal let-modal>
   <div class="modal-header">
-    <h5 class="modal-title">Vânzare {{ selectedStock?.symbol }}</h5>
+    <h5 class="modal-title">Selling {{ selectedStock?.symbol }}</h5>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -102,20 +82,35 @@
   <div class="modal-body">
     <form>
       <div class="form-group">
-        <label for="sellAmount">Număr disponibil de actiuni:{{ selectedStock?.nrOfActions }}</label>
-        <label for="sellAmount">Număr de acțiuni:</label>
+        <label for="sellAmount">Number of available stocks:{{ selectedStock?.nrOfAction| number:'1.2-2' }}</label>
+        <a for="sellAmount">Number of actions:</a>
         <input type="number" class="form-control" id="sellAmount" [(ngModel)]="sellAmount" name="sellAmount" required>
       </div>
       <div>
-        Valoare totală estimată: {{ sellAmount * selectedStock?.currentPrice | currency:'USD':'symbol-narrow' }}
+        Estimated total value: {{ sellAmount * selectedStock?.currentPrice | currency:'USD':'symbol-narrow' }}
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Închide</button>
-    <button type="button" class="btn btn-primary" (click)="sellStock()">Confirmă vânzarea</button>
+    <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="sellStock()">Confirm sell</button>
   </div>
 </ng-template>
-
-
-
+<ng-template #sellConfirmModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Confirm sell</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Symbol: {{ selectedStock?.symbol || 'N/A' }}</p>
+    <p>Number of actions: {{ sellAmount }}</p>
+    <p>Price per action: {{ selectedStock?.currentPrice | currency:'USD':'symbol-narrow' }}</p>
+    <p>Total value: {{ sellAmount * selectedStock?.currentPrice | currency:'USD':'symbol-narrow' }}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="confirmSellStock()">Confirm sell</button>
+  </div>
+</ng-template>

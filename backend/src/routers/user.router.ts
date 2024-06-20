@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { sample_users } from "../data";
+
 import jwt from "jsonwebtoken";
 import expressAsyncHandler from "express-async-handler";
-import { User, UserModel } from "../models/user.model";
+import { DemoUser, DemoUserModel, User, UserModel } from "../models/user.model";
 import bcrypt from "bcryptjs";
 
 const { OAuth2Client } = require('google-auth-library');
@@ -10,18 +10,6 @@ const CLIENT_ID = '878958543895-jvesiqudtoi4iaf3kfjjaaipqh51b164.apps.googleuser
 const client = new OAuth2Client(CLIENT_ID);
 
 const router = Router();
-
-router.get("/seed", expressAsyncHandler( 
-    async (req,res ) => {
-    const stocksCount = await UserModel.countDocuments();
-    if(stocksCount > 0){
-        res.send("Seed done");
-        return;
-    }
-    await UserModel.create(sample_users);
-    res.send("Seed is done now");
-}
-));
 
 router.post("/login",expressAsyncHandler(async (req, res) => {
     const {email,password}=req.body;
@@ -49,6 +37,7 @@ router.post('/google/login', async (req, res) => {
           id:'',
           email: payload.email.toLowerCase(),
           name: payload.name,
+          isDemo: false,
         });
         const createdUser=await UserModel.create(newUser);
         res.send(generateToken(createdUser));
@@ -98,15 +87,62 @@ router.post("/register",expressAsyncHandler(async (req, res) => {
         email:email.toLowerCase(),
         password:encryptedPassword,     
         address,
-        isAdmin:false,
+        isDemo:false,
         balance:temp
     }
     const createdUser=await UserModel.create(newUser);
     res.send(generateToken(createdUser));
 }));
 
+router.post('/switch-to-real', expressAsyncHandler(async (req, res) => {
+    const { email } = req.body;
 
+    let demoUser = await DemoUserModel.findOne({ email });
+    
+    if (!demoUser) {
+      // Dacă utilizatorul nu este găsit, trimite un mesaj de eroare
+      res.status(404).send({ message: 'User not found' });
+      return;
+    }
+  
+    let user = await UserModel.findOne({ email });
+    
+    if (user) {
+    res.send(generateDemoToken(user));
+    }
+  }));
 
+router.post('/switch-to-demo', expressAsyncHandler(async (req, res) => {
+    const { email } = req.body;
+  
+    // Caută utilizatorul în `UserModel`
+    let user = await UserModel.findOne({ email });
+    
+    if (!user) {
+      // Dacă utilizatorul nu este găsit, trimite un mesaj de eroare
+      res.status(404).send({ message: 'User not found' });
+      return;
+    }
+  
+    // Caută contul demo în `DemoUserModel`
+    let demoUser = await DemoUserModel.findOne({ email });
+    
+    if (!demoUser) {
+      // Dacă contul demo nu este găsit, creează unul nou
+      demoUser = new DemoUserModel({
+        id:'',
+        email: user.email,
+        name: user.name,
+        address: user.address,
+        isDemo: true,
+        balance: 99999999,
+      });
+      await demoUser.save();
+    }
+  
+    // Trimite tokenul generat pentru contul demo
+    res.send(generateDemoToken(demoUser));
+  }));
 
 const generateToken=(user:User)=>{
     const token=jwt.sign({
@@ -119,11 +155,27 @@ const generateToken=(user:User)=>{
         email: user.email,
         name: user.name,
         address: user.address,
-        isAdmin: user.isAdmin,
+        isDemo: user.isDemo,
         balance:user.balance,
         token: token
       };
 }
+const generateDemoToken = (demoUser: DemoUser) => {
+    const token = jwt.sign({
+      id: demoUser.id, email: demoUser.email
+    }, 'secret', {
+      expiresIn: "200d"
+    });
+    return {
+      id: demoUser.id,
+      email: demoUser.email,
+      name: demoUser.name,
+      address: demoUser.address,
+      isDemo: demoUser.isDemo,
+      balance: demoUser.balance,
+      token: token
+    };
+  }
 
 
 

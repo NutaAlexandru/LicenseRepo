@@ -4,13 +4,14 @@ import { Schema, model} from 'mongoose';
 export interface PurchaseOrder{
     userId: ObjectId | string;
     date: Date;
-    stockSymbol:string;
-    stockPrice:number;
-    stockId:ObjectId | string;
-    nrOfAction:number;
+    symbol:string;
+    price:number;
+    id:ObjectId | string;
+    nrOfActions:number;
     amount:number;
-    status:'executed'| 'pending' | 'cancelled';
     transactionType: 'buy' | 'sell';
+    status:'executed'| 'pending' | 'cancelled';
+    
 }
 
 const purchaseOrderSchema = new mongoose.Schema({
@@ -38,7 +39,7 @@ export interface Portofolio{
     userId:ObjectId | string;
     stockSymbol:string;
     type:'stock' | 'crypto';
-    nrOfActions:number;
+    nrOfAction:number;
     investedAmount:number;
 };
 
@@ -47,7 +48,7 @@ const portfolioSchema = new mongoose.Schema({
     symbol: { type: String, required: true },
     symbolId: { type: mongoose.Schema.Types.ObjectId, required: true },
     type: { type: String, required: true, enum: ['stock', 'crypto'] },
-    nrOfActions: { type: Number, required: true },
+    nrOfAction: { type: Number, required: true },
     investedAmount: { type: Number, required: true }
   },
   {

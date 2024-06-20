@@ -15,7 +15,7 @@ export class Portofolio{
     symbol:string;
     symbolId:string;
     type:'stock' | 'crypto';
-    nrOfActions:number;
+    nrOfAction:number;
     investedAmount:number;
 };
 

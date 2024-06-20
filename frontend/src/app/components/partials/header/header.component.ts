@@ -42,4 +42,37 @@ get isAuth(){
 changeBackground(index: number) {
   this.backgroundService.changeBackground(index);
 }
+toggleDropdown(event: Event): void {
+  event.preventDefault();
+  const target = event.currentTarget as HTMLElement;
+  const parent = target.parentElement;
+
+  if (parent) {
+    parent.classList.toggle('show');
+  }
+}
+switchToDemo() {
+  if (this.user.email) {
+    this.userService.switchToDemoAccount(this.user.email).subscribe({
+      next: (demoUser) => {
+        this.user = demoUser;
+      },
+      error: (err) => {
+        console.error('Error switching to demo account', err);
+      }
+    });
+  }
+}
+switchToReal() {
+  if (this.user.email) {
+      this.userService.switchToRealAccount(this.user.email).subscribe({
+          next: (realUser) => {
+              this.user = realUser;
+          },
+          error: (err) => {
+              console.error('Error switching to real account', err);
+          }
+      });
+  }
+}
 }

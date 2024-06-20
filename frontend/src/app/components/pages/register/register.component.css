@@ -1,62 +1,149 @@
-/* Stiluri generale pentru container */
-.container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.details {
-    margin: 0 auto;
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
     display: flex;
-    flex-direction: column;
-}
-
-/* Stiluri pentru input-uri și label-uri */
-.input-container {
-    margin-bottom: 20px;
-}
-
-.input-container label {
-    display: block;
-    margin-bottom: 5px;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+  }
+  
+  .register-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .left-section {
+    flex: 1;
+    background: url('/assets/Login.png') no-repeat left center;
+    background-size: cover;
+    z-index: 1002;
+  }
+  
+  .right-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+  }
+  
+  .register-container {
+    background: rgb(255, 255, 255); /* White background with slight transparency */
+    border-radius: 10px;
+    padding: 30px; /* Reduced padding */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 350px; /* Reduced max-width */
+    width: 90%; /* Ensure it fits smaller screens */
+  }
+  
+  .register-header {
+    text-align: center;
+    margin-bottom: 15px; /* Reduced margin */
+  }
+  
+  .register-header h1 {
+    margin: 0;
+    font-size: 22px; /* Reduced font size */
     color: #333;
-}
-
-.input-container input {
+  }
+  
+  .register-form-container {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box; /* Asigură-te că padding-ul nu afectează lățimea */
-}
-
-.input-container input::placeholder {
-    color: #aaa;
-}
-
-/* Stiluri pentru afișarea erorilor */
-.errorList {
-    color: #d9534f; /* Culoare roșie pentru mesajele de eroare */
-    margin-top: -10px; /* Ajustează spațiul dacă este necesar */
-    margin-bottom: 20px;
+  }
+  
+  .input-group {
+    margin-bottom: 10px; /* Reduced margin */
+  }
+  
+  .input-group label {
+    display: block;
+    margin-bottom: 6px; /* Reduced margin */
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 8px; /* Reduced padding */
+    border: none;
+    border-bottom: 2px solid #f0f2f5;
+    box-sizing: border-box;
+  }
+  
+  .input-group input.error {
+    border-bottom-color: #d9534f;
+  }
+  
+  .error-message {
+    color: #d9534f;
+    font-size: 0.8em; /* Reduced font size */
+    margin-top: 4px; /* Reduced margin */
+  }
+  
+  .terms-conditions {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px; /* Reduced margin */
+  }
+  
+  .terms-conditions input {
+    margin-right: 8px; /* Reduced margin */
+  }
+  
+  .terms-conditions label {
     font-size: 0.9em;
-}
-
-/* Stiluri pentru butonul de submit */
-.button button {
+    color: #333;
+  }
+  
+  .terms-conditions a {
+    color: #004494;
+    text-decoration: none;
+  }
+  
+  .terms-conditions a:hover {
+    text-decoration: underline;
+  }
+  
+  .register-button {
     width: 100%;
-    padding: 10px;
+    padding: 12px; /* Reduced padding */
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
+    font-size: 14px; /* Reduced font size */
     transition: background-color 0.3s ease;
-}
-
-.button button:hover {
-    background-color: #0056b3;
-}
+  }
+  
+  .register-button:hover {
+    background-color: #004494;
+  }
+  
+  .login-link {
+    text-align: center;
+    margin-top: 15px; /* Reduced margin */
+  }
+  
+  .login-link a {
+    color: #004494;
+    text-decoration: none;
+  }
+  
+  .login-link a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Optional: Stiluri personalizate suplimentare dacă sunt necesare */
+  .login-overlay-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px; /* Ajustează înălțimea pentru a se potrivi cu headerul tău */
+    background-color: white;
+    z-index: 1001; /* Asigură-te că acest header suplimentar are un z-index mai mare decât headerul principal */
+  }
+  

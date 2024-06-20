@@ -53,7 +53,6 @@ export class PaypallButtonsComponent implements OnInit {
           ],
         });
       },
-
       onApprove: async (data: any, actions: any) => {
         const payment = await actions.order.capture();
         self.transaction.transactionId = payment.id;
@@ -64,7 +63,14 @@ export class PaypallButtonsComponent implements OnInit {
               console.log('Transaction created successfully with ID:', transactionId);
               self.transactionService.updateBalance(this.transaction).subscribe({
                 next: (response) => {
-                  this.userService.depositUpdateUserToLocalStorage(this.transaction.user);
+                  this.userService.depositUpdateUserToLocalStorage(this.user.id).subscribe({
+                    next: (response) => {
+                      console.log(response);
+                    },
+                    error: (errorResponse) => {
+                      console.error('Failed to update:', errorResponse);
+                    }
+                  });
                   console.log(this.transaction.user);
                   console.log('Balance updated successfully');
                 },
@@ -78,9 +84,7 @@ export class PaypallButtonsComponent implements OnInit {
             }
           }
         );
-        
       },
-
       onError: (err: any) => {
         console.log(err);
       },

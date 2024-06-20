@@ -49,10 +49,12 @@ export class StockPageComponent implements OnInit{
   purchaseAmount: number = 0;
   modalRef!: NgbModalRef; // Referința la modal
   @ViewChild('buyModal') buyModal: any;
+  @ViewChild('buyConfirmModal') buyConfirmModal: any;
   user:User;
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options = {};
   updateFlag = false;
+  marketStatus: boolean = false;
   constructor(
     private activatedRoute:ActivatedRoute,
     private stockService:StockService,
@@ -78,6 +80,7 @@ export class StockPageComponent implements OnInit{
       this.loadCompanyProfile(this.stock.symbol);
       this.loadMarketData(this.stock.symbol);
       this.loadPriceChange(this.stock.symbol);
+      this.checkMarketStatus(this.stock.exchangeShortName);
     });
   }
   resetChartData() {
@@ -101,9 +104,12 @@ export class StockPageComponent implements OnInit{
     });
   }
   
-
   openBuyModal() {
     this.modalRef = this.modalService.open(this.buyModal, { ariaLabelledBy: 'modal-basic-title' });
+  }
+  openBuyConfirmModal() {
+    this.modalRef.close(); // Închide modalul de achiziție
+    this.modalRef = this.modalService.open(this.buyConfirmModal, { ariaLabelledBy: 'modal-confirm-title' });
   }
 
   getMaximumShares(amount: number): number {
@@ -113,15 +119,15 @@ export class StockPageComponent implements OnInit{
     return amount / this.companyProfile.price;
   }
 
-  buyStock() {
+  confirmBuyStock() {
     if (!this.companyProfile) {
       // Gestionează cazul în care profilul companiei nu este încărcat
       console.error('Company profile is not loaded.');
       return;
     }
-    if(this.user.balance<this.purchaseAmount)
-    {
-      
+    if (this.user.balance < this.purchaseAmount) {
+      console.error('Insufficient balance.');
+      return;
     }
     enum PurchaseOrderStatus {
       Pending = 'pending',
@@ -132,7 +138,7 @@ export class StockPageComponent implements OnInit{
       Buy = 'buy',
       Sell = 'sell',
     }
-  
+
     const purchaseOrderData = {
       userId: this.user.id,
       date:new Date(),
@@ -145,15 +151,40 @@ export class StockPageComponent implements OnInit{
       transactionType:PurchaseOrderType.Buy,
       type:'stock'
     };
-  
+    console.log(purchaseOrderData);
+
     this.stockService.createPurchaseOrder(purchaseOrderData).subscribe({
       next: (response) => {
+        this.userService.depositUpdateUserToLocalStorage(this.user.id).subscribe({
+          next: (response) => {
+            console.log(response);
+          },
+          error: (errorResponse) => {
+            console.error('Failed to update:', errorResponse);
+          }
+        });
         console.log('Purchase order created:', response);
         this.modalService.dismissAll();
       },
       error: (error) => {
+        console.error('Failed to create purchase order:', error);
       }
     });
+  }
+
+  buyStock() {
+    if (!this.companyProfile) {
+      // Gestionează cazul în care profilul companiei nu este încărcat
+      console.error('Company profile is not loaded.');
+      return;
+    }
+    if (this.user.balance < this.purchaseAmount) {
+      console.error('Insufficient balance.');
+      return;
+    }
+  
+    // Deschide modalul de confirmare
+    this.openBuyConfirmModal();
   }
   loadChartData(stockSymbol: string): void {
     this.stockService.getHistoricalData(stockSymbol).subscribe(data => {
@@ -260,6 +291,12 @@ export class StockPageComponent implements OnInit{
         stock.favorite = !stock.favorite; 
       },
       error: error => console.error('Error toggling favorite:', error)
+    });
+  }
+  checkMarketStatus(shortExchName: string) {
+    this.stockService.isMarketOpen(shortExchName).subscribe((isOpen) => {
+      this.marketStatus = isOpen;
+      console.log('Market status:', this.marketStatus);
     });
   }
   

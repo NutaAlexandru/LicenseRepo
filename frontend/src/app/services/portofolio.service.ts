@@ -15,7 +15,7 @@ export class PortofolioService {
     return this.http.get<PurchaseOrder[]>(PURCHASE_INFO_GET_ALL_URL+userId);
   }
 
-  getUserPortofolio(userId: string):Observable<Portofolio[]> {
+  getUserPortfolio(userId: string):Observable<Portofolio[]> {
     return this.http.get<Portofolio[]>(PORTOFOLIO_INFO_GET_ALL_URL+userId);
   }
 

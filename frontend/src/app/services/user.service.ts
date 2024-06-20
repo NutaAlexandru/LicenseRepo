@@ -3,7 +3,7 @@ import { User } from '../shared/models/User';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IUserLogin } from '../shared/interfaces/IUserLogin';
 import { HttpClient } from '@angular/common/http';
-import { USER_LOGIN_URL, USER_REGISTER_URL,USER_LOGIN_WITH_GOOGLE_URL,USER_UPDATE_URL,USER_DATA_URL } from '../shared/constants/urls';
+import { USER_LOGIN_URL, USER_REGISTER_URL,USER_LOGIN_WITH_GOOGLE_URL,USER_UPDATE_URL,USER_DATA_URL, USER_SWITCH_TO_DEMO_URL, USER_SWITCH_TO_REAL_URL } from '../shared/constants/urls';
 import { tap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { IUserRegister } from '../shared/interfaces/IUserRegister';
@@ -47,6 +47,7 @@ export class UserService {
           this.setUserToLocalStorage(user);
           this.userSubject.next(user);
           this.toastrService.success('Registration successful');
+          window.location.reload();
         },
         error:(errorResponse)=>{
           this.toastrService.error(errorResponse.error,'Registration failed');
@@ -59,7 +60,6 @@ export class UserService {
     if (typeof window !== 'undefined') {
       localStorage.removeItem(USER_KEY);
       this.logoutFromGoogle();
-      window.location.reload();
     }
     
   }
@@ -97,7 +97,6 @@ export class UserService {
           console.log(response);
           this.setUserToLocalStorage(response);
           this.userSubject.next(response);
-          this.toastrService.success('Deposit Successful');
           window.location.reload();
         },
         error: (errorResponse) => {
@@ -138,10 +137,36 @@ export class UserService {
           this.toastrService.error(errorResponse.error,'Login failed');
         }
       })
-      
     );
-    
   }
-
-  
+  switchToDemoAccount(email: string): Observable<User> {
+    return this.http.post<User>(USER_SWITCH_TO_DEMO_URL,{ email }).pipe(
+      tap({
+        next: (demoUser) => {
+          this.setUserToLocalStorage(demoUser);
+          this.userSubject.next(demoUser);
+          this.toastrService.success('Switched to demo account successfully');
+          window.location.reload();
+        },
+        error: (errorResponse) => {
+          this.toastrService.error(errorResponse.error, 'Switch to demo account failed');
+        }
+      })
+    );
+  }
+  switchToRealAccount(email: string): Observable<User> {
+    return this.http.post<User>(USER_SWITCH_TO_REAL_URL, { email }).pipe(
+        tap({
+            next: (realUser) => {
+                this.setUserToLocalStorage(realUser);
+                this.userSubject.next(realUser);
+                this.toastrService.success('Switched to real account successfully');
+                window.location.reload();
+            },
+            error: (errorResponse) => {
+                this.toastrService.error(errorResponse.error, 'Switch to real account failed');
+            }
+        })
+    );
+}
 }

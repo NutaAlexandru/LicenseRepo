@@ -15,7 +15,8 @@ import {
   STOCK_TOOGLE_FAVORITE_URL,
   PURCHASE_INFO_CREATE, 
   STOCKPRICE,
-  STOCK_FAVORITES_URL} from '../shared/constants/urls';
+  STOCK_FAVORITES_URL,
+  MARKET_STATUS_URL} from '../shared/constants/urls';
 import { HttpClient } from '@angular/common/http';
 import { IHistory } from '../shared/interfaces/IHistory';
 import { ICompanyInfo} from '../shared/interfaces/ICompanyInfo'
@@ -103,5 +104,9 @@ export class StockService {
   getFavoriteStocks(): Observable<any[]> {
     return this.http.get<any[]>(STOCK_FAVORITES_URL);
   }
-      
+  isMarketOpen(exchangeShortName: string): Observable<boolean> {
+    return this.http.get<{ isOpen: boolean }>(MARKET_STATUS_URL + exchangeShortName).pipe(
+      map(response => response.isOpen)
+    );
+  }
 }

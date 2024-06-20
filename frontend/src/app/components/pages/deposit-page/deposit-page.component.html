@@ -1,41 +1,42 @@
-<div class="container transaction-form mt-5">
-  <!-- Tab buttons to choose between Deposit and Withdraw -->
-  <ul class="nav nav-tabs">
-    <li class="nav-item">
-        <button class="nav-link btn btn-link active" [class.active]="activeForm === 'deposit'" (click)="showForm('deposit')">Make a Deposit</button>
-    </li>
-    <li class="nav-item">
-        <button class="nav-link btn btn-link"  [class.active]="activeForm === 'withdraw'" (click)="showForm('withdraw')">Make a Withdrawal</button>
-    </li>
-</ul>
+<div class="background-container">
+    <div class="container transaction-form mt-5">
+        <!-- Tab buttons to choose between Deposit and Withdraw -->
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <button class="nav-link btn btn-link active" [class.active]="activeForm === 'deposit'" (click)="showForm('deposit')">Make a Deposit</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link btn btn-link" [class.active]="activeForm === 'withdraw'" (click)="showForm('withdraw')">Make a Withdrawal</button>
+            </li>
+        </ul>
 
+        <!-- Deposit Form -->
+        <div *ngIf="activeForm === 'deposit'" class="deposit-form card mt-3 p-4">
+            <h2>Make a Deposit</h2>
+            <div class="form-group">
+                <label for="depositAmount">Amount:</label>
+                <input type="number" class="form-control" id="depositAmount" [(ngModel)]="depositAmount" placeholder="Enter deposit amount" min="0">
+            </div>
+            <div class="mt-3">
+                <button class="btn btn-primary" (click)="deposit()">Deposit Now</button>
+            </div>
+        </div>
 
-  <!-- Deposit Form -->
-  <div *ngIf="activeForm === 'deposit'" class="deposit-form card mt-3 p-4">
-      <h2>Make a Deposit</h2>
-      <div class="form-group">
-          <label for="depositAmount">Amount:</label>
-          <input type="number" class="form-control" id="depositAmount" [(ngModel)]="depositAmount" placeholder="Enter deposit amount" min="0">
-      </div>
-      <div class="mt-3">
-          <button class="btn btn-primary" (click)="deposit()">Deposit Now</button>
-      </div>
-  </div>
+        <!-- Withdraw Form -->
+        <div *ngIf="activeForm === 'withdraw'" class="withdraw-form card mt-3 p-4">
+            <h2>Make a Withdrawal</h2>
+            <div class="form-group">
+                <label for="withdrawAmount">Amount:</label>
+                <input type="number" class="form-control" id="withdrawAmount" [(ngModel)]="withdrawAmount" placeholder="Enter withdrawal amount" min="0">
+            </div>
+            <div class="mt-3">
+                <button class="btn btn-primary" (click)="withdraw()">Withdraw Now</button>
+            </div>
+        </div>
 
-  <!-- Withdraw Form -->
-  <div *ngIf="activeForm === 'withdraw'" class="withdraw-form card mt-3 p-4">
-      <h2>Make a Withdrawal</h2>
-      <div class="form-group">
-          <label for="withdrawAmount">Amount:</label>
-          <input type="number" class="form-control" id="withdrawAmount" [(ngModel)]="withdrawAmount" placeholder="Enter withdrawal amount" min="0">
-      </div>
-      <div class="mt-3">
-          <button class="btn btn-primary" (click)="withdraw()">Withdraw Now</button>
-      </div>
-  </div>
-
-  <!-- Optional PayPal Buttons -->
-  <div *ngIf="showPaypalButton" class="buttons-container mt-3">
-      <app-paypall-buttons [transaction]="transaction"></app-paypall-buttons>
-  </div>
+        <!-- Optional PayPal Buttons -->
+        <div *ngIf="showPaypalButton" class="buttons-container mt-3">
+            <app-paypall-buttons [transaction]="transaction"></app-paypall-buttons>
+        </div>
+    </div>
 </div>

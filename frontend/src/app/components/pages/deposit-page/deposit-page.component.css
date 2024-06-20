@@ -1,3 +1,25 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.background-container {
+  position:fixed;
+  width: 100%;
+  min-height: 100vh;
+  background-image: url('/assets/test.png');
+  background-size:cover;
+  background-repeat: no-repeat;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.8); /* Add some opacity for better readability */
+  padding: 20px;
+  border-radius: 5px;
+}
+
 .transaction-form {
   max-width: 400px;
   margin: 0 auto;
@@ -49,7 +71,7 @@
   background-color: #0056b3;
 }
 
-.buttons-container{
+.buttons-container {
   flex-basis: 100%;
   display: flex;
   justify-content: center;

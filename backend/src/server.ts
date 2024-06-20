@@ -11,6 +11,7 @@ import dividentsRouter from "./routers/dividents.router"
 import cryptoRouter from "./routers/crypto.router"
 import transactionsRouter from "./routers/transactions.router"
 import purchaseRouter from "./routers/purchaseOrder.router"
+import marketRouter from "./routers/marketStatus.router"
 import { dbConnect } from "./configs/database.config";
 dbConnect();
 const app=express();
@@ -24,7 +25,7 @@ app.use(cors(
 ));
 app.post('/google/login', (req, res) => {
     console.log(req.body);
-    res.redirect('http://localhost:4200');
+    res.redirect('http://localhost:4200/home');
 });
 
 app.use("/api/stocks",stocksRouter);
@@ -34,6 +35,7 @@ app.use('/api',dividentsRouter);
 app.use('/api/cryptos',cryptoRouter);
 app.use('/api/transactions',transactionsRouter);
 app.use('/api/orders',purchaseRouter);
+app.use('/api/marketstatus',marketRouter)
 
 const port = 5000;
 app.listen(port, () => {

@@ -1,6 +1,12 @@
 
 <div class="container mt-4">
   <app-not-found [visible]="!stock" notFoundMessage="Stock not found" resetLinkText="Homepage"></app-not-found>
+     <!-- Market Status -->
+     <div class="col-12">
+      <div class="market-status">
+        <span *ngIf="marketStatus" class="badge bg-success">Market is open</span>
+        <span *ngIf="!marketStatus" class="badge bg-dark">Market is closed</span>
+      </div>
   <!-- Header responsive -->
   <div class="row mb-2" *ngIf="stock && companyProfile">
     <div class="col-12">
@@ -41,6 +47,24 @@
         <button type="button" class="btn btn-primary" (click)="buyStock()">Place Order</button>
       </div>
     </ng-template>
+    <ng-template #buyConfirmModal let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Purchase</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <p>Company: {{ companyProfile?.companyName || 'N/A' }}</p>
+        <p>Amount: {{ purchaseAmount | currency:'USD':'symbol-narrow' }}</p>
+        <p>Price per share: {{ companyProfile?.price | currency:'USD':'symbol-narrow' }}</p>
+        <p>Number of shares: {{ getMaximumShares(purchaseAmount) | number:'1.2-2' }}</p>
+        <p>Total cost: {{ purchaseAmount | currency:'USD':'symbol-narrow' }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
+        <button type="button" class="btn btn-primary" (click)="confirmBuyStock()">Confirm Purchase</button>
+      </div>
+    </ng-template>
+    
 </div>
 
 

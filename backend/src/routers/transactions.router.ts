@@ -93,21 +93,5 @@ router.put('/update-balance', expressAsyncHandler(async (req, res) => {
     
 }));
 
-const generateToken=(user:User)=>{
-    const token=jwt.sign({
-        id: user.id,email:user.email
-    },'secret',{
-        expiresIn:"200d"
-    });
-    return {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        address: user.address,
-        isAdmin: user.isAdmin,
-        balance:user.balance,
-        token: token
-      };
-}
   
   export default router;
